@@ -6,7 +6,7 @@ Database::Database() {
     db.setDatabaseName("iris");
     db.setUserName("iris");
     db.setPassword("iris");
-    if (!db.open()) qDebug() << "Failed to connect to mysql" ;
+    if (!db.open()) qDebug() << "Failed to connect to mysql" ; //TODO: dodaæ informacjê u¿ytkownikowi, ¿e jest b³¹d z po³¹czeniem
 }
 
 bool Database::insertUser(QString name, QString surname, QString group, QString faculty, QString iris_code) {
