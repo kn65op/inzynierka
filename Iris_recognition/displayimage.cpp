@@ -2,11 +2,13 @@
 
 displayImage::displayImage() {
     moveToThread(this);
+    netAccessMgr = NULL;
+    netReply = NULL;
 }
 
 displayImage::~displayImage() {
-    netAccessMgr->deleteLater();
-    netReply->deleteLater();
+    if (netAccessMgr) netAccessMgr->deleteLater();
+    if (netReply) netReply->deleteLater();
 }
 
 void displayImage::run()
