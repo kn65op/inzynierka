@@ -32,6 +32,7 @@ private:
     Iris    eye;
     QString filepath;
     Database db;
+    bool image_loaded;
 
 private slots:
     void on_searchButton_clicked();

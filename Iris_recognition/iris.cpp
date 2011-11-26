@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <sstream>
 #include "image.cpp"
 #include <QtCore/QTextStream>
 
@@ -532,19 +533,19 @@ class Iris {
 		}
 		
 		
+                //TODO: próg binaryzacji, później jak będziemy mieli nowe obrazy
 		/* Funkcja znajduj�ca �rodek �renicy */
                 IplImage* find_center_pupil(IplImage *src, int binary_value) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
-
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
-                        cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
-                        //cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
-                       // cvShowImage("Przed", src);
-                       // cvShowImage("Po", tmp);
-                       // while (cvWaitKey(100));
 
+                        //cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
+                        //cvShowImage("Przed", src);
+                        //cvShowImage("Po", tmp);
+                        //while (cvWaitKey(1000) < 0);
+                        cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
 
 
                         IplConvKernel* element = cvCreateStructuringElementEx(9, 9, 4, 4, CV_SHAPE_ELLIPSE, NULL);

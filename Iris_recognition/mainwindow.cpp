@@ -1,10 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
         ui->setupUi(this);
+        image_loaded = false;
     }
 
 MainWindow::~MainWindow()
@@ -111,11 +113,19 @@ void MainWindow::on_choosePhotoButton_clicked()
         eye.init(filepath);
         QPixmap img = QPixmap(filepath);
         ui->imageLabel->setPixmap(img.scaled(700, 525));
+        image_loaded = true;
     }
 }
 
 void MainWindow::on_findPupilButton_clicked()
 {
+    if (!image_loaded)
+    {
+        QMessageBox box;
+        box.setText("Najpierw wczytaj zdjecie");
+        box.exec();
+        return;
+    }
     eye.pupil(ui->binaryEdit->text().toInt());
     cvDestroyAllWindows();
     Image::showImage(eye.img, "1. Find pupil");
@@ -123,6 +133,13 @@ void MainWindow::on_findPupilButton_clicked()
 
 void MainWindow::on_findIrisButton_clicked()
 {
+    if (!image_loaded)
+    {
+        QMessageBox box;
+        box.setText("Najpierw wczytaj zdjecie");
+        box.exec();
+        return;
+    }
     eye.iris();
     cvDestroyAllWindows();
     Image::showImage(eye.img, "2. Find iris");
@@ -130,6 +147,13 @@ void MainWindow::on_findIrisButton_clicked()
 
 void MainWindow::on_divideIrisButton_clicked()
 {
+    if (!image_loaded)
+    {
+        QMessageBox box;
+        box.setText("Najpierw wczytaj zdjecie");
+        box.exec();
+        return;
+    }
     eye.draw_semicircles();
     cvDestroyAllWindows();
     Image::showImage(eye.img, "3. Divide the areas");
@@ -137,6 +161,13 @@ void MainWindow::on_divideIrisButton_clicked()
 
 void MainWindow::on_makeMaskButton_clicked()
 {
+    if (!image_loaded)
+    {
+        QMessageBox box;
+        box.setText("Najpierw wczytaj zdjecie");
+        box.exec();
+        return;
+    }
     eye.masking();
     Image::showBinaryImage(eye.getMaskImage(), "4. Mask");
 }
