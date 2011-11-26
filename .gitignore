@@ -33,3 +33,8 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
+#Z projektu
+capture
+Iris_recognition-build*
+*.pro
+*.pro.user
