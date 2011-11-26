@@ -537,9 +537,16 @@ class Iris {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
+
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
                         cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
-			
+                        //cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
+                       // cvShowImage("Przed", src);
+                       // cvShowImage("Po", tmp);
+                       // while (cvWaitKey(100));
+
+
+
                         IplConvKernel* element = cvCreateStructuringElementEx(9, 9, 4, 4, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
