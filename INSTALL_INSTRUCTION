@@ -1,0 +1,21 @@
+Zaintaluj Qt (najnowsze powinno dzialaæ) - najlepiej wersjê SDK z wybranym minigw, qtcreator
+w qtcreator stworz nowy pusty projekt (jest w inne)
+nazwij go Iros_recognition
+w folderze ze Ÿród³ami powinny siê stworzyæ pliki *.pro i *.pro.user
+dodaj pliki Ÿród³owe (jeœli siê same nie dodadz¹)
+otwórz edycjê pliku *.pro w qtcreatorze
+
+dodaj tam
+
+INCLUDEPATH += œcie¿ka do opencv\OpenCV2.2\include sciezka do opencv\OpenCV2.2\include\opencv
+
+LIBS += sciezka do opencv\OpenCV2.2\lib\opencv_core220.lib \
+        sciezka do opencv\OpenCV2.2\lib\opencv_highgui220.lib \
+        sciezka do opencv\OpenCV2.2\lib\opencv_imgproc220.lib
+
+
+QT += \
+    sql \
+    network
+
+w przypadku problemów pisz
