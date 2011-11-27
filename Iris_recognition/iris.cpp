@@ -261,7 +261,7 @@ class Iris {
                                 k++;
                         }
 		}
-		
+                //TODO rotacja
 		for(int i=0; i < size; i++) {
 			sum += c[i];	
 		}
@@ -274,7 +274,7 @@ class Iris {
 			res = false;
 
 		return res;	
-	}
+        }
 
         IplImage* getMaskImage() {
             IplImage *result  = cvCreateImage(cvSize(256*2, 8*2), IPL_DEPTH_8U, 1);

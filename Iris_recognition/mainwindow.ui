@@ -259,7 +259,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>260</y>
+      <y>270</y>
       <width>151</width>
       <height>41</height>
      </rect>

@@ -15,6 +15,7 @@ class Database
         QSqlQuery *searchUsers();
         QSqlDatabase db;
         QSqlQueryModel model;
+        ~Database();
 
 };
 

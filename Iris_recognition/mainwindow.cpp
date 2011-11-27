@@ -174,6 +174,13 @@ void MainWindow::on_makeMaskButton_clicked()
 
 void MainWindow::on_searchButton_clicked()
 {
+    if (!image_loaded)
+    {
+        QMessageBox box;
+        box.setText("Najpierw wczytaj zdjecie");
+        box.exec();
+        return;
+    }
     ui->resultLabel->setText("");
     QString binary = ui->binaryEdit->text();
     eye.pupil(binary.toInt());
