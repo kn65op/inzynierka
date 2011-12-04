@@ -20,3 +20,21 @@ QT += \
 
 spróbój uruchomiæ
 w przypadku problemów pisz
+
+Dodanie videoinput
+dopisaæ do pliku .pro
+LIBS +="sciezka_do_projektu\Iris_recognition\libs\libvideoInput.a"
+
+LIBS +=-L"sciezka_do_projektu\Iris_recognition\libs\libs\DShow\lib"\
+ -lddraw\
+ -ldxguid\
+ -lole32\
+ -loleaut32\
+ -lstrmbasd\
+ -lstrmbase\
+ -lstrmiids\
+ -luuid
+
+oraz dodaæ libs\videoInput.h do projektu
+
+powinno dzia³aæ.
