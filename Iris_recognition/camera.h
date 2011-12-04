@@ -21,7 +21,7 @@ public:
   Funckja pozwalaj¹ca pobraæ kolejn¹ klatkê obrazu z kamery
   \param docelowa macierz cv::Mat
   */
-  void getFrame(cv::Mat& mat);
+//  void getFrame(cv::Mat& mat);
   void getFrame(IplImage **mat);
 
 private:

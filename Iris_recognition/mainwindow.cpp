@@ -214,7 +214,8 @@ void MainWindow::on_searchButton_clicked()
 void MainWindow::timerEvent(QTimerEvent *)
 {
     //c.getFrame();
-    IplImage *image=cvQueryFrame(camera);
-    //c.getFrame(&image);
+    //IplImage *image=cvQueryFrame(camera);
+    IplImage *image;
+    c.getFrame(&image);
     ui->cameraWidget->putImage(image);
 }

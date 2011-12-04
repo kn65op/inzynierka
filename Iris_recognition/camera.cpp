@@ -1,5 +1,6 @@
 #include "camera.h"
 
+
 /* odbieranie obarzu z kamery z zastosowaniem bilbioteki videoInput: http://muonics.net/school/spring05/videoInput/ */
 
 Camera::Camera(int d)
@@ -31,13 +32,13 @@ Camera::~Camera(void)
   delete [] yourBuffer;
 }
 
-void Camera::getFrame(cv::Mat & mat)
+/*void Camera::getFrame(cv::Mat & mat)
 {
   VI.getPixels(device, yourBuffer, false, false);
   image->imageData = (char*)yourBuffer;
   cvConvertImage(image, image, CV_CVTIMG_FLIP);
   mat = cv::cvarrToMat(image);
-}
+}*/
 
 void Camera::getFrame(IplImage **mat)
 {
