@@ -33,7 +33,7 @@ class Iris {
 			this->img      = cvCloneImage(this->orginal);
 			
 			// Pobieranie informacji o rozmiarze
-			CvSize size  = cvGetSize(this->orginal);
+                        CvSize size  = cvGetSize(this->orginal);
 			this->width  = size.width;
 			this->height = size.height;
 			
@@ -43,7 +43,7 @@ class Iris {
                         this->iris_right_color = CV_RGB(200, 50, 50);
 			
 			// Tworzy obraz monochromatyczny
-			this->gray = cvCreateImage(cvSize(this->orginal->width, this->orginal->height), this->orginal->depth, 1);
+                        this->gray = cvCreateImage(size, this->orginal->depth, 1);
 			cvCvtColor(this->orginal, this->gray, CV_RGB2GRAY);
 
                         CvRect rect  = cvRect(200, 50, 1100, 1100);
@@ -61,15 +61,20 @@ class Iris {
 		}
 
                 void init(QString filename) {
-                        this->width  = 1100;
-                        this->height = 1100;
+                        //this->width  = 1100;
+                        //this->height = 1100;
+
+
 
                         // Laduje obraz
                         this->filename = filename;
                         this->orginal  = cvLoadImage(this->filename.toAscii().data());
 
-                        CvRect rect  = cvRect(200, 50, 1100, 1100);
-                        cvSetImageROI(this->orginal, rect);
+                        CvSize size = cvGetSize(orginal);
+                        this->width  = size.width;
+                        this->height = size.height;
+                        //CvRect rect  = cvRect(200, 50, 1100, 1100);
+                        //cvSetImageROI(this->orginal, rect);
 
                         this->img = cvCloneImage(this->orginal);
 
@@ -79,10 +84,10 @@ class Iris {
                         this->iris_right_color = CV_RGB(200, 50, 50);
 
                         // Tworzy obraz monochromatyczny
-                        this->gray = cvCreateImage(cvSize(this->width, this->height), this->orginal->depth, 1);
+                        this->gray = cvCreateImage(size, this->orginal->depth, 1);
                         cvCvtColor(this->orginal, this->gray, CV_RGB2GRAY);
 
-                        cvResetImageROI(this->orginal);
+                        //cvResetImageROI(this->orginal);
                 }
 
 		/* Funkcja znajduj�ca �renice */
@@ -541,10 +546,11 @@ class Iris {
 
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
 
-                        //cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
-                        //cvShowImage("Przed", src);
-                        //cvShowImage("Po", tmp);
-                        //while (cvWaitKey(1000) < 0);
+                        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
+                        cvShowImage("Przed", src);
+                        cvShowImage("Po", tmp);
+                        cvSaveImage("poprzednie.jpg", tmp);
+                        while (cvWaitKey(1000) < 0);
                         cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
 
 
