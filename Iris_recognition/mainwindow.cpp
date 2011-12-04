@@ -1,14 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <sstream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow) {
+    ui(new Ui::MainWindow)
+    {
         ui->setupUi(this);
         image_loaded = false;
         camera = cvCreateCameraCapture(0);
         assert(camera);
+        image = 0;
     }
 
 MainWindow::~MainWindow()
@@ -31,6 +34,11 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_submitButton_clicked()
 {
+   if (!image)
+   {
+       return;
+   }
+   static int file_nr = 0;
    // m_netwManager = new QNetworkAccessManager(this);
    // connect(m_netwManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slot_netwManagerFinished(QNetworkReply*)));
 
@@ -38,18 +46,27 @@ void MainWindow::on_submitButton_clicked()
    QString surname = ui->surnameField->text();
    QString group   = ui->groupField->text();
    QString faculty = ui->facultyField->text();
-
-   QString filename = group + "-" + name + "-" + surname + "-" + faculty + ".jpg";
+   stringstream ss;
+   ss << file_nr++;
+   QString file_no = ss.str().c_str();
+   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
    QString catalog  = "capture/";
    path = catalog + filename;
+
+   cvSaveImage(path.toStdString().c_str(), image);
 
    // QUrl urlSave("http://usteni.gliczarow.info.pl/webcam.jpeg?1293535363894");
    // QUrl urlSave("http://192.168.0.1/now.jpg?snap=pre?ww=1600?wh=1200");
 
    //QNetworkRequest request(urlSave);
    //m_netwManager->get(request);
-
-   eye.pupil(ui->binaryEdit->text().toInt());
+   /* moje
+    eye.init(path);
+   QPixmap img = QPixmap(path);
+   ui->imageLabel->setPixmap(img.scaled(700, 525));
+   image_loaded = true;
+*/
+  /* eye.pupil(ui->binaryEdit->text().toInt());
    eye.iris();
    eye.masking();
 
@@ -58,7 +75,7 @@ void MainWindow::on_submitButton_clicked()
      qDebug("Zapisano do bazy.");
    } else {
      qDebug("Wyst¹pi³ b³¹d przy zapisywaniu.");
-   }
+   }*/
 }
 
 void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
@@ -215,7 +232,7 @@ void MainWindow::timerEvent(QTimerEvent *)
 {
     //c.getFrame();
     //IplImage *image=cvQueryFrame(camera);
-    IplImage *image;
+    if (image) delete image;
     c.getFrame(&image);
     ui->cameraWidget->putImage(image);
 }

@@ -39,6 +39,7 @@ private:
     bool image_loaded;
     CvCapture *camera;
     Camera c;
+    IplImage *image;
 
 private slots:
     void on_searchButton_clicked();
