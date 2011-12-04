@@ -300,6 +300,16 @@ p, li { white-space: pre-wrap; }
      <string>Próg binaryzacji</string>
     </property>
    </widget>
+   <widget class="QOpenCVWidget" name="cameraWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>309</x>
+      <y>49</y>
+      <width>701</width>
+      <height>521</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -322,6 +332,14 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QOpenCVWidget</class>
+   <extends>QWidget</extends>
+   <header>qopencvwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

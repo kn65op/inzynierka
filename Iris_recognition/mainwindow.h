@@ -8,6 +8,10 @@
 #include <QtCore/QWaitCondition>
 #include "iris.cpp"
 #include <QtSQL/QSqlQuery>
+#include "QOpenCVWidget.h"
+#include <highgui.h>
+#include <cv.h>
+#include "camera.h"
 
 namespace Ui {
     class MainWindow;
@@ -33,6 +37,8 @@ private:
     QString filepath;
     Database db;
     bool image_loaded;
+    CvCapture *camera;
+    Camera c;
 
 private slots:
     void on_searchButton_clicked();
@@ -44,6 +50,7 @@ private slots:
     void on_activeCameraButton_clicked();
     void on_submitButton_clicked();
     void slot_netwManagerFinished(QNetworkReply *reply);
+    void timerEvent(QTimerEvent *);
 };
 
 #endif // MAINWINDOW_H

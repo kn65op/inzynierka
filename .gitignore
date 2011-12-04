@@ -38,3 +38,4 @@ capture
 Iris_recognition-build*
 *.pro
 *.pro.user
+*.autosave

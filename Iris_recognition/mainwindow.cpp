@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow) {
         ui->setupUi(this);
         image_loaded = false;
+        camera = cvCreateCameraCapture(0);
+        assert(camera);
     }
 
 MainWindow::~MainWindow()
@@ -100,8 +102,9 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
 
 void MainWindow::on_activeCameraButton_clicked()
 {
-    connect(&thread, SIGNAL(setPixmap(const QPixmap&)), ui->imageLabel, SLOT(setPixmap(const QPixmap&)));
-    thread.start();
+    startTimer(40);
+    //connect(&thread, SIGNAL(setPixmap(const QPixmap&)), ui->imageLabel, SLOT(setPixmap(const QPixmap&)));
+    //thread.start();
 }
 
 void MainWindow::on_choosePhotoButton_clicked()
@@ -206,4 +209,12 @@ void MainWindow::on_searchButton_clicked()
     }
 
     ui->resultLabel->setText(result);
+}
+
+void MainWindow::timerEvent(QTimerEvent *)
+{
+    //c.getFrame();
+    IplImage *image=cvQueryFrame(camera);
+    //c.getFrame(&image);
+    ui->cameraWidget->putImage(image);
 }
