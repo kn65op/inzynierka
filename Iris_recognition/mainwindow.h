@@ -37,8 +37,8 @@ private:
     QString filepath;
     Database db;
     bool image_loaded;
-    CvCapture *camera;
-    Camera c;
+//    CvCapture *camera;
+    static Camera c;
     IplImage *image;
 
 private slots:
@@ -52,6 +52,7 @@ private slots:
     void on_submitButton_clicked();
     void slot_netwManagerFinished(QNetworkReply *reply);
     void timerEvent(QTimerEvent *);
+    void on_actionTestuj_folder_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <sstream>
+#include <QDir>
+
+Camera MainWindow::c = Camera(0);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,8 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->setupUi(this);
         image_loaded = false;
-        camera = cvCreateCameraCapture(0);
-        assert(camera);
+//        camera = cvCaptureFromCAM(-1);
+  //      camera = cvCreateCameraCapture(-1);
+    //    assert(camera);
         image = 0;
     }
 
@@ -49,7 +53,7 @@ void MainWindow::on_submitButton_clicked()
    stringstream ss;
    ss << file_nr++;
    QString file_no = ss.str().c_str();
-   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
+   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".bmp";
    QString catalog  = "capture/";
    path = catalog + filename;
 
@@ -233,6 +237,23 @@ void MainWindow::timerEvent(QTimerEvent *)
     //c.getFrame();
     //IplImage *image=cvQueryFrame(camera);
     if (image) delete image;
-    c.getFrame(&image);
-    ui->cameraWidget->putImage(image);
+    MainWindow::c.getFrame(&image);
+    //image = cvQueryFrame(camera);
+    if (image) ui->cameraWidget->putImage(image);
+}
+
+
+void MainWindow::on_actionTestuj_folder_triggered()
+{
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
+    QStringList images_extensions;
+    images_extensions << "*.jpg" << "*.bmp";
+    QDir dir(filepath);
+    dir.setFilter(QDir::Files);
+    QFileInfoList list = dir.entryInfoList(images_extensions);
+    for (int i=0; i<list.size(); i++)
+    {
+        //Tworzenie kodów i porównywanie ich
+        //qDebug() << list.at(i).absoluteFilePath();
+    }
 }

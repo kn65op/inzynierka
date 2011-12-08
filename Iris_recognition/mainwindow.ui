@@ -320,6 +320,13 @@ p, li { white-space: pre-wrap; }
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuPlik">
+    <property name="title">
+     <string>Plik</string>
+    </property>
+    <addaction name="actionTestuj_folder"/>
+   </widget>
+   <addaction name="menuPlik"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -330,6 +337,14 @@ p, li { white-space: pre-wrap; }
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionTestuj_folder">
+   <property name="text">
+    <string>Testuj folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -340,6 +355,21 @@ p, li { white-space: pre-wrap; }
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>nameField</tabstop>
+  <tabstop>surnameField</tabstop>
+  <tabstop>groupField</tabstop>
+  <tabstop>facultyField</tabstop>
+  <tabstop>submitButton</tabstop>
+  <tabstop>findPupilButton</tabstop>
+  <tabstop>divideIrisButton</tabstop>
+  <tabstop>findIrisButton</tabstop>
+  <tabstop>activeCameraButton</tabstop>
+  <tabstop>makeMaskButton</tabstop>
+  <tabstop>searchButton</tabstop>
+  <tabstop>binaryEdit</tabstop>
+  <tabstop>choosePhotoButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -22,6 +22,7 @@ public:
   \param docelowa macierz cv::Mat
   */
 //  void getFrame(cv::Mat& mat);
+  void setSource(int d);
   void getFrame(IplImage **mat);
 
 private:
@@ -31,6 +32,7 @@ private:
   IplImage* image;
   unsigned char* yourBuffer;
   int device;
+  bool started;
 
 };
 
