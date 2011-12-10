@@ -258,6 +258,9 @@ void MainWindow::on_actionTestuj_folder_triggered()
         try
         {
             tmp.pupil();
+            cvDestroyAllWindows();
+            Image::showImage(tmp.img, "1. Find pupil");
+            while (cvWaitKey(1000) < 0);
         }
         catch (...)
         {
