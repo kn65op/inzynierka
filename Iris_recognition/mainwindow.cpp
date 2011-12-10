@@ -253,6 +253,17 @@ void MainWindow::on_actionTestuj_folder_triggered()
     QFileInfoList list = dir.entryInfoList(images_extensions);
     for (int i=0; i<list.size(); i++)
     {
+        Iris tmp;
+        tmp.init(list.at(i).absoluteFilePath());
+        try
+        {
+            tmp.pupil();
+        }
+        catch (...)
+        {
+
+        }
+
         //Tworzenie kodów i porównywanie ich
         //qDebug() << list.at(i).absoluteFilePath();
     }

@@ -100,8 +100,8 @@ class Iris {
                         image = this->find_center_pupil(image, binary_value);
 			
 			// Obrysowanie znalezionej �renicy
-                        cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
-                        cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
+//                        cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
+  //                      cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
 
                         cvReleaseImage(&image);
 		}
@@ -543,31 +543,57 @@ class Iris {
                 IplImage* find_center_pupil(IplImage *src, int binary_value) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
 
-                        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
-                        cvShowImage("Przed", src);
-                        cvShowImage("Po", tmp);
-                        cvSaveImage("poprzednie.jpg", tmp);
+                //        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY_INV);
+               //         cvShowImage("Przed", src);
+                        //cvShowImage("Po", tmp);
+                        //while (cvWaitKey(1000) < 0);
+                        //cvSaveImage("poprzednie.jpg", tmp);
+             //           while (cvWaitKey(1000) < 0);
+                        cvThreshold(src, tmpb, 40, 1, CV_THRESH_BINARY_INV);
+                        cvThreshold(src, tmpw, 254, 1, CV_THRESH_BINARY);
+                        cvOr(tmpb, tmpw, tmp);
+cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage(filename.toStdString().c_str(), tmp2);
+while (cvWaitKey(1000) < 0);
+                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvErode(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+                        element = cvCreateStructuringElementEx(11, 11, 5, 5, CV_SHAPE_ELLIPSE, NULL);
+                        cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+                        cvShowImage("Po", tmp2);
                         while (cvWaitKey(1000) < 0);
-                        cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
-
-
-                        IplConvKernel* element = cvCreateStructuringElementEx(9, 9, 4, 4, CV_SHAPE_ELLIPSE, NULL);
-                        cvDilate(tmp, tmp, element, 1);
-                        cvErode(tmp, tmp, element, 1);
-
-                        element = cvCreateStructuringElementEx(61, 61, 30, 30, CV_SHAPE_ELLIPSE, NULL);
                         cvErode(tmp, tmp, element, 1);
                         cvDilate(tmp, tmp, element, 1);
-
+                        cvReleaseStructuringElement(&element);
+                        cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+                        cvShowImage("Po", tmp2);
+                        while (cvWaitKey(1000) < 0);
+                        element = cvCreateStructuringElementEx(23, 23, 11, 11, CV_SHAPE_ELLIPSE, NULL);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvErode(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("Po", tmp2);
+while (cvWaitKey(1000) < 0);
                         tmp = Image::clearborders(tmp);
-
+cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("clear", tmp2);
+while (cvWaitKey(1000) < 0);
+cvDestroyAllWindows();
+return tmp;
                         element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
                         cvErode(tmp, tmp, element, 1);
                         cvDilate(tmp, tmp, element, 1);
-
+cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("Po", tmp2);
+while (cvWaitKey(1000) < 0);
                         middle = this->find_center(tmp);
 
                         return tmp;
