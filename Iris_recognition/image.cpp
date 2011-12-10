@@ -295,15 +295,18 @@ class Image {
                     // Iteracyjne zwi�kszanie promienia
                     for(int radius=rp; radius < limit; radius += 8) {
                         cnt = 0;
-
+                        qDebug() << radius;
                         for(int i=0; i < number; i++) {
                             array_x[i] = radius * cos(theta[i]);
                             array_y[i] = radius * sin(theta[i]);
                         }
 
                         for(int n=0; n < number; n++) {
-                            sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
-                            cnt++;
+                            if (y0 + (int) array_y[n] < img->height && y0 + (int) array_y[n] >= 0 && x0 + (int) array_x[n] < img->width && x0 + (int) array_x[n] >= 0)
+                            {
+                                sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
+                                cnt++;
+                            }
                         }
 
                         sum2 = (int) sum2/cnt;
@@ -366,8 +369,11 @@ class Image {
 
                         for(int n=0; n < number; n++) {
                             // qDebug("%d", x0 + (int) array_x[n]);
-                            sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
-                            cnt++;
+                            if (y0 + (int) array_y[n] < img->height && y0 + (int) array_y[n] >= 0 && x0 + (int) array_x[n] < img->width && x0 + (int) array_x[n] >= 0)
+                            {
+                                sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
+                                cnt++;
+                            }
                         }
 
                         sum2 = (int) sum2/cnt;

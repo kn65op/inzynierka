@@ -261,6 +261,10 @@ void MainWindow::on_actionTestuj_folder_triggered()
             cvDestroyAllWindows();
             Image::showImage(tmp.img, "1. Find pupil");
             while (cvWaitKey(1000) < 0);
+            tmp.iris();
+            cvDestroyAllWindows();
+            Image::showImage(tmp.img, "2. Find iris");
+            while (cvWaitKey(1000) < 0);
         }
         catch (...)
         {
