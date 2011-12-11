@@ -802,6 +802,7 @@ while (cvWaitKey(1000) < 0);*/
                             }
                         }
                         dif = sum - lastsum;
+                        qDebug() << r << " " << dif;
                         if (dif < dmin)
                         {
                             dmin = dif;
@@ -809,6 +810,7 @@ while (cvWaitKey(1000) < 0);*/
                         }
                         lastsum = sum;
                     }
+                    qDebug() << pupil_r;
                 }
 		
 };
