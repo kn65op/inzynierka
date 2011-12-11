@@ -91,20 +91,28 @@ class Iris {
                 }
 
 		/* Funkcja znajdujï¿½ca ï¿½renice */
-                void pupil(int binary_value = 110) {
+                /**
+                    Funkcja znajduj¹ca Ÿrenicê na podstawie jasnego odlasku w œrodku Ÿrenicy. Najpierw znadjowany jest odblask,
+                potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu. */
+                bool pupil(int binary_value = 110) {
 			// Rozmycie filtrem Gaussa
                         IplImage *image = cvCloneImage(this->gray);
                         cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie ï¿½rodka ï¿½renicy
                      //   image = this->find_center_pupil(image, binary_value);
-                        this->find_center_pupil2(image);
+                        if (!this->find_flash_on_pupil(image)) //szukanie odblasku
+                        {
+                            return false;
+                        }
+                        find_flash_center(image);
 
 			// Obrysowanie znalezionej ï¿½renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
 
                         cvReleaseImage(&image);
+                        return true;
 		}
 		
 		/* Funkcja znajdujï¿½ca obszar tï¿½czï¿½wki */
@@ -670,10 +678,9 @@ while (cvWaitKey(1000) < 0);*/
 		}
 
                 /**
-                  Funkcja znajduj¹ca Ÿrenicê na podstawie jasnego odlasku w œrodku Ÿrenicy. Najpierw znadjowany jest odblask,
-                  potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu.
+                  Funkcja znajduj¹ca odblask na Ÿrenicy.
                   */
-                void find_center_pupil2(IplImage *image)
+                bool find_flash_on_pupil(IplImage *image)
                 {
                     qDebug() << filename;
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
@@ -709,8 +716,57 @@ while (cvWaitKey(1000) < 0);*/
                         pupil_x = pupil_y = 0;
                         pupil_r = 100;
                     }
-                    qDebug() << "Koniec";
+                    cvReleaseImage(&bin);
+                    return !no_found;
+                }
 
+                /**
+                  Funkcja znajduj¹ca œrodek odblasku na Ÿrenicy (dowolny punkt odblasku musi byæ zapisuany w pupil_x i pupil_y)
+                  */
+                void find_flash_center(IplImage *image)
+                {
+                    IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    cvSetReal2D(bin, pupil_y, pupil_x, 255);
+                    for (int i = 1; i < 25; i++)
+                    {
+                        for (int j = 1; j < 25; j++)
+                        {
+                            if (cvGetReal2D(image, pupil_y + i, pupil_x + j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y + i, pupil_x + j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y - i, pupil_x + j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y - i, pupil_x + j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y + i, pupil_x - j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y + i, pupil_x - j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y - i, pupil_x - j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y - i, pupil_x - j, 255);
+                            }
+                        }
+                        if (cvGetReal2D(image, pupil_y + i, pupil_x) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y + i, pupil_x, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y, pupil_x - i) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y, pupil_x - i, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y - i, pupil_x) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y - i, pupil_x, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y, pupil_x + i) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y, pupil_x + i, 255);
+                        }
+                    }
+                    cvShowImage("qweqwE", bin);
+                    while (cvWaitKey(1000) < 0);
                 }
 		
 };
