@@ -97,8 +97,9 @@ class Iris {
                         cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie ï¿½rodka ï¿½renicy
-                        image = this->find_center_pupil(image, binary_value);
-			
+                     //   image = this->find_center_pupil(image, binary_value);
+                        this->find_center_pupil2(image);
+
 			// Obrysowanie znalezionej ï¿½renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
@@ -667,5 +668,49 @@ while (cvWaitKey(1000) < 0);*/
 			
 			return tab;
 		}
+
+                /**
+                  Funkcja znajduj¹ca Ÿrenicê na podstawie jasnego odlasku w œrodku Ÿrenicy. Najpierw znadjowany jest odblask,
+                  potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu.
+                  */
+                void find_center_pupil2(IplImage *image)
+                {
+                    qDebug() << filename;
+                    IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    cvThreshold(image, bin, 254, 1, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+                    int dark_count = 0;
+                    bool no_found = true;
+                    for (int i=20; i<bin->height - 20 && no_found; i++) //iteracja po kolumnach
+                    {
+                        for (int j=20; j<bin->width - 20 && no_found; j++) //iteracja po wierszach
+                        {
+                            if (cvGetReal2D(bin, i, j) == 1) //znaleziono œwiat³o, sprawdzenie otoczenia
+                            {
+                                dark_count = 0;
+                                for (int k=10; k<20; k++)
+                                {
+                                    if (cvGetReal2D(image, i-k, j-k) < 50 && cvGetReal2D(image, i+k, j+k) < 50) //sprawdzamy czy jest ciemne na obrazie
+                                    {
+                                        dark_count++;
+                                    }
+                                }
+                                if (dark_count>6) // liczba czarnych jest wystarczaj¹ca
+                                {
+                                  no_found = false;
+                                  this->pupil_x = j;
+                                  pupil_y = i;
+                                  pupil_r = 20;
+                                }
+                            }
+                        }
+                    }
+                    if (no_found)
+                    {
+                        pupil_x = pupil_y = 0;
+                        pupil_r = 100;
+                    }
+                    qDebug() << "Koniec";
+
+                }
 		
 };
