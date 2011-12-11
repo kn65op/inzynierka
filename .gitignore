@@ -39,3 +39,6 @@ Iris_recognition-build*
 *.pro
 *.pro.user
 *.autosave
+*.*~
+*.aux
+*.toc
