@@ -1,27 +1,49 @@
 \chapter{Wprowadzenie}
 \label{cha:wprowadzenie}
 
-\LaTeX~jest systemem sk�adu umo�liwiaj�cym tworzenie dowolnego typu dokument�w (w~szczeg�lno�ci naukowych i technicznych) o wysokiej jako�ci typograficznej (\cite{Dil00}, \cite{Lam92}). Wysoka jako�� sk�adu jest niezale�na od rozmiaru dokumentu -- zaczynaj�c od kr�tkich list�w do bardzo grubych ksi��ek. \LaTeX~automatyzuje wiele prac zwi�zanych ze sk�adaniem dokument�w np.: referencje, cytowania, generowanie spis�w (tre�li, rysunk�w, symboli itp.) itd.
+%---------------------------------------------------------------------------
 
-\LaTeX~jest zestawem instrukcji umo�liwiaj�cych autorom sk�ad i wydruk ich prac na najwy�szym poziomie typograficznym. Do formatowania dokumentu \LaTeX~stosuje \TeX a (wymiawamy 'tech' -- greckie litery $\tau$, $\epsilon$, $\chi$). Korzystaj�c z~systemu sk�adu \LaTeX~mamy za zadanie przygotowa� jedynie tekst �r�d�owy, ca�y ci�ar sk�adania, formatowania dokumentu przejmuje na siebie system.
+\section{Biometria oraz jej zastosowania w historii i współcześnie}
+\label{sec:biometria}
+
+Biometria jest, zgodnie z definicjami zaczerpniętymi z [1] oraz [2], nauką obejmującą swoim zakresem badanie zmienności populacji organizmów. Wyniki tych badań, po opracowaniu z uwzględnieniem szerokiego zakresu metod statystyki matematycznej, wykorzystywane są w wielu różnych dziedzinach, między innymi antropologii, medycynie czy kryminalistyce. Z punktu widzenia techniki, zadaniem biometrii jest dokonywanie pomiarów istot żywych, w tym w szczególności ludzkich cech charakterystycznych, pozwalającym na jak najpełniej zautomatyzowane rozpoznawanie i weryfikację tożsamości osób ze względu na unikalność badanej cechy.
+	Identyfikacja biometryczna uwzględnia w swoich metodach dwa rodzaje cech człowieka:
+\begin{itemize} 
+\item fizyczne – takie, jak na przykład tęczówka lub siatkówka oka, linie papilarne palców dłoni, układ naczyń krwionośnych, kształt dłoni, kształt ucha, twarz oraz rozkład temperatur na niej, charakterystyka uzębienia, DNA 
+\item behawioralne - takie, jak sposób poruszania się, podpis odręczny, sposób pisania na klawiaturze komputera czy cechy charakterystyczne głosu.
+\end{itemize}
+	Biometria miała zastosowanie już w przeszłości, na przykład poprzez pobieranie odcisków palców w celu potwierdzenia transakcji handlowych w czasach starożytnych, czy w trakcie rejestracji więźniów w XIX wieku. (Tutaj będzie niewielka zmiana oraz odwołanie do źródła) Współcześnie, jest to jedna z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, stosowana najczęściej jako forma kontroli dostępu i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka i efektywna forma odprawy paszportowej pasażerów na lotniskach i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób w bazie i monitoringu czasu pracy w firmach [1].
+	Metody identyfikacji biometrycznej różnią się, poza formą analizy oraz wariantem analizowanych cech, skutecznością poprawności rozpoznawania danej osoby na podstawie próbek danych opisujących jej cechy, wymaganym stopniem zaangażowania analizowanej osoby w proces zbioru danych koniecznych do dokonania pomiarów, oraz odpornością na oszustwa. Porównanie kilku metod biometrycznych zostało omówione w [3]. Z uwagi na dużą skuteczność i względnie prostą mierzalność, w niniejszej pracy skupiono się na identyfikacji na podstawie obrazu tęczówki oka.
+
 
 %---------------------------------------------------------------------------
 
-\section{Cele pracy}
-\label{sec:celePracy}
-
-Celem poni�szej pracy jest zapoznanie student�w z systemem \LaTeX~w zakresie umo�liwiaj�cym im samodzielne, profesjonalne z�o�enie pracy dyplomowej w systemie \LaTeX.
-
-
-%---------------------------------------------------------------------------
-
-\section{Zawarto�� pracy}
+\section{Charakterystyka identyfikacji biometrycznej na bazie tęczówki oka}
 \label{sec:zawartoscPracy}
 
-W rodziale~\ref{cha:pierwszyDokument} przedstawiono podstawowe informacje dotycz�ce struktury dokument�w w \LaTeX u. Alvis~\cite{Alvis2011} jest j�zykiem 
+%W rodziale~\ref{cha:pierwszyDokument} przedstawiono podstawowe informacje dotyczące struktury dokumentów w \LaTeX u. Alvis~\cite{Alvis2011} jest językiem 
+
+Tęczówka ludzkiego oka jest jednym z najbardziej charakterystycznych elementów twarzy człowieka, indywidualnym i niepowtarzalnym ze względu na połączenie uwarunkowanego genetycznie koloru oraz złożonej struktury, wynikającej z różnorodnych procesów fizycznych i chemicznych, kształtujących ją w pierwszych latach ludzkiego życia. Cechy te oraz fakt, że jest ona  dostrzegalna z pewnej odległości, są wykorzystywane w procesie biometrycznej identyfikacji jednostki, który opiera się na zastosowaniu różnorodnych matematycznych metod rozpoznawania wzorców w algorytmach operujących na pobranym z użyciem specjalistycznej kamery obrazie oka.
+	Pobranie stabilnego i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery i sprzęt, projektowane specjalnie do tego typu identyfikacji, są z biegiem lat coraz lepiej przystosowane do automatycznego i bardzo dokładnego uzyskiwania obrazu, dlatego też możliwe jest, iż z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
+	Współcześnie stosowane kamery, wykorzystywane w celu pobrania obrazu oka, operują z użyciem podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone wykazuje skuteczność w pobieraniu tego typu obrazów ze względu na kilka czynników, między innymi dlatego, że w tym zakresie widma wyraźnie uwidaczniają się cechy posiadanej przez znaczną część populacji ludzkiej tęczówki w  odcieniach brązu, jak również ze względu na skuteczność w likwidowaniu powstałych na powierzchni oka odblasków światła z otoczenia i nieinwazyjność samej podczerwieni. Technika Visible Wavelength natomiast zachowuje informację na temat barwników przeważających na obrazie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety i wady; ich porównanie oraz próby połączenia w celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki i większej ilości niesionych wraz z tym informacji zostały opisane w [4]. 
+	Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu przy pomocy kamery, dzieli się następnie na kilka głównych etapów: \begin{itemize}
+\item segmentacja, mająca na celu wyodrębnienie wewnętrznej i zewnętrznej granicy tęczówki na obrazie oka, wraz z szeregiem operacji, mających za zadanie wyeliminowanie zakłóceń na obrazie w postaci otaczających tęczówkę rzęs, powiek czy powstałych w wyniku akwizycji obrazu odblasków
+\item normalizacja, służąca do kompensacji deformacji tęczówki w związku z jej ewentualnym zwężeniem lub rozszerzeniem 
+\item ekstrakcja cech tęczówki w celu uzyskania unikalnego jej kodu, podlegającego późniejszej analizie z zastosowaniem różnorodnych kryteriów, decydujących o identyfikacji i pozytywnym lub negatywnym wyniku weryfikacji tożsamości danej osoby.
+\end{itemize}
+	Różnorodność metod segmentacji obszaru tęczówki oraz ekstrakcji cech i porównywania kodów została opisana w dalszych częściach pracy. Nie pokrywa ona oczywiście wszystkich metod obecnie znanych w tej dziedzinie, jednakże w niniejszej pracy starano się scharakteryzować jak największy ich podzbiór w oparciu o dostępną literaturę.
 
 
+\section{Metody segmentacji obszaru tęczówki oka}
+\label{sec:segmentacja}
 
+Istnieje wiele metod segmentacji tęczówki [5]. Pierwszą efektywnie zrealizowaną w systemie biometrycznym metodę zaproponował John Daugman [6]. Metoda ta, jak wiele innych, późniejszych, opiera się na założeniu, że źrenica oraz tęczówka stanowią okręgi. Stosuje się w niej następujący operator:
+
+Dzięki temu możemy odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a tęczówką oraz między tęczówką a rogówką. Częste jest w niej zastosowanie łuku dla szukania granicy między tęczówką a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]
+	Następną metodą jest metoda Wildes'a[7], która jest odmienna od patentu Daugmana. Jej algorytm jest realizowany w dwóch krokach. Pierwszym jest jest zamiana oryginalnego obrazu na obraz binarny z wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą operatora Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformata Hough'a, dzięki której znajdujemy środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
+	Kolejnym sposobem segmentacji tęczówki jest metoda Camus'a i Wildes'a[8]. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. W tym przypadku funkcją, którą maksymalizujemy jest funkcja: 
+Ta metoda jest skuteczna głównie w przypadku, gdzie granica między tęczówką oraz rogówką oraz między tęczówką a źrenicą jest wyraźna oraz nie ma odblasków lub szumu.
+	Istnieje również metoda Martin-Roche'a, która też jest bardzo podobna do metody Dougmana. Szukamy w niej największej różnicy pięciu kolejnych okręgów za pomocą funkcji:
 
 
 
