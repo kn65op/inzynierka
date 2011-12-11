@@ -770,10 +770,11 @@ while (cvWaitKey(1000) < 0);*/
                     cvReleaseImage(&bin);
                 }
 
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
                 void explode_circle(IplImage *image)
                 {
                     // tworzenie tablicy katow
-                    int angles_count = 36;
+                    int angles_count = 72;
                     int alfa[angles_count];
                     double coss[angles_count];
                     double sins[angles_count];
@@ -783,33 +784,49 @@ while (cvWaitKey(1000) < 0);*/
                         coss[i] = cos(alfa[i]);
                         sins[i] = sin(alfa[i]);
                     }
+                    int p_x, p_y, p_r, act_x, act_y;
                     int r = pupil_r + 10;
                     int dif = 0;
                     int dmin = 0;
                     int lastsum = 0;
                     int x, y;
                     int sum = cvGetReal2D(image, pupil_y, pupil_x);
-                    for (; r < 60; r++) //zwiêkszanie promienia
+                    /*for (int k=-3; k<=3; k = k +3)
                     {
-                        sum = 0;
-                        for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
-                        {
-                            x = pupil_x + sins[j] * r;
-                            y = pupil_y + coss[j] * r;
-                            if (x > 0 && y > 0)
+                        for (int l=-3; l<=3; l = l + 3)
+                        {*/
+                            //act_x = pupil_x + k;
+                            //act_y = pupil_y + l;
+                    act_x = pupil_x;
+                    act_y = pupil_y;
+                            for (; r < 60; r++) //zwiêkszanie promienia
                             {
-                                sum += cvGetReal2D(image, x, y);
+                                sum = 0;
+                                for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
+                                {
+                                    x = act_x + sins[j] * r;
+                                    y = act_y + coss[j] * r;
+                                    if (x > 0 && y > 0)
+                                    {
+                                        sum += cvGetReal2D(image, x, y);
+                                    }
+                                }
+                                dif = sum - lastsum;
+                                qDebug() << r << " " << dif;
+                                if (dif < dmin)
+                                {
+                                    dmin = dif;
+                                    p_r = r;
+                                    p_x = act_x;
+                                    p_y = act_y;
+                                }
+                                lastsum = sum;
                             }
-                        }
-                        dif = sum - lastsum;
-                        qDebug() << r << " " << dif;
-                        if (dif < dmin)
-                        {
-                            dmin = dif;
-                            pupil_r = r;
-                        }
-                        lastsum = sum;
-                    }
+                        /*}
+                    }*/
+                    pupil_x = p_x;
+                    pupil_r = p_r;
+                    pupil_y = p_y;
                     qDebug() << pupil_r;
                 }
 		
