@@ -106,6 +106,7 @@ class Iris {
                             return false;
                         }
                         find_flash_center(image);
+                        explode_circle(image);
 
 			// Obrysowanie znalezionej ï¿½renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
@@ -552,7 +553,7 @@ class Iris {
                 IplImage* find_center_pupil(IplImage *src, int binary_value) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
-                        IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        //IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
@@ -647,7 +648,7 @@ while (cvWaitKey(1000) < 0);*/
 			
 			for(int i=0; i<this->height; i++) {
 				for(int j=0; j<this->width; j++) {
-					if(cvGetReal2D(image, i, j) == 1) {
+                                        if(cvGetReal2D(image, i, j) == 255) {
                                                 if(max_x < j)
                                                     max_x = j;
 
@@ -726,7 +727,7 @@ while (cvWaitKey(1000) < 0);*/
                 void find_flash_center(IplImage *image)
                 {
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
-                    cvSetReal2D(bin, pupil_y, pupil_x, 255);
+                    cvSetReal2D(bin, pupil_y, pupil_x, 1);
                     for (int i = 1; i < 25; i++)
                     {
                         for (int j = 1; j < 25; j++)
@@ -765,8 +766,49 @@ while (cvWaitKey(1000) < 0);*/
                             cvSetReal2D(bin, pupil_y, pupil_x + i, 255);
                         }
                     }
-                    cvShowImage("qweqwE", bin);
-                    while (cvWaitKey(1000) < 0);
+                    find_center(bin);
+                    cvReleaseImage(&bin);
+                }
+
+                void explode_circle(IplImage *image)
+                {
+                    // tworzenie tablicy katow
+                    int angles_count = 36;
+                    int alfa[angles_count];
+                    double coss[angles_count];
+                    double sins[angles_count];
+                    for (int i=0; i < angles_count; i++)
+                    {
+                        alfa[i] = M_PI * i / angles_count;
+                        coss[i] = cos(alfa[i]);
+                        sins[i] = sin(alfa[i]);
+                    }
+                    int r = pupil_r + 10;
+                    int dif = 0;
+                    int dmin = 0;
+                    int lastsum = 0;
+                    int x, y;
+                    int sum = cvGetReal2D(image, pupil_y, pupil_x);
+                    for (; r < 60; r++) //zwiêkszanie promienia
+                    {
+                        sum = 0;
+                        for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
+                        {
+                            x = pupil_x + sins[j] * r;
+                            y = pupil_y + coss[j] * r;
+                            if (x > 0 && y > 0)
+                            {
+                                sum += cvGetReal2D(image, x, y);
+                            }
+                        }
+                        dif = sum - lastsum;
+                        if (dif < dmin)
+                        {
+                            dmin = dif;
+                            pupil_r = r;
+                        }
+                        lastsum = sum;
+                    }
                 }
 		
 };
