@@ -49,7 +49,7 @@ $ x,y $ - położenie piksela na obrazie \\
 $ x_{0}, y_{0} $ - położenie środka okręgu na obrazie \\
 $ r $ - promień okręgu \\
 $ I(x,y) $ - jasność piksela na obrazie\\
-$ G_{\sigma}(r) $ - roksład Gaussa\\
+$ G_{\sigma}(r) $ - rozkład Gaussa\\
 
 Dzięki temu możemy odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a tęczówką oraz między tęczówką a rogówką. Częste jest w niej zastosowanie łuku dla szukania granicy między tęczówką a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]
 
@@ -57,7 +57,7 @@ Następną metodą jest metoda Wildes'a[7], która jest odmienna od patentu Daug
 
 Kolejnym sposobem segmentacji tęczówki jest metoda Camus'a i Wildes'a[8]. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. W tym przypadku funkcją, którą maksymalizujemy jest funkcja \ref{eq:camus_wildes}. 
 \begin{equation}
-\label{eq:daugman}
+\label{eq:camus_wildes}
 C=\sum_{\theta =1}^{n} ((n-1)\left|\left| g_{\theta,r} \right|\right| - \sum_{\varphi=\theta + 1 } ^{n} \left| \left| g_{\theta,r} - g_{\varphi,r} \right| \right| - \frac{I_{\theta,r}}{n}  )
 \end{equation}
 Ta metoda jest skuteczna głównie w przypadku, gdzie granica między tęczówką oraz rogówką oraz między tęczówką a źrenicą jest wyraźna oraz nie ma odblasków lub szumu.
