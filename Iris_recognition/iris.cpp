@@ -789,13 +789,14 @@ while (cvWaitKey(1000) < 0);*/
                         coss[i] = cos(alfa[i]);
                         sins[i] = sin(alfa[i]);
                     }
-                    int p_x, p_y, p_r, act_x, act_y;
+                    int p_x, p_y, p_r, act_x, act_y, tmp_x, tmp_y;
                     int r = pupil_r + 10;
                     int dif = 0;
                     int dmin = 0;
                     int lastsum = 0;
                     int x, y;
                     int sum = cvGetReal2D(image, pupil_y, pupil_x);
+                    IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
                     /*for (int k=-3; k<=3; k = k +3)
                     {
                         for (int l=-3; l<=3; l = l + 3)
@@ -804,7 +805,38 @@ while (cvWaitKey(1000) < 0);*/
                             //act_y = pupil_y + l;
                     act_x = pupil_x;
                     act_y = pupil_y;
-                            for (; r < 60; r++) //zwiêkszanie promienia
+                    //wersja z eksploduj¹cymi promieniami
+                    for (int i = 0; i < angles_count; i++)
+                    {
+                        lastsum = cvGetReal2D(image, act_x, act_y);
+                        dmin = 0;
+                        for (r = pupil_r + 10; r<60; r++)
+                        {
+                            x = act_x + sins[i] * r;
+                            y = act_y + coss[i] * r;
+                            if (x > 0 && y > 0)
+                            {
+                                sum = cvGetReal2D(image, x, y);
+                            }
+                            dif = sum - lastsum;
+                            if (dif < dmin)
+                            {
+                                dmin = dif;
+                                tmp_x = x;
+                                tmp_y = y;
+                            }
+                            lastsum = sum;
+                        }
+                        cvSetReal2D(border_points, 0, i, tmp_x);
+                        cvSetReal2D(border_points, 1, i, tmp_y);
+                    }
+                    CvPoint2D32f center;
+                    float f_r;
+                    cvMinEnclosingCircle(border_points, &center, &f_r);
+                    p_r = f_r;
+                    p_x = center.x;
+                    p_y = center.y;
+                    /*        for (; r < 60; r++) //zwiêkszanie promienia
                             {
                                 sum = 0;
                                 for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
@@ -826,7 +858,7 @@ while (cvWaitKey(1000) < 0);*/
                                     p_y = act_y;
                                 }
                                 lastsum = sum;
-                            }
+                            }*/
                         /*}
                     }*/
                     pupil_x = p_x;
