@@ -97,7 +97,12 @@ class Iris {
                 bool pupil(int binary_value = 110) {
 			// Rozmycie filtrem Gaussa
                         IplImage *image = cvCloneImage(this->gray);
-                        cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
+                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
+
+                        cvDilate(img, img, element);
+                        cvErode(img, img, element);
+                        cvReleaseStructuringElement(&element);
+                     //   cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie �rodka �renicy
                      //   image = this->find_center_pupil(image, binary_value);
