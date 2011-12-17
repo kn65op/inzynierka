@@ -106,7 +106,7 @@ class Iris {
                         {
                             return false;
                         }
-                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
+                        IplConvKernel* element = cvCreateStructuringElementEx(3, 3, 1, 1, CV_SHAPE_ELLIPSE, NULL);
 
                         cvDilate(image, image, element);
                         cvErode(image, image, element);
@@ -783,7 +783,7 @@ while (cvWaitKey(1000) < 0);*/
                 {
                     // tworzenie tablicy katow
                     int angles_count = 72;
-                    int alfa[angles_count];
+                    double alfa[angles_count];
                     double coss[angles_count];
                     double sins[angles_count];
                     for (int i=0; i < angles_count; i++)
@@ -844,8 +844,8 @@ while (cvWaitKey(1000) < 0);*/
                 void explode_rs(IplImage *image)
                 {
                     // tworzenie tablicy katow
-                    int angles_count = 72;
-                    int alfa[angles_count];
+                    int angles_count = 36;
+                    double alfa[angles_count];
                     double coss[angles_count];
                     double sins[angles_count];
                     for (int i=0; i < angles_count; i++)
@@ -853,7 +853,7 @@ while (cvWaitKey(1000) < 0);*/
                         alfa[i] = (2 * M_PI) * i / angles_count;
                         coss[i] = cos(alfa[i]);
                         sins[i] = sin(alfa[i]);
-                        qDebug() << i << " " << sin(alfa[i]) << " " << cos(alfa[i]) << " " << ((2 * M_PI) * i / angles_count);
+                     //   qDebug() << i << " " << sin(alfa[i]) << " " << cos(alfa[i]) << " " << ((2 * M_PI) * i / angles_count);
                     }
                     int act_x, act_y, tmp_x, tmp_y;
                     int r = pupil_r + 10;
@@ -909,7 +909,13 @@ while (cvWaitKey(1000) < 0);*/
                         //qDebug() << i << " " << tmp_x << " " << tmp_y;
                         //cvSetReal2D(border_points, 0, i, tmp_x);
                         //cvSetReal2D(border_points, 1, i, tmp_y);
-                        cvSetReal2D(border_points, tmp_y, tmp_x, 255);
+                        if (cvGetReal2D(image, tmp_y-2, tmp_x-2) < 50 ||
+                            cvGetReal2D(image, tmp_y+2, tmp_x-2) < 50 ||
+                            cvGetReal2D(image, tmp_y-2, tmp_x+2) < 50 ||
+                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 50)
+                        {
+                                cvSetReal2D(border_points, tmp_y, tmp_x, 255);
+                        }
                     }
                     cvShowImage("w", border_points);
                     while (cvWaitKey(100) < 0);
