@@ -106,11 +106,11 @@ class Iris {
                         {
                             return false;
                         }
-                        IplConvKernel* element = cvCreateStructuringElementEx(3, 3, 1, 1, CV_SHAPE_ELLIPSE, NULL);
+                        /*IplConvKernel* element = cvCreateStructuringElementEx(3, 3, 1, 1, CV_SHAPE_ELLIPSE, NULL);
 
                         cvDilate(image, image, element);
                         cvErode(image, image, element);
-                        cvReleaseStructuringElement(&element);
+                        cvReleaseStructuringElement(&element);*/
                         find_flash_center(image);
                         explode_rs(image);
                         //explode_circle(image);
@@ -912,7 +912,11 @@ while (cvWaitKey(1000) < 0);*/
                         if (cvGetReal2D(image, tmp_y-2, tmp_x-2) < 50 ||
                             cvGetReal2D(image, tmp_y+2, tmp_x-2) < 50 ||
                             cvGetReal2D(image, tmp_y-2, tmp_x+2) < 50 ||
-                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 50)
+                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 50)/*
+                        if (cvGetReal2D(image, tmp_y-2, tmp_x-2) < 100 &&
+                            cvGetReal2D(image, tmp_y+2, tmp_x-2) < 100 &&
+                            cvGetReal2D(image, tmp_y-2, tmp_x+2) < 100 &&
+                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 100)*/
                         {
                                 cvSetReal2D(border_points, tmp_y, tmp_x, 255);
                         }
