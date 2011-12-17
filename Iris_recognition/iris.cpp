@@ -792,14 +792,14 @@ while (cvWaitKey(1000) < 0);*/
                         coss[i] = cos(alfa[i]);
                         sins[i] = sin(alfa[i]);
                     }
-                    int p_x, p_y, p_r, act_x, act_y, tmp_x, tmp_y;
+                    int p_x, p_y, p_r, act_x, act_y;
                     int r = pupil_r + 15;
                     int dif = 0;
                     int dmin = 0;
                     int lastsum = angles_count * 300;
                     int x, y;
                     int sum = cvGetReal2D(image, pupil_y, pupil_x);
-                    IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
+                    //IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
                     for (int k=-3; k<=3; k = k +3)
                     {
                         for (int l=-3; l<=3; l = l + 3)
@@ -855,7 +855,7 @@ while (cvWaitKey(1000) < 0);*/
                         sins[i] = sin(alfa[i]);
                         qDebug() << i << " " << sin(alfa[i]) << " " << cos(alfa[i]) << " " << ((2 * M_PI) * i / angles_count);
                     }
-                    int p_x, p_y, p_r, act_x, act_y, tmp_x, tmp_y;
+                    int act_x, act_y, tmp_x, tmp_y;
                     int r = pupil_r + 10;
                     int dif = 0;
                     int dmin = 0;
@@ -911,8 +911,6 @@ while (cvWaitKey(1000) < 0);*/
                         //cvSetReal2D(border_points, 1, i, tmp_y);
                         cvSetReal2D(border_points, tmp_y, tmp_x, 255);
                     }
-                    CvPoint2D32f center;
-                    float f_r;
                     cvShowImage("w", border_points);
                     while (cvWaitKey(100) < 0);
                     find_center(border_points);
@@ -962,12 +960,107 @@ while (cvWaitKey(1000) < 0);*/
                             cvSetReal2D(border_points, i, j, 0);
                         }
                     }*/
-                    int min = pupil_x < pupil_y ? pupil_x : pupil_y;
-                    int q = min < 60 ? min : 60;
-                    qDebug() << pupil_x << " " << pupil_y;
-                    cvSetImageROI(image, cvRect(pupil_x - q, pupil_y - q, 2*q, 2*q));
-                    IplImage *border_points = cvCreateImage(cvSize(2*q, 2*q), image->depth, 1);
-                    IplImage *border_points2 = cvCreateImage(cvSize(2*q, 2*q), image->depth, 1);
+                    int serial = 10;
+                    int threshold = 50;
+                    int x = pupil_x - 15;
+                    int y = pupil_y - 15;
+                    int count = 0;
+                    bool no_found = true;
+                    int minx, miny, maxx, maxy;
+                    while (--x > 0 && no_found)
+                    {
+                        if (cvGetReal2D(image, x, pupil_y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                minx = x;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (!x)
+                    {
+                        minx = 0;
+                    }
+                    x = pupil_x + 15;
+                    no_found = true;
+                    count = 0;
+                    while (++x < image->height && no_found)
+                    {
+                        if (cvGetReal2D(image, x, pupil_y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                maxx = x;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (x == image->height)
+                    {
+                        maxx = image->height;
+                    }
+                    no_found = true;
+                    y = pupil_y - 15;
+                    count = 0;
+                    while (--y > 0 && no_found)
+                    {
+                        if (cvGetReal2D(image, pupil_x, y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                miny = y;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (!y)
+                    {
+                        miny = 0;
+                    }
+                    no_found = true;
+                    y = pupil_y + 15;
+                    count = 0;
+                    while (++y < image->width && no_found)
+                    {
+                        if (cvGetReal2D(image, pupil_x, y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                maxy = y;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (y == image->width)
+                    {
+                        maxy = image->width;
+                    }
+                    int add = 20;
+                    if (minx > add) minx -= add;
+                    if (miny > add) miny -= add;
+                    if (maxx < image->height + add) maxx += add;
+                    if (maxy < image->width + add) maxy += add;
+                    qDebug() << minx << " " << maxx << " " << miny << " " << maxy;
+                    cvSetImageROI(image, cvRect(minx, miny, maxx-minx, maxy-miny));
+                    IplImage *border_points = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);
+                    IplImage *border_points2 = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);
                     //cvSetImageROI(border_points, cvRect(pupil_x - q, pupil_y -q, 2*q, 2*q));
                     cvThreshold(image, border_points, 50, 1, CV_THRESH_BINARY_INV);
                     //border_points = Image::clearborders(border_points);
