@@ -97,11 +97,7 @@ class Iris {
                 bool pupil(int binary_value = 110) {
 			// Rozmycie filtrem Gaussa
                         IplImage *image = cvCloneImage(this->gray);
-                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
 
-                        cvDilate(img, img, element);
-                        cvErode(img, img, element);
-                        cvReleaseStructuringElement(&element);
                      //   cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie �rodka �renicy
@@ -110,11 +106,15 @@ class Iris {
                         {
                             return false;
                         }
-                        qDebug() << "Q";
+                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
+
+                        cvDilate(image, image, element);
+                        cvErode(image, image, element);
+                        cvReleaseStructuringElement(&element);
                         find_flash_center(image);
-                        //explode_rs(image);
+                        explode_rs(image);
                         //explode_circle(image);
-                        find_pupil_by(image);
+                        //find_pupil_by(image);
 
 			// Obrysowanie znalezionej �renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
@@ -844,7 +844,7 @@ while (cvWaitKey(1000) < 0);*/
                 void explode_rs(IplImage *image)
                 {
                     // tworzenie tablicy katow
-                    int angles_count = 36;
+                    int angles_count = 72;
                     int alfa[angles_count];
                     double coss[angles_count];
                     double sins[angles_count];
