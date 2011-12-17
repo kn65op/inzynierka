@@ -262,7 +262,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
                 cvDestroyAllWindows();
                 //Image::showImage(tmp.img, "1. Find pupil");
                 Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
-                while (cvWaitKey(1000) < 0);
+                while (cvWaitKey(100) < 0);
                 cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
                 /*tmp.iris();
                 cvDestroyAllWindows();

@@ -111,7 +111,8 @@ class Iris {
                             return false;
                         }
                         find_flash_center(image);
-                        explode_circle(image);
+                        explode_rs(image);
+                        //explode_circle(image);
 
 			// Obrysowanie znalezionej ï¿½renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
@@ -785,9 +786,72 @@ while (cvWaitKey(1000) < 0);*/
                     double sins[angles_count];
                     for (int i=0; i < angles_count; i++)
                     {
-                        alfa[i] = M_PI * i / angles_count;
+                        alfa[i] = (2 * M_PI) * i / angles_count;
                         coss[i] = cos(alfa[i]);
                         sins[i] = sin(alfa[i]);
+                    }
+                    int p_x, p_y, p_r, act_x, act_y, tmp_x, tmp_y;
+                    int r = pupil_r + 15;
+                    int dif = 0;
+                    int dmin = 0;
+                    int lastsum = angles_count * 300;
+                    int x, y;
+                    int sum = cvGetReal2D(image, pupil_y, pupil_x);
+                    IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
+                    for (int k=-3; k<=3; k = k +3)
+                    {
+                        for (int l=-3; l<=3; l = l + 3)
+                        {
+                            act_x = pupil_x + k;
+                            act_y = pupil_y + l;
+                            lastsum = angles_count * 300;
+                    //act_x = pupil_x;
+                    //act_y = pupil_y;
+                            for (; r < 60; r++) //zwiêkszanie promienia
+                            {
+                                sum = 0;
+                                for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
+                                {
+                                    x = act_x + sins[j] * r;
+                                    y = act_y + coss[j] * r;
+                                    if (x > 0 && y > 0)
+                                    {
+                                        sum += cvGetReal2D(image, x, y);
+                                    }
+                                }
+                                dif = sum - lastsum;
+                                qDebug() << r << " " << dif;
+                                if (dif > dmin)
+                                {
+                                    dmin = dif;
+                                    p_r = r;
+                                    p_x = act_x;
+                                    p_y = act_y;
+                                }
+                                lastsum = sum;
+                            }
+                        }
+                    }
+                    pupil_x = p_x;
+                    pupil_r = p_r;
+                    pupil_y = p_y;
+                    qDebug() << pupil_r;
+                }
+
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
+                void explode_rs(IplImage *image)
+                {
+                    // tworzenie tablicy katow
+                    int angles_count = 36;
+                    int alfa[angles_count];
+                    double coss[angles_count];
+                    double sins[angles_count];
+                    for (int i=0; i < angles_count; i++)
+                    {
+                        alfa[i] = (2 * M_PI) * i / angles_count;
+                        coss[i] = cos(alfa[i]);
+                        sins[i] = sin(alfa[i]);
+                        qDebug() << i << " " << sin(alfa[i]) << " " << cos(alfa[i]) << " " << M_2_PI * i / angles_count;
                     }
                     int p_x, p_y, p_r, act_x, act_y, tmp_x, tmp_y;
                     int r = pupil_r + 10;
@@ -796,7 +860,17 @@ while (cvWaitKey(1000) < 0);*/
                     int lastsum = 0;
                     int x, y;
                     int sum = cvGetReal2D(image, pupil_y, pupil_x);
-                    IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
+                    //IplImage *border_points = cvCreateImage(cvSize(angles_count, 2), 1, 1);
+                    IplImage *border_points = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    for (int i=0; i<border_points->height; i++)
+                    {
+                        for (int j=0; j<border_points->width; j++)
+                        {
+                            cvSetReal2D(border_points, i, j, 0);
+                        }
+                    }
+                    cvShowImage("w", border_points);
+                    while (cvWaitKey(100) < 0);
                     /*for (int k=-3; k<=3; k = k +3)
                     {
                         for (int l=-3; l<=3; l = l + 3)
@@ -806,20 +880,23 @@ while (cvWaitKey(1000) < 0);*/
                     act_x = pupil_x;
                     act_y = pupil_y;
                     //wersja z eksploduj¹cymi promieniami
-                    for (int i = 0; i < angles_count; i++)
+                    for (int i = 0; i < angles_count; i++) //dla ka¿dego k¹ta
                     {
-                        lastsum = cvGetReal2D(image, act_x, act_y);
+                        x = act_x + sins[i] * (pupil_r + 9);
+                        y = act_y + coss[i] * (pupil_r + 9);
+                        lastsum = cvGetReal2D(image, x, y);
                         dmin = 0;
-                        for (r = pupil_r + 10; r<60; r++)
+                        for (r = pupil_r + 10; r<60; r++) //zwiêkszanie promienia
                         {
                             x = act_x + sins[i] * r;
                             y = act_y + coss[i] * r;
+                          //  qDebug() << sins[i] << ": " << x << " " << coss[i] << ": " << y ;
                             if (x > 0 && y > 0)
                             {
                                 sum = cvGetReal2D(image, x, y);
                             }
                             dif = sum - lastsum;
-                            if (dif < dmin)
+                            if (dif > dmin)
                             {
                                 dmin = dif;
                                 tmp_x = x;
@@ -827,15 +904,20 @@ while (cvWaitKey(1000) < 0);*/
                             }
                             lastsum = sum;
                         }
-                        cvSetReal2D(border_points, 0, i, tmp_x);
-                        cvSetReal2D(border_points, 1, i, tmp_y);
+                        //qDebug() << i << " " << tmp_x << " " << tmp_y;
+                        //cvSetReal2D(border_points, 0, i, tmp_x);
+                        //cvSetReal2D(border_points, 1, i, tmp_y);
+                        cvSetReal2D(border_points, tmp_y, tmp_x, 255);
                     }
                     CvPoint2D32f center;
                     float f_r;
-                    cvMinEnclosingCircle(border_points, &center, &f_r);
-                    p_r = f_r;
+                    cvShowImage("w", border_points);
+                    while (cvWaitKey(100) < 0);
+                    find_center(border_points);
+                    //cvMinEnclosingCircle(border_points, &center, &f_r);
+                    /*p_r = f_r;
                     p_x = center.x;
-                    p_y = center.y;
+                    p_y = center.y;*/
                     /*        for (; r < 60; r++) //zwiêkszanie promienia
                             {
                                 sum = 0;
@@ -861,9 +943,9 @@ while (cvWaitKey(1000) < 0);*/
                             }*/
                         /*}
                     }*/
-                    pupil_x = p_x;
+                    /*pupil_x = p_x;
                     pupil_r = p_r;
-                    pupil_y = p_y;
+                    pupil_y = p_y;*/
                     qDebug() << pupil_r;
                 }
 		
