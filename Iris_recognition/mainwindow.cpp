@@ -264,10 +264,10 @@ void MainWindow::on_actionTestuj_folder_triggered()
                 Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
                 while (cvWaitKey(100) < 0);
                 cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
-                /*tmp.iris();
+                tmp.iris();
                 cvDestroyAllWindows();
                 Image::showImage(tmp.img, "2. Find iris");
-                while (cvWaitKey(1000) < 0);*/
+                while (cvWaitKey(1000) < 0);
             }
             else
             {

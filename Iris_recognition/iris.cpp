@@ -871,8 +871,8 @@ while (cvWaitKey(1000) < 0);*/
                             cvSetReal2D(border_points, i, j, 0);
                         }
                     }
-                    cvShowImage("w", border_points);
-                    while (cvWaitKey(100) < 0);
+                    //cvShowImage("w", border_points);
+                    //while (cvWaitKey(100) < 0);
                     /*for (int k=-3; k<=3; k = k +3)
                     {
                         for (int l=-3; l<=3; l = l + 3)
@@ -921,42 +921,12 @@ while (cvWaitKey(1000) < 0);*/
                                 cvSetReal2D(border_points, tmp_y, tmp_x, 255);
                         }
                     }
-                    cvShowImage("w", border_points);
-                    while (cvWaitKey(100) < 0);
+                    //cvShowImage("w", border_points);
+                    //while (cvWaitKey(100) < 0);
                     find_center(border_points);
                     //cvMinEnclosingCircle(border_points, &center, &f_r);
-                    /*p_r = f_r;
-                    p_x = center.x;
-                    p_y = center.y;*/
-                    /*        for (; r < 60; r++) //zwiêkszanie promienia
-                            {
-                                sum = 0;
-                                for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
-                                {
-                                    x = act_x + sins[j] * r;
-                                    y = act_y + coss[j] * r;
-                                    if (x > 0 && y > 0)
-                                    {
-                                        sum += cvGetReal2D(image, x, y);
-                                    }
-                                }
-                                dif = sum - lastsum;
-                                qDebug() << r << " " << dif;
-                                if (dif < dmin)
-                                {
-                                    dmin = dif;
-                                    p_r = r;
-                                    p_x = act_x;
-                                    p_y = act_y;
-                                }
-                                lastsum = sum;
-                            }*/
-                        /*}
-                    }*/
-                    /*pupil_x = p_x;
-                    pupil_r = p_r;
-                    pupil_y = p_y;*/
-                    qDebug() << pupil_r;
+
+                    //qDebug() << pupil_r;
                 }
 
                 /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
