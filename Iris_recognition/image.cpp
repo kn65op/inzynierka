@@ -156,7 +156,8 @@ class Image {
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
                         int size = (int) floor(1.5/s);
-                        int k = 1, number = 2*size+1;
+                        int k = 1, number = 2*size+1; //CHANGE
+                        //int k = 10, number = 2*size+1; //CHANGE
                         float real[number][number];
                         float imag[number][number];
                         float sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;

@@ -238,10 +238,12 @@ class Iris {
 		cvCopy(tmp, right);
 		
 		cvResetImageROI(tmp);
-		cvReleaseImage(&tmp);
+                cvReleaseImage(&tmp);
 		
-                double sigma = 0.31;
-		double freq  = 0.15;
+                double sigma = 0.31; //CHANGE
+                //double sigma = 11; //CHANGE
+                double freq  = 0.15; //CHANGE
+                //double freq  = 10 / M_PI; //CHANGE
 		double wr, wl;
 		double p = 0;
 		
@@ -290,7 +292,7 @@ class Iris {
 		}
 		
                 this->hamming = (double) sum/size;
-                //qDebug() << this->hamming;
+                qDebug() << this->hamming;
                 return this->hamming;
 		
 /*                if(this->hamming < HAMMING)

@@ -13,6 +13,7 @@ class Database
         Database();
         bool insertUser(QString, QString, QString, QString, QString);
         QSqlQuery *searchUsers();
+        void createDB();
         QSqlDatabase db;
         QSqlQueryModel model;
         ~Database();

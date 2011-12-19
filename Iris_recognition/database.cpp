@@ -10,8 +10,13 @@ Database::Database() {
     db.setHostName("localhost");
     db.setDatabaseName("iris.sqlite3");
     if (!db.open()) qDebug() << "Failed to connect to mysql" ; //TODO: dodaæ informacjê u¿ytkownikowi, ¿e jest b³¹d z po³¹czeniem
+}
+
+void Database::createDB()
+{
     //Przy pierwszym uruchomieniu, aby utworzyæ bazê nale¿y odkomentowaæ poprzedni¹ linijkê
-    //db.exec("CREATE TABLE users (id integer primary key autoincrement, name TEXT, surname TEXT, groupa TEXT, faculty TEXT, iris_code TEXT);");
+    //
+    db.exec("CREATE TABLE users (id integer primary key autoincrement, name TEXT, surname TEXT, groupa TEXT, faculty TEXT, iris_code TEXT);");
 }
 
 bool Database::insertUser(QString name, QString surname, QString group, QString faculty, QString iris_code) {

@@ -246,6 +246,65 @@ void MainWindow::timerEvent(QTimerEvent *)
 
 void MainWindow::on_actionTestuj_folder_triggered()
 {
+    db.createDB();
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
+    QStringList images_extensions;
+    images_extensions << "*.jpg" << "*.bmp";
+    QDir dir(filepath);
+    dir.setFilter(QDir::Files);
+    QFileInfoList list = dir.entryInfoList(images_extensions);
+    for (int i=0; i<list.size(); i++)
+    {
+        Iris tmp;
+        tmp.init(list.at(i).absoluteFilePath());
+        try
+        {
+            if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
+            {
+                //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "1. Find pupil");
+                //Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
+                //while (cvWaitKey(100) < 0);
+
+                //zapisanie obrazu
+                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+
+                //wyszukiwanie granic têczówki
+                tmp.iris();
+
+                //wyœwietlenie granic têczówki oraz Ÿrenicy
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "2. Find iris");
+                //while (cvWaitKey(1000) < 0);
+
+                //Tworzenie maski têczówki
+                tmp.masking();
+
+                //Zapisanie do bazy
+                QStringList slist = list.at(i).fileName().split("-");
+                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());
+
+            }
+            else
+            {
+                QMessageBox box;
+                box.setText("Dla zdjecia nie znaleziono zrenicy");
+                box.exec();
+            }
+        }
+        catch (...)
+        {
+
+        }
+
+        //Tworzenie kodów i porównywanie ich
+        //qDebug() << list.at(i).absoluteFilePath();
+    }
+}
+
+void MainWindow::on_actionTestuj_baz_triggered()
+{
     //tmp
     std::string tmp_file_name = "wynik.csv";
     QSqlQuery *query = db.searchUsers();
@@ -337,10 +396,4 @@ void MainWindow::on_actionTestuj_folder_triggered()
     }
 
     file_out.clear();
-}
-
-void MainWindow::on_actionTestuj_baz_triggered()
-{
-    //QSqlQuery query = db.searchUsers();
-    //query.
 }
