@@ -173,7 +173,7 @@ class Image {
                                         B = -(x - xy0)*sin(theta) + (y - xy0)*cos(theta);
                                         B *= B;
 
-                                        gausian = k * exp(-M_PI * (s*s) * (A + B)); //rownanie 3
+                                        gausian = k * exp(-M_PI * A * (s*s) + s * s * B); //rownanie 3
                                         rest_real = exp(-M_PI * pow(f/s, 2)) * cos(w);
                                         rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(w);
 
