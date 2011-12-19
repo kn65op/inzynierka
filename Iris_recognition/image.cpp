@@ -295,7 +295,7 @@ class Image {
                     // Iteracyjne zwi�kszanie promienia
                     for(int radius=rp; radius < limit; radius += 8) {
                         cnt = 0;
-                        qDebug() << radius;
+                       // qDebug() << radius;
                         for(int i=0; i < number; i++) {
                             array_x[i] = radius * cos(theta[i]);
                             array_y[i] = radius * sin(theta[i]);

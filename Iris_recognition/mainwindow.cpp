@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <sstream>
 #include <QDir>
+#include <fstream>
 
 Camera MainWindow::c = Camera(0);
 
@@ -245,6 +246,18 @@ void MainWindow::timerEvent(QTimerEvent *)
 
 void MainWindow::on_actionTestuj_folder_triggered()
 {
+    //tmp
+    std::string tmp_file_name = "wynik.csv";
+    QSqlQuery *query = db.searchUsers();
+    ofstream file_out(tmp_file_name.c_str(), ios::trunc);
+    while (query->next())
+    {
+        file_out << query->value(2).toString().toStdString() << " " << query->value(3).toString().toStdString() << ";";
+    }
+    file_out << "\n";
+    delete query;
+    //tmp
+
     filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
     QStringList images_extensions;
     images_extensions << "*.jpg" << "*.bmp";
@@ -280,8 +293,32 @@ void MainWindow::on_actionTestuj_folder_triggered()
                 tmp.masking();
 
                 //Zapisanie do bazy
-                QStringList slist = list.at(i).fileName().split("-");
-                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());
+                /*QStringList slist = list.at(i).fileName().split("-");
+                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());*/
+
+                //tmp porównanie z tym co jest w bazie
+                QSqlQuery *query = db.searchUsers();
+
+                while (query->next())
+                {
+                    file_out << tmp.compare(query->value(1).toString()) << ";";
+/*                    if (tmp.compare(query->value(1).toString()))
+                    {
+                        file_out << "1;";
+                        /*QMessageBox box;
+                        box.setText("Osoba " + list.at(i).fileName() + " jest podobna do osoby z id " + query->value(0).toString());
+                        box.exec();///
+                    }
+                    else
+                    {
+                        file_out << "0;";
+                        /*QMessageBox box;
+                        box.setText("Osoba " + list.at(i).fileName() + " NIE jest podobna do osoby z id " + query->value(0).toString());
+                        box.exec();///
+                    }
+  */              }
+                file_out << "\n";
+                delete query;
             }
             else
             {
@@ -298,4 +335,12 @@ void MainWindow::on_actionTestuj_folder_triggered()
         //Tworzenie kodów i porównywanie ich
         //qDebug() << list.at(i).absoluteFilePath();
     }
+
+    file_out.clear();
+}
+
+void MainWindow::on_actionTestuj_baz_triggered()
+{
+    //QSqlQuery query = db.searchUsers();
+    //query.
 }

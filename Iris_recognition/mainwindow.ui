@@ -325,6 +325,7 @@ p, li { white-space: pre-wrap; }
      <string>Plik</string>
     </property>
     <addaction name="actionTestuj_folder"/>
+    <addaction name="actionTestuj_baz"/>
    </widget>
    <addaction name="menuPlik"/>
   </widget>
@@ -343,6 +344,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionTestuj_baz">
+   <property name="text">
+    <string>Testuj bazę</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>

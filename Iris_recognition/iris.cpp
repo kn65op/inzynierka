@@ -271,7 +271,7 @@ class Iris {
             return str;
         }
 	
-        bool compare(QString code) {
+        double compare(QString code) {
                 int    size = 2048;
                 bool   res;
                 int    k = 0;
@@ -290,14 +290,16 @@ class Iris {
 		}
 		
                 this->hamming = (double) sum/size;
+                //qDebug() << this->hamming;
+                return this->hamming;
 		
-                if(this->hamming < HAMMING)
+/*                if(this->hamming < HAMMING)
 			res = true;
 		else
 			res = false;
 
-		return res;	
-        }
+                return res;
+*/        }
 
         IplImage* getMaskImage() {
             IplImage *result  = cvCreateImage(cvSize(256*2, 8*2), IPL_DEPTH_8U, 1);
@@ -822,7 +824,7 @@ while (cvWaitKey(1000) < 0);*/
                                     }
                                 }
                                 dif = sum - lastsum;
-                                qDebug() << r << " " << dif;
+                                //qDebug() << r << " " << dif;
                                 if (dif > dmin)
                                 {
                                     dmin = dif;
@@ -837,7 +839,7 @@ while (cvWaitKey(1000) < 0);*/
                     pupil_x = p_x;
                     pupil_r = p_r;
                     pupil_y = p_y;
-                    qDebug() << pupil_r;
+                  //  qDebug() << pupil_r;
                 }
 
                 /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
@@ -1037,7 +1039,7 @@ while (cvWaitKey(1000) < 0);*/
                     if (miny > add) miny -= add;
                     if (maxx < image->height + add) maxx += add;
                     if (maxy < image->width + add) maxy += add;
-                    qDebug() << minx << " " << maxx << " " << miny << " " << maxy;
+                   // qDebug() << minx << " " << maxx << " " << miny << " " << maxy;
                     cvSetImageROI(image, cvRect(minx, miny, maxx-minx, maxy-miny));
                     IplImage *border_points = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);
                     IplImage *border_points2 = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);

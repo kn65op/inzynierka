@@ -53,6 +53,7 @@ private slots:
     void slot_netwManagerFinished(QNetworkReply *reply);
     void timerEvent(QTimerEvent *);
     void on_actionTestuj_folder_triggered();
+    void on_actionTestuj_baz_triggered();
 };
 
 #endif // MAINWINDOW_H

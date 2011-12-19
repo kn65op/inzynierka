@@ -33,13 +33,13 @@ bool Database::insertUser(QString name, QString surname, QString group, QString 
     }
 }
 
-QSqlQuery searchUsers() {
-    QSqlQuery query("SELECT `id`, `iris_code` FROM users");
-    query.exec();
+QSqlQuery * Database::searchUsers() {
+    QSqlQuery *query = new QSqlQuery("SELECT `id`, `iris_code`, `name`, `surname` FROM users");
+    query->exec();
 
-    if( query.lastError().isValid()) {
-        qDebug() << query.lastError().text();
-        qDebug() << query.lastQuery();
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
     }
 
     return query;
