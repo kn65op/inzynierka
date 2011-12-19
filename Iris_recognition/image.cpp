@@ -150,29 +150,35 @@ class Image {
                         return result;
                 }
 
-                static IplImage** gabor_filter(IplImage *src, double s, double f, double w, double p) {
+                static IplImage** gabor_filter(IplImage *src, int size, double s, double f, double w, double p, double theta) {
                         IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
-                        int size = (int) floor(1.5/s);
-                        int k = 1, number = 2*size+1; //CHANGE
-                        //int k = 10, number = 2*size+1; //CHANGE
+                        //int k = 1, number = 2*size+1; //CHANGE
+                        int k = 10, number = size+1; //CHANGE
+                        int xy0 = (int)size/2;
                         float real[number][number];
                         float imag[number][number];
                         float sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
+                        double A, B;
 
-                        for(int x=-size; x <= size; x++) {
-                                for(int y=-size; y <= size; y++) {
-                                        sinusoid_real = cos(2*M_PI * f * (cos(w)*x + sin(w)*y) + p);
-                                        sinusoid_imag = sin(2*M_PI * f * (cos(w)*x + sin(w)*y) + p);
+                        for(int x=-xy0; x <= xy0; x++) {
+                                for(int y=-xy0; y <= xy0; y++) {
+                                        sinusoid_real = cos(2*M_PI * f * (cos(theta)*x + sin(theta)*y) + p);
+                                        sinusoid_imag = sin(2*M_PI * f * (cos(theta)*x + sin(theta)*y) + p);
 
-                                        gausian = k * exp(-M_PI * (s*s) * (x*x + y*y));
-                                        rest_real = exp(-M_PI * pow(f/s, 2)) * cos(p);
-                                        rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(p);
+                                        A = (x - xy0)*cos(theta) + (y - xy0)*sin(theta);
+                                        A *= A;
+                                        B = -(x - xy0)*sin(theta) + (y - xy0)*cos(theta);
+                                        B *= B;
 
-                                        real[size+x][size+y] = gausian * (sinusoid_real - rest_real);
-                                        imag[size+x][size+y] = gausian * (sinusoid_imag - rest_imag);
+                                        gausian = k * exp(-M_PI * (s*s) * (A + B)); //rownanie 3
+                                        rest_real = exp(-M_PI * pow(f/s, 2)) * cos(w);
+                                        rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(w);
+
+                                        real[xy0+x][xy0+y] = gausian * (sinusoid_real - rest_real);
+                                        imag[xy0+x][xy0+y] = gausian * (sinusoid_imag - rest_imag);
                                 }
                         }
 

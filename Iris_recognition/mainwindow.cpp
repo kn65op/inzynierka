@@ -194,7 +194,9 @@ void MainWindow::on_makeMaskButton_clicked()
         return;
     }
     eye.masking();
-    Image::showBinaryImage(eye.getMaskImage(), "4. Mask");
+    IplImage * bin = eye.getMaskImage();
+    Image::showBinaryImage(bin, "4. Mask");
+    cvReleaseImage(&bin);
 }
 
 void MainWindow::on_searchButton_clicked()
@@ -247,7 +249,7 @@ void MainWindow::timerEvent(QTimerEvent *)
 void MainWindow::on_actionTestuj_folder_triggered()
 {
     db.createDB();
-    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do dodania do bazy"), ".");
     QStringList images_extensions;
     images_extensions << "*.jpg" << "*.bmp";
     QDir dir(filepath);
@@ -301,6 +303,9 @@ void MainWindow::on_actionTestuj_folder_triggered()
         //Tworzenie kodów i porównywanie ich
         //qDebug() << list.at(i).absoluteFilePath();
     }
+    QMessageBox box;
+    box.setText("Koniec");
+    box.exec();
 }
 
 void MainWindow::on_actionTestuj_baz_triggered()
@@ -309,6 +314,7 @@ void MainWindow::on_actionTestuj_baz_triggered()
     std::string tmp_file_name = "wynik.csv";
     QSqlQuery *query = db.searchUsers();
     ofstream file_out(tmp_file_name.c_str(), ios::trunc);
+    file_out << ";";
     while (query->next())
     {
         file_out << query->value(2).toString().toStdString() << " " << query->value(3).toString().toStdString() << ";";
@@ -317,7 +323,7 @@ void MainWindow::on_actionTestuj_baz_triggered()
     delete query;
     //tmp
 
-    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do testowania bazy"), ".");
     QStringList images_extensions;
     images_extensions << "*.jpg" << "*.bmp";
     QDir dir(filepath);
@@ -357,6 +363,7 @@ void MainWindow::on_actionTestuj_baz_triggered()
 
                 //tmp porównanie z tym co jest w bazie
                 QSqlQuery *query = db.searchUsers();
+                file_out << list.at(i).fileName().toStdString() << ";";
 
                 while (query->next())
                 {
@@ -395,5 +402,8 @@ void MainWindow::on_actionTestuj_baz_triggered()
         //qDebug() << list.at(i).absoluteFilePath();
     }
 
-    file_out.clear();
+    file_out.close();
+    QMessageBox box;
+    box.setText("Koniec");
+    box.exec();
 }

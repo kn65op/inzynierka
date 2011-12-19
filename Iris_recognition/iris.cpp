@@ -240,23 +240,28 @@ class Iris {
 		cvResetImageROI(tmp);
                 cvReleaseImage(&tmp);
 		
-                double sigma = 0.31; //CHANGE
+                int size = 11; //CHANGE
                 //double sigma = 11; //CHANGE
-                double freq  = 0.15; //CHANGE
-                //double freq  = 10 / M_PI; //CHANGE
+                //double freq  = 0.15; //CHANGE
+                double freq  = 10 / M_PI; //CHANGE
 		double wr, wl;
 		double p = 0;
+                double ab = 0.525;
+                double theta = M_PI / 4;
 		
 
 		for(int k=1; k <= 8; k++) {
 			wr = -0.4 * M_PI  + (k-1) * 0.1 * M_PI;
 			wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
 			
-			gabor_right = Image::gabor_filter(right, sigma, freq, wr, p);
-			gabor_left  = Image::gabor_filter(left,  sigma, freq, wl, p);
+                        gabor_right = Image::gabor_filter(right, size, ab, freq, wr, p, theta);
+                        gabor_left  = Image::gabor_filter(left,  size, ab, freq, wl, p, theta);
                         this->make_mask(gabor_left, gabor_right, k);
+                        cvReleaseImage(&(gabor_right[0]));
+                        cvReleaseImage(&(gabor_right[1]));
                 }
-
+                cvReleaseImage(&right);
+                cvReleaseImage(&left);
 	}
 
         QString get_mask() {
@@ -279,19 +284,28 @@ class Iris {
                 int    k = 0;
                 int    c[size];
                 int    sum = 0;
-		
-		for(int i=0; i < 8; i++) {
-                        for(int j=0; j < 256; j++) {
-                                c[k] = this->maska[i][j] ^ code.at(k).digitValue();
-                                k++;
-                        }
-		}
+                int    minsum = 2048;
+                int rot;
+                for (rot = 0; rot < 16; rot += 2) //rotacja
+                {
+                    sum = 0;
+                    for(int i=0; i < 8; i++) {
+                            for(int j=0; j < 256; j++) {
+                                sum += this->maska[i][j] ^ code.at(k % 2048).digitValue();
+                                    k++;
+                            }
+                    }
+                    if (sum < minsum)
+                    {
+                        minsum = sum;
+                    }
+                }
                 //TODO rotacja
-		for(int i=0; i < size; i++) {
+                /*for(int i=0; i < size; i++) {
 			sum += c[i];	
-		}
+                }*/
 		
-                this->hamming = (double) sum/size;
+                this->hamming = (double) minsum/size;
                 qDebug() << this->hamming;
                 return this->hamming;
 		
@@ -928,6 +942,7 @@ while (cvWaitKey(1000) < 0);*/
                     //cvShowImage("w", border_points);
                     //while (cvWaitKey(100) < 0);
                     find_center(border_points);
+                    cvReleaseImage(&border_points);
                     //cvMinEnclosingCircle(border_points, &center, &f_r);
 
                     //qDebug() << pupil_r;
