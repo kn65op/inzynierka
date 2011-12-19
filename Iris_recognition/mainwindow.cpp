@@ -257,17 +257,31 @@ void MainWindow::on_actionTestuj_folder_triggered()
         tmp.init(list.at(i).absoluteFilePath());
         try
         {
-            if (tmp.pupil())
+            if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
             {
-                cvDestroyAllWindows();
+                //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
+                //cvDestroyAllWindows();
                 //Image::showImage(tmp.img, "1. Find pupil");
-                Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
-                while (cvWaitKey(100) < 0);
-                cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+                //Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
+                //while (cvWaitKey(100) < 0);
+
+                //zapisanie obrazu
+                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+
+                //wyszukiwanie granic têczówki
                 tmp.iris();
-                cvDestroyAllWindows();
-                Image::showImage(tmp.img, "2. Find iris");
-                while (cvWaitKey(1000) < 0);
+
+                //wyœwietlenie granic têczówki oraz Ÿrenicy
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "2. Find iris");
+                //while (cvWaitKey(1000) < 0);
+
+                //Tworzenie maski têczówki
+                tmp.masking();
+
+                //Zapisanie do bazy
+                QStringList slist = list.at(i).fileName().split("-");
+                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());
             }
             else
             {
