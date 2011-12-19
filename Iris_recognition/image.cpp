@@ -156,7 +156,7 @@ class Image {
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
                         //int k = 1, number = 2*size+1; //CHANGE
-                        int k = 10, number = size+1; //CHANGE
+                        int k = 10, number = size; //CHANGE
                         int xy0 = (int)size/2;
                         float real[number][number];
                         float imag[number][number];
@@ -177,8 +177,8 @@ class Image {
                                         rest_real = exp(-M_PI * pow(f/s, 2)) * cos(w);
                                         rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(w);
 
-                                        real[xy0+x][xy0+y] = gausian * (sinusoid_real - rest_real);
-                                        imag[xy0+x][xy0+y] = gausian * (sinusoid_imag - rest_imag);
+                                        real[xy0+x][xy0+y] = gausian * exp(sinusoid_real);// - rest_real);
+                                        imag[xy0+x][xy0+y] = gausian * exp(sinusoid_imag);// - rest_imag);
                                 }
                         }
 
