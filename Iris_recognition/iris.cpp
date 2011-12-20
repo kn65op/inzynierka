@@ -259,6 +259,8 @@ class Iris {
                         this->make_mask(gabor_left, gabor_right, k);
                         cvReleaseImage(&(gabor_right[0]));
                         cvReleaseImage(&(gabor_right[1]));
+                        cvReleaseImage(&(gabor_left[0]));
+                        cvReleaseImage(&(gabor_left[1]));
                 }
                 cvReleaseImage(&right);
                 cvReleaseImage(&left);
