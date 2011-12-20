@@ -8,6 +8,7 @@
 #include <cv.h>
 #include <stdlib.h>
 
+#include <fstream>
 
 class Image {
         public:
@@ -150,42 +151,86 @@ class Image {
                         return result;
                 }
 
-                static IplImage** gabor_filter(IplImage *src, double s, double f, double w, double p) {
-                        IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
-                        IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
+                static IplImage** gabor_filter(IplImage *src, int size, double ab, double f, double w, double p, double theta) {
+                        IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
+                        IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
-                        int size = (int) floor(1.5/s);
-                        int k = 1, number = 2*size+1;
-                        float real[number][number];
-                        float imag[number][number];
-                        float sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
+                        //int k = 1, number = 2*size+1; //CHANGE
+                        int k = 10; //CHANGE
+                        int xy0 = 0;
+                        double real[size][size];
+                        double imag[size][size];
+                        double sinusoid_real, sinusoid_imag, gausian;
+                        double A, B;
 
-                        for(int x=-size; x <= size; x++) {
-                                for(int y=-size; y <= size; y++) {
-                                        sinusoid_real = cos(2*M_PI * f * (cos(w)*x + sin(w)*y) + p);
-                                        sinusoid_imag = sin(2*M_PI * f * (cos(w)*x + sin(w)*y) + p);
 
-                                        gausian = k * exp(-M_PI * (s*s) * (x*x + y*y));
-                                        rest_real = exp(-M_PI * pow(f/s, 2)) * cos(p);
-                                        rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(p);
+                        //tmp
+    //                    theta = M_PI / 8;
+  //                      double a = 0.25;
+//                        double b = 0.125;
+                        //tmp
+                        float ab2 = ab*ab;
 
-                                        real[size+x][size+y] = gausian * (sinusoid_real - rest_real);
-                                        imag[size+x][size+y] = gausian * (sinusoid_imag - rest_imag);
+                        //oblicznie wartosci filtru gabora
+                        for(int x=-size/2; x <= size/2; x++) {
+                                for(int y=-size/2; y <= size/2; y++) {
+                                        sinusoid_real = cos(2 * M_PI * f * (cos(w) * x + sin(w) * y) + p);
+                                        sinusoid_imag = sin(2 * M_PI * f * (cos(w) * x + sin(w) * y) + p);
+
+                                        A = (x - xy0)*cos(theta) + (y - xy0)*sin(theta);
+                                        A *= A;
+                                        B = -(x - xy0)*sin(theta) + (y - xy0)*cos(theta);
+                                        B *= B;
+
+                                        gausian = k * exp(-M_PI * (A * (ab2) + (ab2) * B)); //rownanie 3
+                                        //rest_real = exp(-M_PI * pow(f/ab, 2)) * cos(w);
+                                        //rest_imag = exp(-M_PI * pow(f/ab, 2)) * sin(w);
+
+                                        real[x+size/2][y+size/2] = gausian * sinusoid_real;// - rest_real);
+                                        imag[x+size/2][y+size/2] = gausian * sinusoid_imag;// - rest_imag);
                                 }
                         }
 
-                        IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
+                        //tmp
+                        /*
+                        std::ofstream ofr("areal.csv", std::ios::trunc);
+                        std::ofstream ofi("aimag.csv", std::ios::trunc);
+                        for (int i=0; i<size; i++)
+                        {
+                            for (int j=0; j<size; j++)
+                            {
+                                ofr << real[i][j] << ";";
+                                ofi << imag[i][j] << ";";
+                            }
+                            ofi << "\n";
+                            ofr << "\n";
+                        }
+                        ofi.close();
+                        ofr.close();
+                        //tmp */
+
+                        //?
+
+                        IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         cvConvertScale(src, src32, 1);
 
-                        CvMat *filter_real = cvCreateMat(number, number, CV_32FC1);
+                        CvMat *filter_real = cvCreateMat(size, size, CV_64FC1);
                         cvSetData(filter_real, real, filter_real->step);
 
-                        CvMat *filter_imag = cvCreateMat(number, number, CV_32FC1);
+                        CvMat *filter_imag = cvCreateMat(size, size, CV_64FC1);
                         cvSetData(filter_imag, imag, filter_imag->step);
 
                         cvFilter2D(src32, result_imag, filter_imag);
                         cvFilter2D(src32, result_real, filter_real);
+
+                        /*
+                        cvShowImage("src32", src32);
+                        cvShowImage("imag", result_imag);
+                        cvShowImage("real", result_real);
+                        cvShowImage("filterimag", filter_imag);
+                        cvShowImage("filterreal", filter_real);
+                        while (cvWaitKey(100) < 0); //*/
 
                         res[0] = result_real;
                         res[1] = result_imag;
@@ -295,15 +340,18 @@ class Image {
                     // Iteracyjne zwi�kszanie promienia
                     for(int radius=rp; radius < limit; radius += 8) {
                         cnt = 0;
-
+                       // qDebug() << radius;
                         for(int i=0; i < number; i++) {
                             array_x[i] = radius * cos(theta[i]);
                             array_y[i] = radius * sin(theta[i]);
                         }
 
                         for(int n=0; n < number; n++) {
-                            sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
-                            cnt++;
+                            if (y0 + (int) array_y[n] < img->height && y0 + (int) array_y[n] >= 0 && x0 + (int) array_x[n] < img->width && x0 + (int) array_x[n] >= 0)
+                            {
+                                sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
+                                cnt++;
+                            }
                         }
 
                         sum2 = (int) sum2/cnt;
@@ -366,8 +414,11 @@ class Image {
 
                         for(int n=0; n < number; n++) {
                             // qDebug("%d", x0 + (int) array_x[n]);
-                            sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
-                            cnt++;
+                            if (y0 + (int) array_y[n] < img->height && y0 + (int) array_y[n] >= 0 && x0 + (int) array_x[n] < img->width && x0 + (int) array_x[n] >= 0)
+                            {
+                                sum2 = sum2 + cvGetReal2D(img, y0 + (int) array_y[n], x0 + (int) array_x[n]);
+                                cnt++;
+                            }
                         }
 
                         sum2 = (int) sum2/cnt;

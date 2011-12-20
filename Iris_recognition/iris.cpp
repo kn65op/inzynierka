@@ -91,19 +91,37 @@ class Iris {
                 }
 
 		/* Funkcja znajdujï¿½ca ï¿½renice */
-                void pupil(int binary_value = 110) {
+                /**
+                    Funkcja znajduj¹ca Ÿrenicê na podstawie jasnego odlasku w œrodku Ÿrenicy. Najpierw znadjowany jest odblask,
+                potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu. */
+                bool pupil(int binary_value = 110) {
 			// Rozmycie filtrem Gaussa
                         IplImage *image = cvCloneImage(this->gray);
-                        cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
+
+                     //   cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie ï¿½rodka ï¿½renicy
-                        image = this->find_center_pupil(image, binary_value);
-			
+                     //   image = this->find_center_pupil(image, binary_value);
+                        if (!this->find_flash_on_pupil(image)) //szukanie odblasku
+                        {
+                            return false;
+                        }
+                        /*IplConvKernel* element = cvCreateStructuringElementEx(3, 3, 1, 1, CV_SHAPE_ELLIPSE, NULL);
+
+                        cvDilate(image, image, element);
+                        cvErode(image, image, element);
+                        cvReleaseStructuringElement(&element);*/
+                        find_flash_center(image);
+                        explode_rs(image);
+                        //explode_circle(image);
+                        //find_pupil_by(image);
+
 			// Obrysowanie znalezionej ï¿½renicy
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
 
                         cvReleaseImage(&image);
+                        return true;
 		}
 		
 		/* Funkcja znajdujï¿½ca obszar tï¿½czï¿½wki */
@@ -220,23 +238,32 @@ class Iris {
 		cvCopy(tmp, right);
 		
 		cvResetImageROI(tmp);
-		cvReleaseImage(&tmp);
+                cvReleaseImage(&tmp);
 		
-                double sigma = 0.31;
-		double freq  = 0.15;
-		double wr, wl;
+                int size = 11; //CHANGE
+                //double sigma = 11; //CHANGE
+                //double freq  = 0.15; //CHANGE
+                double freq  = 10 / M_PI; //CHANGE
+                double w;//, wr, wl;
 		double p = 0;
+                double ab = 0.525;
+                double theta = M_PI / 4;
 		
-
+                //filtracja dla 8 ró¿nych wartoœci k¹tów filtrów Gabora
 		for(int k=1; k <= 8; k++) {
-			wr = -0.4 * M_PI  + (k-1) * 0.1 * M_PI;
-			wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
+                        w = (k-1)* M_PI / 8;
+                        //wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
 			
-			gabor_right = Image::gabor_filter(right, sigma, freq, wr, p);
-			gabor_left  = Image::gabor_filter(left,  sigma, freq, wl, p);
+                        gabor_right = Image::gabor_filter(right, size, ab, freq, w, p, theta);
+                        gabor_left  = Image::gabor_filter(left,  size, ab, freq, w, p, theta);
                         this->make_mask(gabor_left, gabor_right, k);
+                        cvReleaseImage(&(gabor_right[0]));
+                        cvReleaseImage(&(gabor_right[1]));
+                        cvReleaseImage(&(gabor_left[0]));
+                        cvReleaseImage(&(gabor_left[1]));
                 }
-
+                cvReleaseImage(&right);
+                cvReleaseImage(&left);
 	}
 
         QString get_mask() {
@@ -253,33 +280,49 @@ class Iris {
             return str;
         }
 	
-        bool compare(QString code) {
+        double compare(QString code) {
                 int    size = 2048;
-                bool   res;
                 int    k = 0;
-                int    c[size];
-                int    sum = 0;
-		
-		for(int i=0; i < 8; i++) {
+                int    no_rot = 9; //liczba porównañ (rotacji) powinno byæ nieparzyste (bo jest te¿ bez rotacji)
+                int    sum[no_rot];
+                int    minsum = 2048;
+
+                for (int i=0; i<no_rot; i++)
+                {
+                    sum[i] = 0;
+                }
+                for(int i=0; i < 8; i++) {
                         for(int j=0; j < 256; j++) {
-                                c[k] = this->maska[i][j] ^ code.at(k).digitValue();
-                                k++;
+                            for (int l=0, rot = 2048-(no_rot / 2); l<no_rot; l++, rot += 2)
+                            {
+                                sum [l] += this->maska[i][j] ^ code.at((k + rot)% 2048).digitValue();
+                            }
+                            k++;
                         }
-		}
+                }
+                for (int i=0; i<no_rot; i++)
+                {
+                    qDebug() << "sum[" << i << "]" << sum[i];
+                    if (sum[i] < minsum)
+                    {
+                        minsum = sum[i];
+                    }
+                }
                 //TODO rotacja
-		for(int i=0; i < size; i++) {
-			sum += c[i];	
-		}
+                qDebug() << minsum << ": MINSUM";
+
 		
-                this->hamming = (double) sum/size;
+                this->hamming = (double) minsum/size;
+                qDebug() << this->hamming;
+                return this->hamming;
 		
-                if(this->hamming < HAMMING)
+/*                if(this->hamming < HAMMING)
 			res = true;
 		else
 			res = false;
 
-		return res;	
-        }
+                return res;
+*/        }
 
         IplImage* getMaskImage() {
             IplImage *result  = cvCreateImage(cvSize(256*2, 8*2), IPL_DEPTH_8U, 1);
@@ -543,31 +586,63 @@ class Iris {
                 IplImage* find_center_pupil(IplImage *src, int binary_value) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        //IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
 
-                        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY);
-                        cvShowImage("Przed", src);
-                        cvShowImage("Po", tmp);
-                        cvSaveImage("poprzednie.jpg", tmp);
-                        while (cvWaitKey(1000) < 0);
-                        cvThreshold(src, tmp, binary_value, 1, CV_THRESH_BINARY);
-
-
-                        IplConvKernel* element = cvCreateStructuringElementEx(9, 9, 4, 4, CV_SHAPE_ELLIPSE, NULL);
+                //        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY_INV);
+               //         cvShowImage("Przed", src);
+                        //cvShowImage("Po", tmp);
+                        //while (cvWaitKey(1000) < 0);
+                        //cvSaveImage("poprzednie.jpg", tmp);
+             //           while (cvWaitKey(1000) < 0);
+                        cvThreshold(src, tmpb, 40, 1, CV_THRESH_BINARY_INV);
+                        cvThreshold(src, tmpw, 254, 1, CV_THRESH_BINARY);
+                        cvOr(tmpb, tmpw, tmp);
+                        cvReleaseImage(&tmpb);
+                        cvReleaseImage(&tmpw);
+/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage(filename.toStdString().c_str(), tmp2);
+while (cvWaitKey(1000) < 0);*/
+                        IplConvKernel* element = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
-
-                        element = cvCreateStructuringElementEx(61, 61, 30, 30, CV_SHAPE_ELLIPSE, NULL);
+                        cvReleaseStructuringElement(&element);
+                        element = cvCreateStructuringElementEx(11, 11, 5, 5, CV_SHAPE_ELLIPSE, NULL);
+                        /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+                        cvShowImage("Po", tmp2);
+                        while (cvWaitKey(1000) < 0);*/
                         cvErode(tmp, tmp, element, 1);
                         cvDilate(tmp, tmp, element, 1);
-
+                        cvReleaseStructuringElement(&element);
+                        /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+                        cvShowImage("Po", tmp2);
+                        while (cvWaitKey(1000) < 0);*/
+                        element = cvCreateStructuringElementEx(23, 23, 11, 11, CV_SHAPE_ELLIPSE, NULL);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvErode(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("Po", tmp2);
+while (cvWaitKey(1000) < 0);*/
+                        element = cvCreateStructuringElementEx(23, 23, 11, 11, CV_SHAPE_ELLIPSE, NULL);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvErode(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
                         tmp = Image::clearborders(tmp);
-
-                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
-                        cvErode(tmp, tmp, element, 1);
-                        cvDilate(tmp, tmp, element, 1);
-
+/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("clear", tmp2);
+while (cvWaitKey(1000) < 0);
+cvDestroyAllWindows();
+return tmp;*/
+//                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
+  //                      cvErode(tmp, tmp, element, 1);
+    //                    cvDilate(tmp, tmp, element, 1);
+/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
+cvShowImage("Po", tmp2);
+while (cvWaitKey(1000) < 0);*/
                         middle = this->find_center(tmp);
 
                         return tmp;
@@ -606,7 +681,7 @@ class Iris {
 			
 			for(int i=0; i<this->height; i++) {
 				for(int j=0; j<this->width; j++) {
-					if(cvGetReal2D(image, i, j) == 1) {
+                                        if(cvGetReal2D(image, i, j) == 255) {
                                                 if(max_x < j)
                                                     max_x = j;
 
@@ -635,5 +710,387 @@ class Iris {
 			
 			return tab;
 		}
+
+                /**
+                  Funkcja znajduj¹ca odblask na Ÿrenicy.
+                  */
+                bool find_flash_on_pupil(IplImage *image)
+                {
+                    qDebug() << filename;
+                    IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    cvThreshold(image, bin, 254, 1, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+                    int dark_count = 0;
+                    bool no_found = true;
+                    for (int i=20; i<bin->height - 20 && no_found; i++) //iteracja po kolumnach
+                    {
+                        for (int j=20; j<bin->width - 20 && no_found; j++) //iteracja po wierszach
+                        {
+                            if (cvGetReal2D(bin, i, j) == 1) //znaleziono œwiat³o, sprawdzenie otoczenia
+                            {
+                                dark_count = 0;
+                                for (int k=10; k<20; k++)
+                                {
+                                    if (cvGetReal2D(image, i-k, j-k) < 50 && cvGetReal2D(image, i+k, j+k) < 50) //sprawdzamy czy jest ciemne na obrazie
+                                    {
+                                        dark_count++;
+                                    }
+                                }
+                                if (dark_count>6) // liczba czarnych jest wystarczaj¹ca
+                                {
+                                  no_found = false;
+                                  this->pupil_x = j;
+                                  pupil_y = i;
+                                  pupil_r = 20;
+                                }
+                            }
+                        }
+                    }
+                    if (no_found)
+                    {
+                        pupil_x = pupil_y = 0;
+                        pupil_r = 100;
+                    }
+                    cvReleaseImage(&bin);
+                    return !no_found;
+                }
+
+                /**
+                  Funkcja znajduj¹ca œrodek odblasku na Ÿrenicy (dowolny punkt odblasku musi byæ zapisuany w pupil_x i pupil_y)
+                  */
+                void find_flash_center(IplImage *image)
+                {
+                    IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    cvSetReal2D(bin, pupil_y, pupil_x, 1);
+                    for (int i = 1; i < 25; i++)
+                    {
+                        for (int j = 1; j < 25; j++)
+                        {
+                            if (cvGetReal2D(image, pupil_y + i, pupil_x + j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y + i, pupil_x + j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y - i, pupil_x + j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y - i, pupil_x + j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y + i, pupil_x - j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y + i, pupil_x - j, 255);
+                            }
+                            if (cvGetReal2D(image, pupil_y - i, pupil_x - j) > 240)
+                            {
+                                cvSetReal2D(bin, pupil_y - i, pupil_x - j, 255);
+                            }
+                        }
+                        if (cvGetReal2D(image, pupil_y + i, pupil_x) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y + i, pupil_x, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y, pupil_x - i) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y, pupil_x - i, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y - i, pupil_x) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y - i, pupil_x, 255);
+                        }
+                        if (cvGetReal2D(image, pupil_y, pupil_x + i) > 240)
+                        {
+                            cvSetReal2D(bin, pupil_y, pupil_x + i, 255);
+                        }
+                    }
+                    find_center(bin);
+                    cvReleaseImage(&bin);
+                }
+
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
+                void explode_circle(IplImage *image)
+                {
+                    // tworzenie tablicy katow
+                    int angles_count = 72;
+                    double alfa[angles_count];
+                    double coss[angles_count];
+                    double sins[angles_count];
+                    for (int i=0; i < angles_count; i++)
+                    {
+                        alfa[i] = (2 * M_PI) * i / angles_count;
+                        coss[i] = cos(alfa[i]);
+                        sins[i] = sin(alfa[i]);
+                    }
+                    int p_x, p_y, p_r, act_x, act_y;
+                    int r = pupil_r + 15;
+                    int dif = 0;
+                    int dmin = 0;
+                    int lastsum = angles_count * 300;
+                    int x, y;
+                    int sum = cvGetReal2D(image, pupil_y, pupil_x);
+                    //IplImage *border_points = cvCreateImage(cvSize(2, angles_count), 1, 1);
+                    for (int k=-3; k<=3; k = k +3)
+                    {
+                        for (int l=-3; l<=3; l = l + 3)
+                        {
+                            act_x = pupil_x + k;
+                            act_y = pupil_y + l;
+                            lastsum = angles_count * 300;
+                    //act_x = pupil_x;
+                    //act_y = pupil_y;
+                            for (; r < 60; r++) //zwiêkszanie promienia
+                            {
+                                sum = 0;
+                                for (int j=0; j<angles_count; j++) //przechodzenie po okgrêgu i liczenie jansoœci
+                                {
+                                    x = act_x + sins[j] * r;
+                                    y = act_y + coss[j] * r;
+                                    if (x > 0 && y > 0)
+                                    {
+                                        sum += cvGetReal2D(image, x, y);
+                                    }
+                                }
+                                dif = sum - lastsum;
+                                //qDebug() << r << " " << dif;
+                                if (dif > dmin)
+                                {
+                                    dmin = dif;
+                                    p_r = r;
+                                    p_x = act_x;
+                                    p_y = act_y;
+                                }
+                                lastsum = sum;
+                            }
+                        }
+                    }
+                    pupil_x = p_x;
+                    pupil_r = p_r;
+                    pupil_y = p_y;
+                  //  qDebug() << pupil_r;
+                }
+
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
+                void explode_rs(IplImage *image)
+                {
+                    // tworzenie tablicy katow
+                    int angles_count = 36;
+                    double alfa[angles_count];
+                    double coss[angles_count];
+                    double sins[angles_count];
+                    for (int i=0; i < angles_count; i++)
+                    {
+                        alfa[i] = (2 * M_PI) * i / angles_count;
+                        coss[i] = cos(alfa[i]);
+                        sins[i] = sin(alfa[i]);
+                     //   qDebug() << i << " " << sin(alfa[i]) << " " << cos(alfa[i]) << " " << ((2 * M_PI) * i / angles_count);
+                    }
+                    int act_x, act_y, tmp_x, tmp_y;
+                    int r = pupil_r + 10;
+                    int dif = 0;
+                    int dmin = 0;
+                    int lastsum = 0;
+                    int x, y;
+                    int sum = cvGetReal2D(image, pupil_y, pupil_x);
+                    //IplImage *border_points = cvCreateImage(cvSize(angles_count, 2), 1, 1);
+                    IplImage *border_points = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    for (int i=0; i<border_points->height; i++)
+                    {
+                        for (int j=0; j<border_points->width; j++)
+                        {
+                            cvSetReal2D(border_points, i, j, 0);
+                        }
+                    }
+                    //cvShowImage("w", border_points);
+                    //while (cvWaitKey(100) < 0);
+                    /*for (int k=-3; k<=3; k = k +3)
+                    {
+                        for (int l=-3; l<=3; l = l + 3)
+                        {*/
+                            //act_x = pupil_x + k;
+                            //act_y = pupil_y + l;
+                    act_x = pupil_x;
+                    act_y = pupil_y;
+                    //wersja z eksploduj¹cymi promieniami
+                    for (int i = 0; i < angles_count; i++) //dla ka¿dego k¹ta
+                    {
+                        x = act_x + sins[i] * (pupil_r + 9);
+                        y = act_y + coss[i] * (pupil_r + 9);
+                        lastsum = cvGetReal2D(image, x, y);
+                        dmin = 0;
+                        for (r = pupil_r + 10; r<60; r++) //zwiêkszanie promienia
+                        {
+                            x = act_x + sins[i] * r;
+                            y = act_y + coss[i] * r;
+                          //  qDebug() << sins[i] << ": " << x << " " << coss[i] << ": " << y ;
+                            if (x > 0 && y > 0)
+                            {
+                                sum = cvGetReal2D(image, x, y);
+                            }
+                            dif = sum - lastsum;
+                            if (dif > dmin)
+                            {
+                                dmin = dif;
+                                tmp_x = x;
+                                tmp_y = y;
+                            }
+                            lastsum = sum;
+                        }
+                        //qDebug() << i << " " << tmp_x << " " << tmp_y;
+                        //cvSetReal2D(border_points, 0, i, tmp_x);
+                        //cvSetReal2D(border_points, 1, i, tmp_y);
+                        if (cvGetReal2D(image, tmp_y-2, tmp_x-2) < 50 ||
+                            cvGetReal2D(image, tmp_y+2, tmp_x-2) < 50 ||
+                            cvGetReal2D(image, tmp_y-2, tmp_x+2) < 50 ||
+                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 50)/*
+                        if (cvGetReal2D(image, tmp_y-2, tmp_x-2) < 100 &&
+                            cvGetReal2D(image, tmp_y+2, tmp_x-2) < 100 &&
+                            cvGetReal2D(image, tmp_y-2, tmp_x+2) < 100 &&
+                            cvGetReal2D(image, tmp_y+2, tmp_x+2) < 100)*/
+                        {
+                                cvSetReal2D(border_points, tmp_y, tmp_x, 255);
+                        }
+                    }
+                    //cvShowImage("w", border_points);
+                    //while (cvWaitKey(100) < 0);
+                    find_center(border_points);
+                    cvReleaseImage(&border_points);
+                    //cvMinEnclosingCircle(border_points, &center, &f_r);
+
+                    //qDebug() << pupil_r;
+                }
+
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
+                void find_pupil_by(IplImage *image)
+                {
+                    //IplImage *border_points = cvCreateImage(cvSize(angles_count, 2), 1, 1);
+                    /*for (int i=0; i<border_points->height; i++)
+                    {
+                        for (int j=0; j<border_points->width; j++)
+                        {
+                            cvSetReal2D(border_points, i, j, 0);
+                        }
+                    }*/
+                    int serial = 10;
+                    int threshold = 50;
+                    int x = pupil_x - 15;
+                    int y = pupil_y - 15;
+                    int count = 0;
+                    bool no_found = true;
+                    int minx, miny, maxx, maxy;
+                    while (--x > 0 && no_found)
+                    {
+                        if (cvGetReal2D(image, x, pupil_y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                minx = x;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (!x)
+                    {
+                        minx = 0;
+                    }
+                    x = pupil_x + 15;
+                    no_found = true;
+                    count = 0;
+                    while (++x < image->height && no_found)
+                    {
+                        if (cvGetReal2D(image, x, pupil_y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                maxx = x;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (x == image->height)
+                    {
+                        maxx = image->height;
+                    }
+                    no_found = true;
+                    y = pupil_y - 15;
+                    count = 0;
+                    while (--y > 0 && no_found)
+                    {
+                        if (cvGetReal2D(image, pupil_x, y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                miny = y;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (!y)
+                    {
+                        miny = 0;
+                    }
+                    no_found = true;
+                    y = pupil_y + 15;
+                    count = 0;
+                    while (++y < image->width && no_found)
+                    {
+                        if (cvGetReal2D(image, pupil_x, y) > threshold)
+                        {
+                            if (++count > serial)
+                            {
+                                maxy = y;
+                                no_found = false;
+                            }
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+                    }
+                    if (y == image->width)
+                    {
+                        maxy = image->width;
+                    }
+                    int add = 20;
+                    if (minx > add) minx -= add;
+                    if (miny > add) miny -= add;
+                    if (maxx < image->height + add) maxx += add;
+                    if (maxy < image->width + add) maxy += add;
+                   // qDebug() << minx << " " << maxx << " " << miny << " " << maxy;
+                    cvSetImageROI(image, cvRect(minx, miny, maxx-minx, maxy-miny));
+                    IplImage *border_points = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);
+                    IplImage *border_points2 = cvCreateImage(cvSize(maxx-minx, maxy-miny), image->depth, 1);
+                    //cvSetImageROI(border_points, cvRect(pupil_x - q, pupil_y -q, 2*q, 2*q));
+                    cvThreshold(image, border_points, 50, 1, CV_THRESH_BINARY_INV);
+                    //border_points = Image::clearborders(border_points);
+
+                    //cvResetImageROI(border_points);
+                    /*while ()
+                    {
+
+                    }*/
+                    cvThreshold(border_points, border_points2, 0, 255, CV_THRESH_BINARY);
+                    cvShowImage("w", border_points2);
+                    while (cvWaitKey(100) < 0);
+                    IplConvKernel* element = cvCreateStructuringElementEx(3, 3, 1, 1, CV_SHAPE_ELLIPSE, NULL);
+                    cvErode(border_points, border_points, element);
+                    cvDilate(border_points, border_points, element);
+                    cvThreshold(border_points, border_points2, 0, 255, CV_THRESH_BINARY);
+                    cvShowImage("w", border_points2);
+                    while (cvWaitKey(100) < 0);
+                    border_points = Image::clearborders(border_points);
+                    cvThreshold(border_points, border_points2, 0, 255, CV_THRESH_BINARY);
+                    cvShowImage("w", border_points2);
+                    while (cvWaitKey(100) < 0);
+                    //find_center(border_points);
+
+                }
 		
 };

@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <sstream>
 #include <QDir>
+#include <fstream>
 
 Camera MainWindow::c = Camera(0);
 
@@ -193,7 +194,9 @@ void MainWindow::on_makeMaskButton_clicked()
         return;
     }
     eye.masking();
-    Image::showBinaryImage(eye.getMaskImage(), "4. Mask");
+    IplImage * bin = eye.getMaskImage();
+    Image::showBinaryImage(bin, "4. Mask");
+    cvReleaseImage(&bin);
 }
 
 void MainWindow::on_searchButton_clicked()
@@ -245,7 +248,8 @@ void MainWindow::timerEvent(QTimerEvent *)
 
 void MainWindow::on_actionTestuj_folder_triggered()
 {
-    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do sprawdzenia"), ".");
+    db.createDB();
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do dodania do bazy"), ".");
     QStringList images_extensions;
     images_extensions << "*.jpg" << "*.bmp";
     QDir dir(filepath);
@@ -253,7 +257,153 @@ void MainWindow::on_actionTestuj_folder_triggered()
     QFileInfoList list = dir.entryInfoList(images_extensions);
     for (int i=0; i<list.size(); i++)
     {
+        Iris tmp;
+        tmp.init(list.at(i).absoluteFilePath());
+        try
+        {
+            if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
+            {
+                //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "1. Find pupil");
+                //Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
+                //while (cvWaitKey(100) < 0);
+
+                //zapisanie obrazu
+                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+
+                //wyszukiwanie granic têczówki
+                tmp.iris();
+
+                //wyœwietlenie granic têczówki oraz Ÿrenicy
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "2. Find iris");
+                //while (cvWaitKey(1000) < 0);
+
+                //Tworzenie maski têczówki
+                tmp.masking();
+
+                //Zapisanie do bazy
+                QStringList slist = list.at(i).fileName().split("-");
+                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());
+
+            }
+            else
+            {
+                QMessageBox box;
+                box.setText("Dla zdjecia nie znaleziono zrenicy");
+                box.exec();
+            }
+        }
+        catch (...)
+        {
+
+        }
+
         //Tworzenie kodów i porównywanie ich
         //qDebug() << list.at(i).absoluteFilePath();
     }
+    QMessageBox box;
+    box.setText("Koniec");
+    box.exec();
+}
+
+void MainWindow::on_actionTestuj_baz_triggered()
+{
+    //tmp
+    std::string tmp_file_name = "wynik.csv";
+    QSqlQuery *query = db.searchUsers();
+    ofstream file_out(tmp_file_name.c_str(), ios::trunc);
+    file_out << ";";
+    while (query->next())
+    {
+        file_out << query->value(2).toString().toStdString() << " " << query->value(3).toString().toStdString() << ";";
+    }
+    file_out << "\n";
+    delete query;
+    //tmp
+
+    filepath = QFileDialog::getExistingDirectory(this, tr("Wybierz katalog do testowania bazy"), ".");
+    QStringList images_extensions;
+    images_extensions << "*.jpg" << "*.bmp";
+    QDir dir(filepath);
+    dir.setFilter(QDir::Files);
+    QFileInfoList list = dir.entryInfoList(images_extensions);
+    for (int i=0; i<list.size(); i++)
+    {
+        Iris tmp;
+        tmp.init(list.at(i).absoluteFilePath());
+        try
+        {
+            if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
+            {
+                //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "1. Find pupil");
+                //Image::showImage(tmp.img, list.at(i).fileName().toStdString().c_str());
+                //while (cvWaitKey(100) < 0);
+
+                //zapisanie obrazu
+                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+
+                //wyszukiwanie granic têczówki
+                tmp.iris();
+
+                //wyœwietlenie granic têczówki oraz Ÿrenicy
+                //cvDestroyAllWindows();
+                //Image::showImage(tmp.img, "2. Find iris");
+                //while (cvWaitKey(1000) < 0);
+
+                //Tworzenie maski têczówki
+                tmp.masking();
+
+                //Zapisanie do bazy
+                /*QStringList slist = list.at(i).fileName().split("-");
+                db.insertUser(slist.at(1), slist.at(2), slist.at(0), slist.at(3), tmp.get_mask());*/
+
+                //tmp porównanie z tym co jest w bazie
+                QSqlQuery *query = db.searchUsers();
+                file_out << list.at(i).fileName().toStdString() << ";";
+
+                while (query->next())
+                {
+                    file_out << tmp.compare(query->value(1).toString()) << ";";
+/*                    if (tmp.compare(query->value(1).toString()))
+                    {
+                        file_out << "1;";
+                        /*QMessageBox box;
+                        box.setText("Osoba " + list.at(i).fileName() + " jest podobna do osoby z id " + query->value(0).toString());
+                        box.exec();///
+                    }
+                    else
+                    {
+                        file_out << "0;";
+                        /*QMessageBox box;
+                        box.setText("Osoba " + list.at(i).fileName() + " NIE jest podobna do osoby z id " + query->value(0).toString());
+                        box.exec();///
+                    }
+  */              }
+                file_out << "\n";
+                delete query;
+            }
+            else
+            {
+                QMessageBox box;
+                box.setText("Dla zdjecia nie znaleziono zrenicy");
+                box.exec();
+            }
+        }
+        catch (...)
+        {
+
+        }
+
+        //Tworzenie kodów i porównywanie ich
+        //qDebug() << list.at(i).absoluteFilePath();
+    }
+
+    file_out.close();
+    QMessageBox box;
+    box.setText("Koniec");
+    box.exec();
 }
