@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]; then
+	echo "Usage: $0 nazwa_pliku_bez_rozszerzenia"
+	exit 0
+fi
+
+
+pdflatex $1.tex
+bibtex $1.aux
+pdflatex $1.tex
+pdflatex $1.tex
