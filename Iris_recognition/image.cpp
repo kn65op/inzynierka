@@ -157,10 +157,10 @@ class Image {
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
                         //int k = 1, number = 2*size+1; //CHANGE
-                        int k = 10, number = size; //CHANGE
+                        int k = 10; //CHANGE
                         int xy0 = 0;
-                        double real[number][number];
-                        double imag[number][number];
+                        double real[size][size];
+                        double imag[size][size];
                         double sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
                         double A, B;
 
@@ -193,7 +193,7 @@ class Image {
                         }
 
                         //tmp
-                        std::ofstream ofr("real.csv", std::ios::trunc);
+                        /*std::ofstream ofr("real.csv", std::ios::trunc);
                         std::ofstream ofi("imag.csv", std::ios::trunc);
                         for (int i=0; i<size; i++)
                         {
@@ -206,7 +206,7 @@ class Image {
                             ofr << "\n";
                         }
                         ofi.close();
-                        ofr.close();
+                        ofr.close();*/
                         //tmp
 
                         //?
@@ -214,14 +214,20 @@ class Image {
                         IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         cvConvertScale(src, src32, 1);
 
-                        CvMat *filter_real = cvCreateMat(number, number, CV_32FC1);
+                        CvMat *filter_real = cvCreateMat(size, size, CV_32FC1);
                         cvSetData(filter_real, real, filter_real->step);
 
-                        CvMat *filter_imag = cvCreateMat(number, number, CV_32FC1);
+                        CvMat *filter_imag = cvCreateMat(size, size, CV_32FC1);
                         cvSetData(filter_imag, imag, filter_imag->step);
 
                         cvFilter2D(src32, result_imag, filter_imag);
                         cvFilter2D(src32, result_real, filter_real);
+                        cvShowImage("src32", src32);
+                        cvShowImage("imag", result_imag);
+                        cvShowImage("real", result_real);
+                        cvShowImage("filterimag", filter_imag);
+                        cvShowImage("filterreal", filter_real);
+                        while (cvWaitKey(100) < 0);
 
                         res[0] = result_real;
                         res[1] = result_imag;
