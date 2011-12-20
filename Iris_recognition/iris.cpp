@@ -244,18 +244,18 @@ class Iris {
                 //double sigma = 11; //CHANGE
                 //double freq  = 0.15; //CHANGE
                 double freq  = 10 / M_PI; //CHANGE
-		double wr, wl;
+                double w;//, wr, wl;
 		double p = 0;
                 double ab = 0.525;
                 double theta = M_PI / 4;
 		
-
+                //filtracja dla 8 ró¿nych wartoœci k¹tów filtrów Gabora
 		for(int k=1; k <= 8; k++) {
-			wr = -0.4 * M_PI  + (k-1) * 0.1 * M_PI;
-			wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
+                        w = (k-1)* M_PI / 8;
+                        //wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
 			
-                        gabor_right = Image::gabor_filter(right, size, ab, freq, wr, p, theta);
-                        gabor_left  = Image::gabor_filter(left,  size, ab, freq, wl, p, theta);
+                        gabor_right = Image::gabor_filter(right, size, ab, freq, w, p, theta);
+                        gabor_left  = Image::gabor_filter(left,  size, ab, freq, w, p, theta);
                         this->make_mask(gabor_left, gabor_right, k);
                         cvReleaseImage(&(gabor_right[0]));
                         cvReleaseImage(&(gabor_right[1]));

@@ -8,6 +8,7 @@
 #include <cv.h>
 #include <stdlib.h>
 
+#include <fstream>
 
 class Image {
         public:
@@ -150,37 +151,61 @@ class Image {
                         return result;
                 }
 
-                static IplImage** gabor_filter(IplImage *src, int size, double s, double f, double w, double p, double theta) {
+                static IplImage** gabor_filter(IplImage *src, int size, double ab, double f, double w, double p, double theta) {
                         IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
                         //int k = 1, number = 2*size+1; //CHANGE
                         int k = 10, number = size; //CHANGE
-                        int xy0 = (int)size/2;
-                        float real[number][number];
-                        float imag[number][number];
-                        float sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
+                        int xy0 = 0;
+                        double real[number][number];
+                        double imag[number][number];
+                        double sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
                         double A, B;
 
-                        for(int x=-xy0; x <= xy0; x++) {
-                                for(int y=-xy0; y <= xy0; y++) {
-                                        sinusoid_real = cos(2*M_PI * f * (cos(theta)*x + sin(theta)*y) + p);
-                                        sinusoid_imag = sin(2*M_PI * f * (cos(theta)*x + sin(theta)*y) + p);
+
+                        //tmp
+    //                    theta = M_PI / 8;
+  //                      double a = 0.25;
+//                        double b = 0.125;
+                        //tmp
+                        double ab2 = ab*ab;
+
+                        //oblicznie wartosci filtru gabora
+                        for(int x=-size/2; x <= size/2; x++) {
+                                for(int y=-size/2; y <= size/2; y++) {
+                                        sinusoid_real = cos(2 * M_PI * f * (cos(w) * x + sin(w) * y) + p);
+                                        sinusoid_imag = sin(2 * M_PI * f * (cos(w) * x + sin(w) * y) + p);
 
                                         A = (x - xy0)*cos(theta) + (y - xy0)*sin(theta);
                                         A *= A;
                                         B = -(x - xy0)*sin(theta) + (y - xy0)*cos(theta);
                                         B *= B;
 
-                                        gausian = k * exp(-M_PI * A * (s*s) + s * s * B); //rownanie 3
-                                        rest_real = exp(-M_PI * pow(f/s, 2)) * cos(w);
-                                        rest_imag = exp(-M_PI * pow(f/s, 2)) * sin(w);
+                                        gausian = k * exp(-M_PI * (A * (ab2) + (ab2) * B)); //rownanie 3
+                                        //rest_real = exp(-M_PI * pow(f/ab, 2)) * cos(w);
+                                        //rest_imag = exp(-M_PI * pow(f/ab, 2)) * sin(w);
 
-                                        real[xy0+x][xy0+y] = gausian * exp(sinusoid_real);// - rest_real);
-                                        imag[xy0+x][xy0+y] = gausian * exp(sinusoid_imag);// - rest_imag);
+                                        real[x+size/2][y+size/2] = gausian;// * sinusoid_real;// - rest_real);
+                                        imag[x+size/2][y+size/2] = gausian * sinusoid_imag;// - rest_imag);
                                 }
                         }
+
+                        //tmp
+                        std::ofstream of("gausian.csv", std::ios::trunc);
+                        for (int i=0; i<size; i++)
+                        {
+                            for (int j=0; j<size; j++)
+                            {
+                                of << real[i][j] << ";";
+                            }
+                            of << "\n";
+                        }
+                        of.close();
+                        //tmp
+
+                        //?
 
                         IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
                         cvConvertScale(src, src32, 1);
