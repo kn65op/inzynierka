@@ -187,22 +187,26 @@ class Image {
                                         //rest_real = exp(-M_PI * pow(f/ab, 2)) * cos(w);
                                         //rest_imag = exp(-M_PI * pow(f/ab, 2)) * sin(w);
 
-                                        real[x+size/2][y+size/2] = gausian;// * sinusoid_real;// - rest_real);
+                                        real[x+size/2][y+size/2] = gausian * sinusoid_real;// - rest_real);
                                         imag[x+size/2][y+size/2] = gausian * sinusoid_imag;// - rest_imag);
                                 }
                         }
 
                         //tmp
-                        std::ofstream of("gausian.csv", std::ios::trunc);
+                        std::ofstream ofr("real.csv", std::ios::trunc);
+                        std::ofstream ofi("imag.csv", std::ios::trunc);
                         for (int i=0; i<size; i++)
                         {
                             for (int j=0; j<size; j++)
                             {
-                                of << real[i][j] << ";";
+                                ofr << real[i][j] << ";";
+                                ofi << imag[i][j] << ";";
                             }
-                            of << "\n";
+                            ofi << "\n";
+                            ofr << "\n";
                         }
-                        of.close();
+                        ofi.close();
+                        ofr.close();
                         //tmp
 
                         //?
