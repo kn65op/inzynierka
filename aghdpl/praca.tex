@@ -2,7 +2,7 @@
 % \documentclass{aghdpl}               % przy kompilacji programem latex
 % \documentclass[pdflatex,en]{aghdpl}  % praca w języku angielskim
 \usepackage[polish]{babel}
-\usepackage[latin2]{inputenc}
+\usepackage[utf8]{inputenc}
 
 % dodatkowe pakiety
 \usepackage{enumerate}
@@ -34,7 +34,7 @@
 \facultyPL{Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki}
 \facultyEN{Faculty of Electrical Engineering, Automatics, Computer Science and Electronics}
 
-\acknowledgements{}
+\acknowledgements{Serdecznie dziękuję \dots tu ciąg dalszych podziękowań np. dla promotora, żony, sąsiada itp.}
 
 
 
@@ -61,11 +61,11 @@
 % \include{dodatekB}
 % itd.
 
-\bibliographystyle{alpha}
-\bibliography{bibliografia}
+\bibliographystyle{plain}
+\bibliography{bibliografia2}{}
 %\begin{thebibliography}{1}
 %
-%\bibitem{Dil00}
+%\bibitem{Jain00}
 %A.~Diller.
 %\newblock {\em LaTeX wiersz po wierszu}.
 %\newblock Wydawnictwo Helion, Gliwice, 2000.
@@ -82,5 +82,7 @@
 %\newblock \\\texttt{http://fm.ia.agh.edu.pl/alvis:manual}.
 %
 %\end{thebibliography}
+%\cite{Jain00}
+
 
 \end{document}
