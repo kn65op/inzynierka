@@ -152,16 +152,16 @@ class Image {
                 }
 
                 static IplImage** gabor_filter(IplImage *src, int size, double ab, double f, double w, double p, double theta) {
-                        IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
-                        IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
+                        IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
+                        IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
 
                         //int k = 1, number = 2*size+1; //CHANGE
                         int k = 10; //CHANGE
                         int xy0 = 0;
-                        float real[size][size];
-                        float imag[size][size];
-                        float sinusoid_real, sinusoid_imag, gausian;
+                        double real[size][size];
+                        double imag[size][size];
+                        double sinusoid_real, sinusoid_imag, gausian;
                         double A, B;
 
 
@@ -170,7 +170,7 @@ class Image {
   //                      double a = 0.25;
 //                        double b = 0.125;
                         //tmp
-                        double ab2 = ab*ab;
+                        float ab2 = ab*ab;
 
                         //oblicznie wartosci filtru gabora
                         for(int x=-size/2; x <= size/2; x++) {
@@ -193,8 +193,9 @@ class Image {
                         }
 
                         //tmp
-                        /*std::ofstream ofr("real.csv", std::ios::trunc);
-                        std::ofstream ofi("imag.csv", std::ios::trunc);
+                        /*
+                        std::ofstream ofr("areal.csv", std::ios::trunc);
+                        std::ofstream ofi("aimag.csv", std::ios::trunc);
                         for (int i=0; i<size; i++)
                         {
                             for (int j=0; j<size; j++)
@@ -206,28 +207,30 @@ class Image {
                             ofr << "\n";
                         }
                         ofi.close();
-                        ofr.close();*/
-                        //tmp
+                        ofr.close();
+                        //tmp */
 
                         //?
 
-                        IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_32F, 1);
+                        IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         cvConvertScale(src, src32, 1);
 
-                        CvMat *filter_real = cvCreateMat(size, size, CV_32FC1);
+                        CvMat *filter_real = cvCreateMat(size, size, CV_64FC1);
                         cvSetData(filter_real, real, filter_real->step);
 
-                        CvMat *filter_imag = cvCreateMat(size, size, CV_32FC1);
+                        CvMat *filter_imag = cvCreateMat(size, size, CV_64FC1);
                         cvSetData(filter_imag, imag, filter_imag->step);
 
                         cvFilter2D(src32, result_imag, filter_imag);
                         cvFilter2D(src32, result_real, filter_real);
+
+                        /*
                         cvShowImage("src32", src32);
                         cvShowImage("imag", result_imag);
                         cvShowImage("real", result_real);
                         cvShowImage("filterimag", filter_imag);
                         cvShowImage("filterreal", filter_real);
-                        while (cvWaitKey(100) < 0);
+                        while (cvWaitKey(100) < 0); //*/
 
                         res[0] = result_real;
                         res[1] = result_imag;

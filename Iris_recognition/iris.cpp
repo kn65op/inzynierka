@@ -282,30 +282,35 @@ class Iris {
 	
         double compare(QString code) {
                 int    size = 2048;
-                bool   res;
                 int    k = 0;
-                int    c[size];
-                int    sum = 0;
+                int    no_rot = 9; //liczba porównañ (rotacji) powinno byæ nieparzyste (bo jest te¿ bez rotacji)
+                int    sum[no_rot];
                 int    minsum = 2048;
-                int rot;
-                for (rot = 0; rot < 16; rot += 2) //rotacja
+
+                for (int i=0; i<no_rot; i++)
                 {
-                    sum = 0;
-                    for(int i=0; i < 8; i++) {
-                            for(int j=0; j < 256; j++) {
-                                sum += this->maska[i][j] ^ code.at(k % 2048).digitValue();
-                                    k++;
+                    sum[i] = 0;
+                }
+                for(int i=0; i < 8; i++) {
+                        for(int j=0; j < 256; j++) {
+                            for (int l=0, rot = 2048-(no_rot / 2); l<no_rot; l++, rot += 2)
+                            {
+                                sum [l] += this->maska[i][j] ^ code.at((k + rot)% 2048).digitValue();
                             }
-                    }
-                    if (sum < minsum)
+                            k++;
+                        }
+                }
+                for (int i=0; i<no_rot; i++)
+                {
+                    qDebug() << "sum[" << i << "]" << sum[i];
+                    if (sum[i] < minsum)
                     {
-                        minsum = sum;
+                        minsum = sum[i];
                     }
                 }
                 //TODO rotacja
-                /*for(int i=0; i < size; i++) {
-			sum += c[i];	
-                }*/
+                qDebug() << minsum << ": MINSUM";
+
 		
                 this->hamming = (double) minsum/size;
                 qDebug() << this->hamming;
