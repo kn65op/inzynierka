@@ -159,9 +159,9 @@ class Image {
                         //int k = 1, number = 2*size+1; //CHANGE
                         int k = 10; //CHANGE
                         int xy0 = 0;
-                        double real[size][size];
-                        double imag[size][size];
-                        double sinusoid_real, sinusoid_imag, gausian, rest_real, rest_imag;
+                        float real[size][size];
+                        float imag[size][size];
+                        float sinusoid_real, sinusoid_imag, gausian;
                         double A, B;
 
 
