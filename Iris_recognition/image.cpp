@@ -151,7 +151,7 @@ class Image {
                         return result;
                 }
 
-                static IplImage** gabor_filter(IplImage *src, int size, double ab, double f, double w, double p, double theta) {
+                static IplImage** gabor_filter(IplImage *src, int size, double a, double b, double f, double w, double p, double theta) {
                         IplImage* result_real = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         IplImage* result_imag = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         IplImage** res = (IplImage **) malloc(sizeof(IplImage*)*2);
@@ -163,6 +163,8 @@ class Image {
                         double imag[size][size];
                         double sinusoid_real, sinusoid_imag, gausian;
                         double A, B;
+                        double a2 = a * a;
+                        double b2 = b * b;
 
 
                         //tmp
@@ -170,7 +172,7 @@ class Image {
   //                      double a = 0.25;
 //                        double b = 0.125;
                         //tmp
-                        float ab2 = ab*ab;
+                        double rest_real, rest_imag;
 
                         //oblicznie wartosci filtru gabora
                         for(int x=-size/2; x <= size/2; x++) {
@@ -183,7 +185,7 @@ class Image {
                                         B = -(x - xy0)*sin(theta) + (y - xy0)*cos(theta);
                                         B *= B;
 
-                                        gausian = k * exp(-M_PI * (A * (ab2) + (ab2) * B)); //rownanie 3
+                                        gausian = k * exp(-M_PI * (A * a2 + b2 * B)); //rownanie 3
                                         //rest_real = exp(-M_PI * pow(f/ab, 2)) * cos(w);
                                         //rest_imag = exp(-M_PI * pow(f/ab, 2)) * sin(w);
 
@@ -215,6 +217,9 @@ class Image {
                         IplImage* src32 = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_64F, 1);
                         cvConvertScale(src, src32, 1);
 
+                        //cvShowImage("src32", src32);
+                        //cvShowImage("src", src);
+
                         CvMat *filter_real = cvCreateMat(size, size, CV_64FC1);
                         cvSetData(filter_real, real, filter_real->step);
 
@@ -224,13 +229,28 @@ class Image {
                         cvFilter2D(src32, result_imag, filter_imag);
                         cvFilter2D(src32, result_real, filter_real);
 
-                        /*
-                        cvShowImage("src32", src32);
-                        cvShowImage("imag", result_imag);
-                        cvShowImage("real", result_real);
+/*                        std::ofstream ofi("res_imag.csv", std::ios::trunc);
+                        std::ofstream ofr("res_real.csv", std::ios::trunc);
+                        for (int i=0; i<result_real->height; i++)
+                        {
+                            for (int j=0; j<result_real->width ; j++)
+                            {
+                                //cvSetReal2D(result_real, i, j, cvGetReal2D(result_real, i, j)/20);
+                                ofr << cvGetReal2D(result_real, i, j) << ";";
+                                ofi << cvGetReal2D(result_imag, i, j) << ";";
+                            }
+                            ofi << "\n";
+                            ofr << "\n";
+                        }
+                        ofi.close();
+                        ofr.close();//*/
+
+  //                      cvShowImage("src32", src32);
+                        /*cvShowImage("imag", result_imag);
+                        cvShowImage("real", result_real);/*
                         cvShowImage("filterimag", filter_imag);
-                        cvShowImage("filterreal", filter_real);
-                        while (cvWaitKey(100) < 0); //*/
+                        cvShowImage("filterreal", filter_real);*/
+//                        while (cvWaitKey(100) < 0); //*/
 
                         res[0] = result_real;
                         res[1] = result_imag;

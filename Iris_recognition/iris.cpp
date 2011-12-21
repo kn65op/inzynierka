@@ -246,16 +246,17 @@ class Iris {
                 double freq  = 10 / M_PI; //CHANGE
                 double w;//, wr, wl;
 		double p = 0;
-                double ab = 0.525;
+                double a = 0.525;
+                double b = 0.525;
                 double theta = M_PI / 4;
-		
+
                 //filtracja dla 8 ró¿nych wartoœci k¹tów filtrów Gabora
 		for(int k=1; k <= 8; k++) {
                         w = (k-1)* M_PI / 8;
                         //wl = -1.4 * M_PI  + (k-1) * 0.1 * M_PI;
 			
-                        gabor_right = Image::gabor_filter(right, size, ab, freq, w, p, theta);
-                        gabor_left  = Image::gabor_filter(left,  size, ab, freq, w, p, theta);
+                        gabor_right = Image::gabor_filter(right, size, a, b, freq, w, p, theta);
+                        gabor_left  = Image::gabor_filter(left,  size, a, b, freq, w, p, theta);
                         this->make_mask(gabor_left, gabor_right, k);
                         cvReleaseImage(&(gabor_right[0]));
                         cvReleaseImage(&(gabor_right[1]));
@@ -286,6 +287,7 @@ class Iris {
                 int    no_rot = 9; //liczba porównañ (rotacji) powinno byæ nieparzyste (bo jest te¿ bez rotacji)
                 int    sum[no_rot];
                 int    minsum = 2048;
+                int    skok = 2;
 
                 for (int i=0; i<no_rot; i++)
                 {
@@ -293,7 +295,7 @@ class Iris {
                 }
                 for(int i=0; i < 8; i++) {
                         for(int j=0; j < 256; j++) {
-                            for (int l=0, rot = 2048-(no_rot / 2); l<no_rot; l++, rot += 2)
+                            for (int l=0, rot = 2048-((no_rot/2) * skok); l<no_rot; l++, rot += skok)
                             {
                                 sum [l] += this->maska[i][j] ^ code.at((k + rot)% 2048).digitValue();
                             }
