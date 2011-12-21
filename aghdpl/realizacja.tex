@@ -14,3 +14,14 @@ Część algorytmu odpowiedzialna za wykrycie źrenicy ma za zadanie odnalezieni
 \label{sec:wykrycieTeczowki}
 Algorytm odpowiedzialny za wykrycie tęczówki jest identyczny jak w pracy \cite{Gl11}.
 
+\section{Ekstrakcja cech tęczówki}
+\label{sec:ekstrakcja}
+Zadaniem części algorytmu odpowiedzialnej za ektrakcje cech tęczówki jest zmniejszenie ilości danych reprezentujących daną tęczówkę. Po tej operacji zostaje utworzony wektor o długości 2048 bitów. Dzięki temu można znacznie ograniczyć liczbę przechowywanych danych, potrzebnych do poprawnego rozpoznania osoby. Ważne jest, by otrzymany wektor był wyraźnie różniący się pomiędzy różnymi osobami oraz dla jednej osoby różne zdjęcia generowały podobny zestaw bitów. 
+
+W celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem (tu będą wzory ale na linuxie to zrobię)
+
+Obraz jest filtrowany z użyciem otrzymanych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy w pewnych obszarach. Obszary wybierane są na tęczówce w punktach zależnych od jej romiaru. Jest to spowodowane tym, że w zależności od jasności otocenia źrenica się zwiększa lub zmniejsza co powoduje zmniejszanie lub zwiększanie tęczówki. Otrzymana suma kodowana jest w ten sposób, że osobno rozpatrując część rzeczywistą i urojoną zapisywane jest 1 w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. W ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosujemy 8 róznych orientacji filtru Gabora to potrzebujemy 2048/(2*8) = 128 obszarów. 
+
+\section{Porówanie kodów tęczówki}
+\label{sec:porownanieKodow}
+W celu określenia czy dane dwie tęczówki należy do jednej osoby należy porównać otrzymane kody. Porównanie wykonywane jest za pomocą operacji XOR: WZór. Osoba może obracać głowę w czasie robienia różnych zdjęć, dlatego zastosowano rotację jednego kodu przy porównaniu. Sprawdzanych jest 9 różnych coś tam.
