@@ -6,12 +6,12 @@
 \section{Biometria oraz jej zastosowania w historii i współcześnie}
 \label{sec:biometria}
 
-Biometria jest, zgodnie z definicjami zaczerpniętymi z !!!![1]!!!! oraz !!!![2]!!!!, nauką obejmującą swoim zakresem badanie zmienności populacji organizmów. Wyniki tych badań, po opracowaniu z uwzględnieniem szerokiego zakresu metod statystyki matematycznej, wykorzystywane są w wielu różnych dziedzinach, między innymi antropologii, medycynie czy kryminalistyce. Z punktu widzenia techniki, zadaniem biometrii jest dokonywanie pomiarów istot żywych, w tym w szczególności ludzkich cech charakterystycznych, pozwalającym na jak najpełniej zautomatyzowane rozpoznawanie i weryfikację tożsamości osób ze względu na unikalność badanej cechy.
+Biometria jest, zgodnie z definicjami zaczerpniętymi z !!!![1]!!!! oraz !!!![2]!!!!, nauką obejmującą swoim zakresem badanie zmienności populacji organizmów. Wyniki tych badań, po opracowaniu z uwzględnieniem szerokiego zakresu metod statystyki matematycznej, wykorzystywane są w wielu różnych dziedzinach, między innymi antropologii, medycynie czy kryminalistyce. Z punktu widzenia techniki, zadaniem biometrii jest dokonywanie pomiarów istot żywych, w tym w szczególności cech charakterystycznych ludzi, które pozwoliłoby na automatyczne rozpoznawanie i weryfikację osób.
 
 Identyfikacja biometryczna uwzględnia w swoich metodach dwa rodzaje cech człowieka:
 \begin{itemize} 
 \item fizyczne – takie, jak na przykład tęczówka lub siatkówka oka, linie papilarne palców dłoni, układ naczyń krwionośnych, kształt dłoni, kształt ucha, twarz oraz rozkład temperatur na niej, charakterystyka uzębienia, DNA 
-\item behawioralne - takie, jak sposób poruszania się, podpis odręczny, sposób pisania na klawiaturze komputera czy cechy charakterystyczne głosu.
+\item behawioralne - takie, jak sposób poruszania się, dynamika podpisu, sposób pisania na klawiaturze komputera czy cechy charakterystyczne głosu.
 \end{itemize}
 
 Biometria miała zastosowanie już w przeszłości, na przykład poprzez pobieranie odcisków palców w celu potwierdzenia transakcji handlowych w czasach starożytnych, czy w trakcie rejestracji więźniów w XIX wieku. (Tutaj będzie niewielka zmiana oraz odwołanie do źródła) Współcześnie, jest to jedna z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, stosowana najczęściej jako forma kontroli dostępu i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka i efektywna forma odprawy paszportowej pasażerów na lotniskach i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób w bazie i monitoringu czasu pracy w firmach [1].
@@ -21,20 +21,24 @@ Metody identyfikacji biometrycznej różnią się, poza formą analizy oraz wari
 
 %---------------------------------------------------------------------------
 
-\section{Charakterystyka identyfikacji biometrycznej na bazie tęczówki oka}
+\section{Charakterystyka identyfikacji biometrycznej na podstawie tęczówki oka}
 \label{sec:zawartoscPracy}
 
 %W rodziale~\ref{cha:pierwszyDokument} przedstawiono podstawowe informacje dotyczące struktury dokumentów w \LaTeX u. Alvis~\cite{Alvis2011} jest językiem 
 
 Tęczówka ludzkiego oka jest jednym z najbardziej charakterystycznych elementów twarzy człowieka, indywidualnym i niepowtarzalnym ze względu na połączenie uwarunkowanego genetycznie koloru oraz złożonej struktury, wynikającej z różnorodnych procesów fizycznych i chemicznych, kształtujących ją w pierwszych latach ludzkiego życia. Cechy te oraz fakt, że jest ona  dostrzegalna z pewnej odległości, są wykorzystywane w procesie biometrycznej identyfikacji jednostki, który opiera się na zastosowaniu różnorodnych matematycznych metod rozpoznawania wzorców w algorytmach operujących na pobranym z użyciem specjalistycznej kamery obrazie oka.
-	Pobranie stabilnego i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery i sprzęt, projektowane specjalnie do tego typu identyfikacji, są z biegiem lat coraz lepiej przystosowane do automatycznego i bardzo dokładnego uzyskiwania obrazu, dlatego też możliwe jest, iż z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
-	Współcześnie stosowane kamery, wykorzystywane w celu pobrania obrazu oka, operują z użyciem podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone wykazuje skuteczność w pobieraniu tego typu obrazów ze względu na kilka czynników, między innymi dlatego, że w tym zakresie widma wyraźnie uwidaczniają się cechy posiadanej przez znaczną część populacji ludzkiej tęczówki w  odcieniach brązu, jak również ze względu na skuteczność w likwidowaniu powstałych na powierzchni oka odblasków światła z otoczenia i nieinwazyjność samej podczerwieni. Technika Visible Wavelength natomiast zachowuje informację na temat barwników przeważających na obrazie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety i wady; ich porównanie oraz próby połączenia w celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki i większej ilości niesionych wraz z tym informacji zostały opisane w \cite{Hos10}. 
-	Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu przy pomocy kamery, dzieli się następnie na kilka głównych etapów: \begin{itemize}
+
+Pobranie stabilnego i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery i sprzęt, projektowane specjalnie do tego typu identyfikacji, są  coraz lepiej przystosowane do autoamtycznej akwizycji obrazu wysokiej rozdzielczości, dlatego też możliwe jest, iż z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
+
+Współcześnie stosowane kamery, wykorzystywane w celu pobrania obrazu oka, operują z użyciem podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone wykazuje skuteczność w pobieraniu tego typu obrazów ze względu na kilka czynników, między innymi dlatego, że w tym zakresie widma wyraźnie uwidaczniają się cechy posiadanej przez znaczną część populacji ludzkiej tęczówki w  odcieniach brązu, jak również ze względu na skuteczność w likwidowaniu powstałych na powierzchni oka odblasków światła z otoczenia i nieinwazyjność samej podczerwieni. Technika Visible Wavelength natomiast zachowuje informację na temat barwników przeważających na obrazie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety i wady; ich porównanie oraz próby połączenia w celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki i większej ilości niesionych wraz z tym informacji zostały opisane w pracy \cite{Hos10}. 
+
+Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu przy pomocy kamery, dzieli się następnie na kilka głównych etapów: \begin{itemize}
 \item segmentacja, mająca na celu wyodrębnienie wewnętrznej i zewnętrznej granicy tęczówki na obrazie oka, wraz z szeregiem operacji, mających za zadanie wyeliminowanie zakłóceń na obrazie w postaci otaczających tęczówkę rzęs, powiek czy powstałych w wyniku akwizycji obrazu odblasków
 \item normalizacja, służąca do kompensacji deformacji tęczówki w związku z jej ewentualnym zwężeniem lub rozszerzeniem 
 \item ekstrakcja cech tęczówki w celu uzyskania unikalnego jej kodu, podlegającego późniejszej analizie z zastosowaniem różnorodnych kryteriów, decydujących o identyfikacji i pozytywnym lub negatywnym wyniku weryfikacji tożsamości danej osoby.
 \end{itemize}
-	Różnorodność metod segmentacji obszaru tęczówki oraz ekstrakcji cech i porównywania kodów została opisana w dalszych częściach pracy. Nie pokrywa ona oczywiście wszystkich metod obecnie znanych w tej dziedzinie, jednakże w niniejszej pracy starano się scharakteryzować jak największy ich podzbiór w oparciu o dostępną literaturę.
+
+Różnorodność metod segmentacji obszaru tęczówki oraz ekstrakcji cech i porównywania kodów została opisana w dalszych częściach pracy. Nie pokrywa ona oczywiście wszystkich metod obecnie znanych w tej dziedzinie, jednakże w niniejszej pracy starano się scharakteryzować jak największy ich podzbiór w oparciu o dostępną literaturę.
 
 
 \section{Metody segmentacji obszaru tęczówki oka}
@@ -50,29 +54,16 @@ $ x,y $ - położenie piksela na obrazie \\
 $ x_{0}, y_{0} $ - położenie środka okręgu na obrazie \\
 $ r $ - promień okręgu \\
 $ I(x,y) $ - jasność piksela na obrazie\\
-$ G_{\sigma}(r) $ - roksład Gaussa\\
+$ G_{\sigma}(r) $ - rozkład Gaussa\\
 
-Dzięki temu możemy odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a tęczówką oraz między tęczówką a rogówką. Częste jest w niej zastosowanie łuku dla szukania granicy między tęczówką a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]
+Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a tęczówką oraz między tęczówką a rogówką. Częste jest w niej zastosowanie łuku dla szukania granicy między tęczówką a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]
 
-Następną metodą jest metoda Wildes'a\cite{Wildes}, która jest odmienna od patentu Daugmana. Jej algorytm jest realizowany w dwóch krokach. Pierwszym jest jest zamiana oryginalnego obrazu na obraz binarny z wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą operatora Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformata Hough'a, dzięki której znajdujemy środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
+Następną metodą jest metoda Wildes'a\cite{Wildes}, która jest odmienna od patentu Daugmana. Jej algorytm jest realizowany w dwóch krokach. Pierwszym jest zamiana oryginalnego obrazu na obraz binarny z wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą operatora Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformata Hough'a, dzięki której można znaleźć środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
 
-Kolejnym sposobem segmentacji tęczówki jest metoda Camus'a i Wildes'a\cite{Camus}. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. W tym przypadku funkcją, którą maksymalizujemy jest funkcja \ref{eq:camus_wildes}. 
+Kolejnym sposobem segmentacji tęczówki jest metoda Camus'a i Wildes'a \cite{Camus}. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. W tym przypadku funkcją, którą maksymalizujemy jest funkcja \ref{eq:camus_wildes}. 
 \begin{equation}
-\label{eq:daugman}
+\label{eq:camus_wildes}
 C=\sum_{\theta =1}^{n} ((n-1)\left|\left| g_{\theta,r} \right|\right| - \sum_{\varphi=\theta + 1 } ^{n} \left| \left| g_{\theta,r} - g_{\varphi,r} \right| \right| - \frac{I_{\theta,r}}{n}  )
 \end{equation}
 Ta metoda jest skuteczna głównie w przypadku, gdzie granica między tęczówką oraz rogówką oraz między tęczówką a źrenicą jest wyraźna oraz nie ma odblasków lub szumu.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
