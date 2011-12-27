@@ -70,10 +70,11 @@ Ta metoda jest skuteczna głównie ~w przypadku, gdzie granica między tęczówk
 \section{Metody generacji kodu tęczówki}
 \label{sec:metodyGeneracjiKodu}
 
-Istnieje wiele metod generacji kodu tęczówki. W patencie Daugmana zastosowano filtrację za pomocą filtrów Gabora \cite{Daugman}, których definicja jest przedstawiona w równaniu \ref{eq:gabor}.
+Istnieje wiele metod generacji kodu tęczówki. W patencie Daugmana zastosowano filtrację za pomocą filtrów Gabora \cite{Daugman}, których definicja we współrzędnych biegunowych jest przedstawiona w równaniu \ref{eq:gabor}.
 \begin{equation}
-\label{eq:daugman}
-max_{r,x_{0},y_{0}}\left| G_{\sigma}(r) \frac{\delta}{\delta r}\int_{r,x_{0},y_{0}} \frac{~i(x,y)}{2\pi r}ds \right|
+G(\ro,\theta) = e^{-2\pi i\omega }
+\label{eq:gabor}
+
 \end{equation}
 Wybierane są punkty na tęczówce, w sposób pozwalający na poprawną analizę w przypadku zmianu jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od janości otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane z użyciem filtrów Gabora, dla różnych kierunków. W ten sposób otrzymujemy (dla jednego punktu) liczbę zespoloną. Kodujemy otrzymaną liczbę w następujący sposób: kodujemy 1 jeśli dana część jest większa od zera lub 0 jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle o długości 2048 bitów, jest to zależne od ilości wybranych punktów).
 
