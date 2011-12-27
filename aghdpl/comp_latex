@@ -2,6 +2,7 @@
 
 if [ "$#" -lt 1 ]; then
 	echo "Usage: $0 nazwa_pliku_bez_rozszerzenia"
+	echo "Program kompiluje zrodla latexa razem z bibliografia do pliku pdf. Wystarczy jednokrotne użycie programu (kompilacja jest przeprowadzana odpowiedznią ilość razy)."
 	exit 0
 fi
 

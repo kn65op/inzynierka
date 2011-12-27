@@ -67,3 +67,23 @@ C=\sum_{\theta =1}^{n} ((n-1)\left|\left| g_{\theta,r} \right|\right| - \sum_{\v
 \end{equation}
 Ta metoda jest skuteczna głównie ~w przypadku, gdzie granica między tęczówką oraz rogówką oraz między tęczówką ~a źrenicą jest wyraźna oraz nie ma odblasków lub szumu.
 
+\section{Metody generacji kodu tęczówki}
+\label{sec:metodyGeneracjiKodu}
+
+Istnieje wiele metod generacji kodu tęczówki. W patencie Daugmana zastosowano filtrację za pomocą filtrów Gabora \cite{Daugman}, których definicja we współrzędnych biegunowych jest przedstawiona w równaniu \ref{eq:gabor}.
+\begin{equation}
+\label{eq:gabor}
+G(r,\theta) = e^{-2\pi i\omega (\theta - \theta 0)_{e}-(r - r0)2/a2_{e}-(\theta-\theta 0 )2/\beta 2}
+\end{equation}
+gdzie:\\
+$r$ - promień we współrzędnych biegunowych \\
+$\theta$ - kąt w radianach we współrzędnych biegunowych \\
+$ \omega $ - częstotliwość \\
+$ \alpha, \beta $ - stałe \\
+Wybierane są punkty na tęczówce, w sposób pozwalający na poprawną analizę w przypadku zmianu jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od janości otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane z użyciem filtrów Gabora, dla różnych kierunków. W ten sposób otrzymujemy (dla jednego punktu) liczbę zespoloną. Kodujemy otrzymaną liczbę w następujący sposób: kodujemy 1 jeśli dana część jest większa od zera lub 0 jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle o długości 2048 bitów, jest to zależne od ilości wybranych punktów).
+
+Inne podjeście stosują Sun i Tan w swojej pracy \cite{TaSu09}. Proponują użycie pomiaru porządkowego (ordinal measures) do rozpoznawania na podstawie tęczówki. Wybiera się dwa obszary, oblicza sumę jasności pikseli w tych obszarach i w zależności od tego, który obszar ma wyższą sumę to koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
+
+\section{Metody porówniania kodów tęczówek}
+\label{sec:metodyPorownaniaKodow}
+Główną metodą stosowana do porównywania kodów tęczówek jest, zaproponowana przez Daugmana, liczenie odległości Hamminga. !!TRZEBA POPRAWIĆ!!. Polega na liczeniu ilości bitów, których wartości nie zgadzają się w dwóch porywnywanych kodach.
