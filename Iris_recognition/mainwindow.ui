@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Iris Recognition</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLineEdit" name="nameField">
@@ -301,6 +301,9 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
    <widget class="QOpenCVWidget" name="cameraWidget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>309</x>
