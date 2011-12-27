@@ -74,4 +74,13 @@ Obraz jest filtrowany ~z użyciem otrzymanych filtrów. Po tym zabiegu otrzymuje
 
 \section{Porówanie kodów tęczówki}
 \label{sec:porownanieKodow}
-~w celu określenia czy dane dwie tęczówki należy do jednej osoby należy porównać otrzymane kody. Porównanie wykonywane jest za pomocą operacji XOR: WZór. Osoba może obracać głowę ~w czasie robienia różnych zdjęć, dlatego zastosowano rotację jednego kodu przy porównaniu. Sprawdzanych jest 9 różnych coś tam.
+~W celu określenia czy dane dwie tęczówki należy do jednej osoby należy porównać otrzymane kody. Porównanie wykonywane jest za pomocą operacji XOR zgodnie ze wzorem \ref{eq:Hamming}.
+\begin{equation}
+\label{eq:Hamming}
+H = \sum \frac{XOR(A,B)}{2048}
+\end{equation}
+gdzie:
+$A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
+Po tej operacji wartość $H$ określa procent różnych pikseli dla dwóch różnych kodów.
+
+Osoba może mieć trochę obróconą głowę ~w czasie robienia zdjęcia służącego identyfikacji ~w stosunku do zdjęcia, ~z którego powstał zapisany kodu ~w bazie. ~W celu zminimalizowania błędu stosowana jest rotacja jednego z porównywanych kodów. Kod jest przesuwany ~w obydwie strony ~o dwa piksele (ponieważ ~z jednej lokalizacji na obrazie otrzymujemy dwa bity kodu). Wykonywanych jest 9 porównań kodów. Wybierana jest najniższa wyliczona wartość odległości Hamminga. Ustalonym progiem zgodności dwóch kodów jest 0.32 \cite{Daugman}.
