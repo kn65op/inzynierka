@@ -45,3 +45,4 @@ Iris_recognition-build*
 *.pdf
 *.bbl
 *.blg
+*.out
