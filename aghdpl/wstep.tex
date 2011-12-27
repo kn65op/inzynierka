@@ -21,7 +21,7 @@ W porównaniu ~z tradycyjnymi metodami identyfikacji bądź weryfikacji tożsamo
 \end{itemize}
 metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu, lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła w posiadanie danych dostępowych w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
 
-Biometria miała zastosowanie już ~w przeszłości, na przykład poprzez pobieranie odcisków palców ~w celu potwierdzenia transakcji handlowych ~w czasach starożytnych, czy ~w trakcie rejestracji więźniów ~w XIX wieku \cite{Bio02}\cite{HF1}. Współcześnie, jest to jedna ~z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, której rozwiązania służą najczęściej jako forma kontroli dostępu ~i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych ~i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka ~i efektywna forma odprawy paszportowej pasażerów na lotniskach ~i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób ~w bazie ~i monitoringu czasu pracy ~w firmach \cite{Bio01}cite{Bio02}.
+Biometria miała zastosowanie już ~w przeszłości, na przykład poprzez pobieranie odcisków palców ~w celu potwierdzenia transakcji handlowych ~w czasach starożytnych, czy ~w trakcie rejestracji więźniów ~w XIX wieku \cite{Bio02}\cite{HF1}. Współcześnie, jest to jedna ~z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, której rozwiązania służą najczęściej jako forma kontroli dostępu ~i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych ~i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka ~i efektywna forma odprawy paszportowej pasażerów na lotniskach ~i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób ~w bazie ~i monitoringu czasu pracy ~w firmach \cite{Bio01}\cite{Bio02}.
 
 Metody identyfikacji biometrycznej różnią się, poza formą analizy oraz wariantem analizowanych cech, skutecznością poprawności rozpoznawania danej osoby na podstawie próbek danych opisujących jej cechy, wymaganym stopniem zaangażowania analizowanej osoby ~w proces zbioru danych koniecznych do dokonania pomiarów, oraz odpornością na oszustwa. Porównanie kilku metod biometrycznych zostało omówione ~w \cite{Gl11}. ~z uwagi na dużą skuteczność ~i względnie prostą mierzalność, ~w niniejszej pracy skupiono się na identyfikacji w oparciu ~o obraz tęczówki oka.
 
@@ -52,10 +52,13 @@ Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu prz
 \end{itemize}
 
 Schemat przedstawiający działanie typowego systemu identyfikacji biometrycznej na podstawie tęczówki oka znajduje się na diagramie ~\ref{fig:identyfikacja}. Został on utworzony w oparciu ~o ogólne schematy działania typowych systemów identyfikacji biometrycznej, umieszczonych w ~\cite{Bio02} ~i \cite{Jain00}.
+\begin{center}
 \begin{figure}
 \label{fig:identyfikacja}
-\includegraphics{diagram.jpg}
+\includegraphics{schemat.jpg}
+\caption{Schemat typowego systemu identyfikacji biometrycznej}
 \end{figure}
+\end{center}
 
 Różnorodność metod segmentacji obszaru tęczówki oraz ekstrakcji cech ~i porównywania kodów została opisana ~w dalszych częściach pracy. Nie pokrywa ona oczywiście wszystkich metod obecnie znanych ~w tej dziedzinie, jednakże ~w niniejszej pracy starano się scharakteryzować jak największy ich podzbiór ~w oparciu ~o dostępną literaturę.
 
@@ -75,7 +78,15 @@ $ r $ - promień okręgu \\
 $ ~i(x,y) $ - jasność piksela na obrazie\\
 $ G_{\sigma}(r) $ - rozkład Gaussa\\
 
-Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą ~a tęczówką oraz między tęczówką ~a rogówką. Częste jest ~w niej zastosowanie łuku dla szukania granicy między tęczówką ~a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]
+Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą ~a tęczówką oraz między tęczówką ~a rogówką. Częste jest ~w niej zastosowanie łuku dla szukania granicy między tęczówką ~a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]. Po skutecznie zrealizowanym algorytmie otrzymuje obraz podobny do przedstawionego na rysunku \ref{fig:przykladDaugman}.
+
+\begin{center}
+\begin{figure}
+\label{fig:przykladDaugman}
+\includegraphics[scale=0.5]{calosc.png}
+\caption{Obraz po realizacji algorytmu Daugmana}
+\end{figure}
+\end{center}
 
 Następnym rozwiązaniem jest metoda Wildes'~a \cite{Wildes}, która jest odmienna od patentu Daugmana. Jej algorytm jest realizowany ~w dwóch krokach. Pierwszym jest zamiana oryginalnego obrazu na obraz binarny ~z wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą algorytmu Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformacja Hough'~a [9], dzięki której można znaleźć środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
 
@@ -99,7 +110,15 @@ $r$ - promień we współrzędnych biegunowych \\
 $\theta$ - kąt w radianach we współrzędnych biegunowych \\
 $ \omega $ - częstotliwość \\
 $ \alpha, \beta $ - stałe \\
-Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera, lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od ilości wybranych punktów).
+Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera, lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od ilości wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
+
+\begin{center}
+\begin{figure}
+\label{fig:przykladPunkty}
+\includegraphics[scale=0.5]{punkty.png}
+\caption{Przykładowy wybór punktów}
+\end{figure}
+\end{center}
 
 Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują użycie pomiaru porządkowego (ordinal measures) do rozpoznawania na podstawie tęczówki. Wybiera się w nim dwa obszary, oblicza sumę jasności pikseli w tych obszarach ~i w zależności od tego, który obszar ma wyższą sumę, koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
 
