@@ -30,7 +30,7 @@ Zadaniem części algorytmu odpowiedzialnej za ektrakcje cech tęczówki jest zm
 
 ~w celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem (tu będą wzory ale na linuxie to zrobię)
 
-Obraz jest filtrowany ~z użyciem otrzymanych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy ~w pewnych obszarach. Obszary wybierane są na tęczówce ~w punktach zależnych od jej romiaru. Jest to spowodowane tym, że ~w zależności od jasności otocenia źrenica się zwiększa lub zmniejsza co powoduje zmniejszanie lub zwiększanie tęczówki. Otrzymana suma kodowana jest ~w ten sposób, że osobno rozpatrując część rzeczywistą ~i urojoną zapisywane jest 1 ~w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. ~w ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosujemy 8 róznych orientacji filtru Gabora to potrzebujemy 2048/(2*8) = 128 obszarów. 
+Obraz jest filtrowany ~z użyciem otrzymanych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy ~w pewnych obszarach. Obszary wybierane są na tęczówce ~w punktach zależnych od jej romiaru. Jest to spowodowane tym, że ~w zależności od jasności otocenia źrenica się zwiększa lub zmniejsza co powoduje zmniejszanie lub zwiększanie tęczówki. Otrzymana suma kodowana jest ~w ten sposób, że osobno rozpatrując część rzeczywistą ~i urojoną zapisywane jest 1 ~w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. ~w ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosujemy 8 róznych orientacji filtru Gabora to potrzebujemy 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc potrzeba po 64 obszary na jedną stronę.
 
 \section{Porówanie kodów tęczówki}
 \label{sec:porownanieKodow}
