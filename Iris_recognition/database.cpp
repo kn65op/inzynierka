@@ -8,10 +8,15 @@ Database::Database() {
     db.setPassword("iris");*/
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("localhost");
-    db.setDatabaseName("iris2.sqlite3");
+    db.setDatabaseName("iris.sqlite3");
     if (!db.open()) qDebug() << "Failed to connect to mysql" ; //TODO: dodaæ informacjê u¿ytkownikowi, ¿e jest b³¹d z po³¹czeniem
+}
+
+void Database::createDB()
+{
     //Przy pierwszym uruchomieniu, aby utworzyæ bazê nale¿y odkomentowaæ poprzedni¹ linijkê
-    //db.exec("CREATE TABLE users (id integer primary key autoincrement, name TEXT, surname TEXT, groupa TEXT, faculty TEXT, iris_code TEXT);");
+    //
+    db.exec("CREATE TABLE users (id integer primary key autoincrement, name TEXT, surname TEXT, groupa TEXT, faculty TEXT, iris_code TEXT);");
 }
 
 bool Database::insertUser(QString name, QString surname, QString group, QString faculty, QString iris_code) {
@@ -33,13 +38,13 @@ bool Database::insertUser(QString name, QString surname, QString group, QString 
     }
 }
 
-QSqlQuery searchUsers() {
-    QSqlQuery query("SELECT `id`, `iris_code` FROM users");
-    query.exec();
+QSqlQuery * Database::searchUsers() {
+    QSqlQuery *query = new QSqlQuery("SELECT `id`, `iris_code`, `name`, `surname` FROM users");
+    query->exec();
 
-    if( query.lastError().isValid()) {
-        qDebug() << query.lastError().text();
-        qDebug() << query.lastQuery();
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
     }
 
     return query;
