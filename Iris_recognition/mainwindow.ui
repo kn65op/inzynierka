@@ -301,6 +301,9 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
    <widget class="QOpenCVWidget" name="cameraWidget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>309</x>
