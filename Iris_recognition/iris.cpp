@@ -721,6 +721,11 @@ while (cvWaitKey(1000) < 0);*/
                     qDebug() << filename;
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
                     cvThreshold(image, bin, 254, 1, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+                    /*//ERTMPPPPPP
+                    IplImage *tmpppp = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
+                    cvThreshold(bin, tmpppp, 0, 255, CV_THRESH_BINARY);
+                    cvSaveImage("binaryzacja.jpg", tmpppp);
+                    //ERTMPPPPPPP*/
                     int dark_count = 0;
                     bool no_found = true;
                     for (int i=20; i<bin->height - 20 && no_found; i++) //iteracja po kolumnach
@@ -801,6 +806,9 @@ while (cvWaitKey(1000) < 0);*/
                             cvSetReal2D(bin, pupil_y, pupil_x + i, 255);
                         }
                     }
+                    /*//ERTMP
+                    cvSaveImage("odblask.jpg", bin);
+                    //ERTMP*/
                     find_center(bin);
                     cvReleaseImage(&bin);
                 }
