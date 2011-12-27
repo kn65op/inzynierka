@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
   //      camera = cvCreateCameraCapture(-1);
     //    assert(camera);
         image = 0;
+        ui->cameraWidget->setVisible(false);
     }
 
 MainWindow::~MainWindow()
@@ -125,6 +126,7 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
 void MainWindow::on_activeCameraButton_clicked()
 {
     startTimer(40);
+    ui->cameraWidget->setVisible(true);
     //connect(&thread, SIGNAL(setPixmap(const QPixmap&)), ui->imageLabel, SLOT(setPixmap(const QPixmap&)));
     //thread.start();
 }
@@ -139,6 +141,7 @@ void MainWindow::on_choosePhotoButton_clicked()
         QPixmap img = QPixmap(filepath);
         ui->imageLabel->setPixmap(img.scaled(700, 525));
         image_loaded = true;
+        ui->cameraWidget->setVisible(false);
     }
 }
 
