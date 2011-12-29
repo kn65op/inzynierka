@@ -15,44 +15,40 @@ Wadą zastosowania kartonowego pudła jest zmniejszenie jasności uzyskiwanych o
 \section{Wykrycie źrenicy}
 \label{sec:wykrycieZrenicy}
 Część algorytmu odpowiedzialna za wykrycie źrenicy ma za zadanie odnalezienie źrenicy na obrazie oraz opisanie kształtu źrenicy jako okrąg. Zadanie to jest realizowane ~z wykorzystaniem wcześniej wspomnianego odblasku pochodzącego od lampy, który powinien znajdować się na środku źrenicy. Odblask jest jednym ~z najjaśniejszych punktów na obrazie. ~w związku ~z tym wykrycie odblasku odbywa się ~z wykorzystaniem binaryzacji ~z progiem 254. Po tej operacji na obrazie zostają tylko piksele najjaśniejsze (jak na rysunku \ref{fig:binaryzacja}). Niestety na wielu ujęciach odblask na źrenicy nie jest jedynym, który jest widoczny na obrazie. Pozostałe mogą znajdować się ~w różnych miejscach: na białku oka lub na skórze. Można ten fakt wykorzystać analizując otoczenie znalezionych odblasków. 
-
 \begin{figure}
-\label{fig:binaryzacja}
 \begin{center}
 \includegraphics[scale=0.5]{binaryzacja.jpg}
 \caption{Obraz po binaryzacji, jasne punktu to znalezione odblaski}
+\label{fig:binaryzacja}
 \end{center}
 \end{figure}
 
 Interesujący nas odblask znajduje się ~w otoczeniu źrenicy, ~a więc jednego ~z najciemniejszych obszarów obrazu, otoczenie pozostałych odblasków jest o wiele jaśniejsze (skóra lub białko oka). Dlatego algorytm analizuje otoczenie każdego odblasku. Badanych jest 20 pikseli ~w odległości od 10 do 20 pikseli. Wybierany pierwszy odblask, ~w którego otoczeniu większość pikseli ma jasność poniżej 50. Po znalezieniu jednego piksela odblasku łatwo można znaleźć cały odblask. Jest to realizowane przez analizę otoczenia znalezionego piksela (~w odległości nie większej niż 25 pikseli) ~i klasyfikowaniu ich jako element odblasku jeśli ich jasność jest większa niż 240. Przykład wyniku przeprowadzonych operacji jet przedstawiony na rysunku \ref{fig:dobryOdblask}.
-
 \begin{figure}
-\label{fig:dobryOdblask}
 \begin{center}
 \includegraphics[scale=0.5]{odblask.jpg}
 \caption{Obraz po realizacji algorytmu poszukiwania odblasku na źrenicy}
+\label{fig:dobryOdblask}
 \end{center}
 \end{figure}
 
 Po znalezieniu wszystkich pikseli należących do odblasku jego kształt jest aproksymowany kołem, którego środek jest przyjmowany jako środek źrenicy. Mając środek źrenicy można zastosować metodę ,,eksplodujących okręgów'' ~z patentu Daugmana. Szukane jest największe zmniejszenie się jasności pikseli na rozszerzającym się okręgu (~z uwagi na to, że źrenica jest ciemna ~a tęczówka jest jaśniejsza). Znaleziony okrąg określa źrenicę. Przykład obrazu z wykrytą źrenicą jest przedstawiony na rysunku \ref{fig:zrenicaNasza}.
-
 \begin{figure}
-\label{fig:zrenicaNasza}
 \begin{center}
 \includegraphics[scale=0.5]{zrenica.jpg}
 \caption{Wykryta źrenica}
+\label{fig:zrenicaNasza}
 \end{center}
 \end{figure}
 
 \section{Wykrycie tęczówki}
 \label{sec:wykrycieTeczowki}
 Algorytm odpowiedzialny za wykrycie tęczówki jest identyczny jak ~w pracy \cite{Gl11}. Przykładowy obraz z wykrytą tęczówką jest przedstawiony na ryskunku \ref{fig:teczowkaNasza}.
-
 \begin{figure}
-\label{fig:teczowkaNasza}
 \begin{center}
 \includegraphics[scale=0.5]{teczowka.jpg}
 \caption{Obraz po realizacji algorytmu poszukiwania granic tęczówki}
+\label{fig:teczowkaNasza}
 \end{center}
 \end{figure}
 
@@ -63,12 +59,11 @@ Zadaniem części algorytmu odpowiedzialnej za ektrakcje cech tęczówki jest zm
 ~w celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem (tu będą wzory ale na linuxie to zrobię)
 
 Obraz jest filtrowany ~z użyciem otrzymanych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy ~w pewnych obszarach. Obszary wybierane są na tęczówce ~w punktach zależnych od jej rozmiaru. Jest to spowodowane tym, że ~w zależności od jasności otoczenia źrenica się zwiększa lub zmniejsza co powoduje zmniejszanie lub zwiększanie tęczówki. Otrzymana suma kodowana jest ~w ten sposób, że osobno rozpatrując część rzeczywistą ~i urojoną zapisywane jest 1 ~w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. ~w ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosujemy 8 różnych orientacji filtru Gabora to potrzebujemy 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc potrzeba po 64 obszary na jedną stronę. Przykład wyznaczonych obszarów przeznaczony jest na rysunku \ref{fig:obszaryNasze}.
-
 \begin{figure}
-\label{fig:obszaryNasze}
 \begin{center}
 \includegraphics[scale=0.5]{obszary.jpg}
 \caption{Obraz z zaznaczonymi obszarami używanymi do tworzenie kodu tęczówki}
+\label{fig:obszaryNasze}
 \end{center}
 \end{figure}
 

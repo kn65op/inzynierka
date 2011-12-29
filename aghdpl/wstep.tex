@@ -54,9 +54,9 @@ Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu prz
 Schemat przedstawiający działanie typowego systemu identyfikacji biometrycznej na podstawie tęczówki oka znajduje się na diagramie ~\ref{fig:identyfikacja}. Został on utworzony w oparciu ~o ogólne schematy działania typowych systemów identyfikacji biometrycznej, umieszczonych w ~\cite{Bio02} ~i \cite{Jain00}.
 \begin{center}
 \begin{figure}
-\label{fig:identyfikacja}
 \includegraphics{schemat.jpg}
 \caption{Schemat typowego systemu identyfikacji biometrycznej}
+\label{fig:identyfikacja}
 \end{figure}
 \end{center}
 
@@ -79,12 +79,11 @@ $ ~I(x,y) $ - jasność piksela na obrazie\\
 $ G_{\sigma}(r) $ - rozkład Gaussa\\
 
 Dzięki temu możemy odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą ~a tęczówką oraz między tęczówką ~a rogówką. Częste jest ~w niej zastosowanie łuku dla szukania granicy między tęczówką ~a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]. Po skutecznie zrealizowanym algorytmie otrzymuje obraz podobny do przedstawionego na rysunku \ref{fig:przykladDaugman}.
-
 \begin{center}
 \begin{figure}
-\label{fig:przykladDaugman}
 \includegraphics[scale=0.5]{calosc.png}
 \caption{Obraz po realizacji algorytmu Daugmana}
+\label{fig:przykladDaugman}
 \end{figure}
 \end{center}
 
@@ -111,12 +110,11 @@ $\theta$ - kąt w radianach we współrzędnych biegunowych \\
 $ \omega $ - częstotliwość \\
 $ \alpha, \beta $ - stałe \\
 Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera, lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od ilości wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
-
 \begin{center}
 \begin{figure}
-\label{fig:przykladPunkty}
 \includegraphics[scale=0.5]{punkty.png}
 \caption{Przykładowy wybór punktów}
+\label{fig:przykladPunkty}
 \end{figure}
 \end{center}
 
@@ -124,4 +122,4 @@ Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują uż
 
 \section{Metody porównania kodów tęczówek}
 \label{sec:metodyPorownaniaKodow}
-Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa ilości bitów, których wartości są różne w dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota inplementacji, dlatego została użyta w naszej pracy. Inne metody są przedstawione w pracy \cite{KoGł}.
+Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa ilości bitów, których wartości są różne w dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota inplementacji, dlatego została użyta w naszej pracy. Inne metody są przedstawione w pracy \cite{KoGl}.
