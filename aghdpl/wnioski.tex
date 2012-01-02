@@ -6,12 +6,26 @@ Można pomyśleć o tytułach~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!DASDSfabshjdbs 
 
 \section{Testy systemu}
 \label{sec:testy}
-Celem implementacji systemu służącego do identyfikacji biometrycznej na podstawie tęczówki oka jest stwierdzenie, że tęczówki są identyczne wtedy ~i tylko wtedy, jeśli obie tęczówki należą do jednej osoby. W związku ~z tym taki system może pełnić dwa błędy:
+Celem implementacji systemu służącego do identyfikacji biometrycznej na podstawie tęczówki jest stwierdzenie, że tęczówki są identyczne wtedy ~i tylko wtedy, jeśli obie tęczówki należą do jednej osoby. W związku ~z tym taki system może pełnić dwa błędy:
 \begin{itemize}
 \item fałszywa identyfikacja - ~w sytuacji, gdy dwa analizowane zdjęcia przedstawiają tęczówki należące do różnych osób ~a system określi, że są identyczne,
 \item fałszywe odrzucenie - ~w sytuacji, gdy dwa analizowane zdjęcia przedstawiają tęczówki należące do tej samej osoby ~a system określi je jako różne.
 \end{itemize}
-Sytuacja fałszywej identyfikacji jest groźniejsza, ~a także trudniejsza do eliminacji lub zmniejszenia prawdopodobieństwa. 
+Sytuacja fałszywej identyfikacji jest groźniejsza, ~a także trudniejsza do eliminacji lub zmniejszenia prawdopodobieństwa. ~W celu zmniejszenia prawdopodobieństwa tego przypadku należałoby każdemu użytkownikowi robić dwa zdjęcia tęczówki ~i akceptować tylko w przypadku pozytywnej weryfikacji obu zdjęć. Fałszywe odrzucenie jest mniej groźne oraz łatwo można zrobić drugie zdjęcie tęczówki osoby, która została fałszywie odrzucona. ~W związku ~z tym celem było osiągnięcie jak najmniejszej liczby fałszywych identyfikacji, nawet kosztem zwiększenia liczby fałszywych odrzuceń.
+
+TUTAJ TABELA Z WYNIKAMI I OPIS TABELI.
 
 \section{Wnioski}
 \label{sec:wnioski}
+
+Pomyślnie udało się zrealizować główne zadanie jakim było stworzenie aplikacji pozwalającej na identyfikację osób na podstawie tęczówki. System spełnia stawiane mu wymagania odnośnie poprawności rozpoznania osób. Nie jest to oczywiście system idealny, posiada kilka wad.
+
+Głównym problemem jest pierwszy etap: akwizycja obrazu. Obraz uzyskany jest dość dobrej jakości, jednak sposób uzyskania obrazu (stanowisko, pozycja badanego). Utrudnia to ~w znacznym stopniu zastosowanie systemu ~w różnych miejscach, aby móc skorzystać ~z niego ~w innym miejscu, poza przeniesieniem wymaganych elementów, należałoby również ustawić wszystko ~w odpowiednim miejscu. Byłoby to czasochłonne oraz mogłoby się okazać, że nie ~w każdym pomieszczeniu można zestawić stanowisko. Dodatkowo ostrość ustawiana jest ręcznie co utrudnia korzystanie ~z urządzenia. ~W celu poprawy należało zainwestować ~w lepsze urządzenia: kamerę potrafiącą rejestrować ~w podczerwieni (co pozwoliłoby na ograniczenie odblasków) oraz obiektyw ~z automatycznym ustawianiem ostrości.
+
+~W przypadku zmiany kamery mogłoby się okazać, że sposób znajdowania źrenicy ~i tęczówki wymagałby modyfikacji. Przy obecnie wykorzystywanych te algorytmy działają poprawnie oraz ~w pełni automatycznie.
+
+Baza danych na chwilę obecną jest dobrze zaprojektowana. Podczas używania ~z uwagi na zmianę czynników zewnętrznych może się okazać, że potrzebne będą nowe pola lub niektóre okażą się niepotrzebne. ~Z uwagi na odpowiedni podział na tabele nie powinno to przysparzać większych kłopotów.
+
+
+
+
