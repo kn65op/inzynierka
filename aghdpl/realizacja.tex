@@ -12,6 +12,9 @@ Kolejnym problemem, który należało pokonać były odblaski na powierzchni oka
 
 Wadą zastosowania kartonowego pudła jest zmniejszenie jasności uzyskiwanych obrazów. Do rozjaśnienia obrazu użyto oświetlacza IR oraz lampy umieszczonej na kamerze, która oświetla oko badanej osoby. Taka lampa również tworzy odblask, lecz ~w tym wypadku odblask może być wykorzystany przez algorytm wykrywający źrenicę. Jest to możliwe, ponieważ ~z uwagi na umiejscowienie lampy odblask powstaje na środku źrenicy, dzięki czemu jest łatwo znaleźć ten środek. Obraz jest zapisywany ~w skali szarości.
 
+Ponieważ obrazy osiągnięte ~z użyciem pierwszej dostępnej kamery nie były zadowalające należało użyć innej kamery. Głównym problemem była mała rozdzielczość kamery oraz mała jasność ~w pudle. Przy użyciu kamery !!!Nazwa!! te problemy zostały zniwelowane. Kamera ma ~o wiele większą rozdzielczość. Ponadto problem zbyt małej jasności został zniwelowany tylko ~z użyciem oświetlacza IR. Nie było potrzeby użycia innej lampy, co ułatwiło dalsze przetwarzanie zarejestrowanych obrazów.
+
+
 \section{Wykrycie źrenicy}
 \label{sec:wykrycieZrenicy}
 Część algorytmu odpowiedzialna za wykrycie źrenicy ma za zadanie odnalezienie źrenicy na obrazie oraz opisanie kształtu źrenicy jako okrąg. Zadanie to jest realizowane ~z wykorzystaniem wcześniej wspomnianego odblasku pochodzącego od lampy, który powinien znajdować się na środku źrenicy. Odblask jest jednym ~z najjaśniejszych punktów na obrazie. ~w związku ~z tym wykrycie odblasku odbywa się ~z wykorzystaniem binaryzacji ~z progiem 254. Po tej operacji na obrazie zostają tylko piksele najjaśniejsze (jak na rysunku \ref{fig:binaryzacja}). Niestety na wielu ujęciach odblask na źrenicy nie jest jedynym, który jest widoczny na obrazie. Pozostałe mogą znajdować się ~w różnych miejscach: na białku oka lub na skórze. Można ten fakt wykorzystać analizując otoczenie znalezionych odblasków. 
