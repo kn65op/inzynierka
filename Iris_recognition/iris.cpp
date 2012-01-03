@@ -247,11 +247,11 @@ class Iris {
                 int size = 11; //CHANGE
                 //double sigma = 11; //CHANGE
                 //double freq  = 0.15; //CHANGE
-                double freq  = 10 / M_PI; //CHANGE
+                double freq  = 8 / M_PI; //CHANGE
                 double w;//, wr, wl;
 		double p = 0;
-                double a = 0.525;
-                double b = 0.525;
+                double a = 0.500;
+                double b = 0.300;
                 double theta = M_PI / 4;
 
                 //filtracja dla 8 ró¿nych wartoœci k¹tów filtrów Gabora
