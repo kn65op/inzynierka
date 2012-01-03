@@ -278,7 +278,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
                 //while (cvWaitKey(100) < 0);
 
                 //zapisanie obrazu
-                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+                cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
 
                 //wyszukiwanie granic têczówki
                 tmp.iris();
