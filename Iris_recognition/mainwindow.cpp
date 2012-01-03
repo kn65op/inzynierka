@@ -40,13 +40,20 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_submitButton_clicked()
 {
-   if (!image)
+   /*if (!image)
    {
        return;
-   }
+   }*/
    static int file_nr = 0;
-   // m_netwManager = new QNetworkAccessManager(this);
-   // connect(m_netwManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slot_netwManagerFinished(QNetworkReply*)));
+    m_netwManager = new QNetworkAccessManager(this);
+    connect(m_netwManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slot_netwManagerFinished(QNetworkReply*)));
+
+
+   // QUrl urlSave("http://usteni.gliczarow.info.pl/webcam.jpeg?1293535363894");
+    QUrl urlSave("http://192.168.0.214/now.jpg?snap=pre?ww=1600?wh=1200");
+
+   QNetworkRequest request(urlSave);
+   m_netwManager->get(request);
 
    QString name    = ui->nameField->text();
    QString surname = ui->surnameField->text();
@@ -59,13 +66,8 @@ void MainWindow::on_submitButton_clicked()
    QString catalog  = "capture/";
    path = catalog + filename;
 
-   cvSaveImage(path.toStdString().c_str(), image);
+   //cvSaveImage(path.toStdString().c_str(), image);
 
-   // QUrl urlSave("http://usteni.gliczarow.info.pl/webcam.jpeg?1293535363894");
-   // QUrl urlSave("http://192.168.0.1/now.jpg?snap=pre?ww=1600?wh=1200");
-
-   //QNetworkRequest request(urlSave);
-   //m_netwManager->get(request);
    /* moje
     eye.init(path);
    QPixmap img = QPixmap(path);
@@ -86,6 +88,8 @@ void MainWindow::on_submitButton_clicked()
 
 void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
 {
+    qDebug() << "re[ly\
+                ";
     if (reply->error() != QNetworkReply::NoError) {
         qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
         return;
@@ -102,6 +106,7 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
     QByteArray jpegData = reply->readAll();
     QPixmap pixmap;
     pixmap.loadFromData(jpegData);
+    qDebug() << "path: " << path;
 
     if(pixmap.save(path, "jpg")) {
         qDebug() << "File was saved!";
@@ -125,10 +130,10 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
 
 void MainWindow::on_activeCameraButton_clicked()
 {
-    startTimer(40);
-    ui->cameraWidget->setVisible(true);
-    //connect(&thread, SIGNAL(setPixmap(const QPixmap&)), ui->imageLabel, SLOT(setPixmap(const QPixmap&)));
-    //thread.start();
+    //startTimer(40);
+    //ui->cameraWidget->setVisible(true);
+    connect(&thread, SIGNAL(setPixmap(const QPixmap&)), ui->imageLabel, SLOT(setPixmap(const QPixmap&)));
+    thread.start();
 }
 
 void MainWindow::on_choosePhotoButton_clicked()

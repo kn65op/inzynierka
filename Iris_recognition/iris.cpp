@@ -2,6 +2,7 @@
 #include <sstream>
 #include "image.cpp"
 #include <QtCore/QTextStream>
+#include <cv.h>
 
 # define HAMMING 0.32
 
@@ -120,6 +121,9 @@ class Iris {
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
 
+                        cvShowImage("zrenica", img);
+                        while (cvWaitKey(100) < 0);
+                        cvDestroyAllWindows();
                         cvReleaseImage(&image);
                         return true;
 		}
@@ -735,7 +739,7 @@ while (cvWaitKey(1000) < 0);*/
                             if (cvGetReal2D(bin, i, j) == 1) //znaleziono œwiat³o, sprawdzenie otoczenia
                             {
                                 dark_count = 0;
-                                for (int k=10; k<20; k++)
+                                for (int k=10; k<25; k++)
                                 {
                                     if (cvGetReal2D(image, i-k, j-k) < 50 && cvGetReal2D(image, i+k, j+k) < 50) //sprawdzamy czy jest ciemne na obrazie
                                     {
@@ -879,7 +883,7 @@ while (cvWaitKey(1000) < 0);*/
                 void explode_rs(IplImage *image)
                 {
                     // tworzenie tablicy katow
-                    int angles_count = 36;
+                    int angles_count = 72;
                     double alfa[angles_count];
                     double coss[angles_count];
                     double sins[angles_count];
@@ -923,7 +927,7 @@ while (cvWaitKey(1000) < 0);*/
                         y = act_y + coss[i] * (pupil_r + 9);
                         lastsum = cvGetReal2D(image, x, y);
                         dmin = 0;
-                        for (r = pupil_r + 10; r<60; r++) //zwiêkszanie promienia
+                        for (r = pupil_r + 10; r<200; r++) //zwiêkszanie promienia
                         {
                             x = act_x + sins[i] * r;
                             y = act_y + coss[i] * r;
@@ -956,16 +960,34 @@ while (cvWaitKey(1000) < 0);*/
                                 cvSetReal2D(border_points, tmp_y, tmp_x, 255);
                         }
                     }
-                    //cvShowImage("w", border_points);
-                    //while (cvWaitKey(100) < 0);
-                    find_center(border_points);
+                    cvShowImage("w", border_points);
+                    while (cvWaitKey(100) < 0);
+                    //find_center(border_points);
+                    vector<CvPoint> points;
+                    CvPoint2D32f center;
+                    float f_r;
+                    getPoints(border_points, points);
+                    //CvMat *tmp = cvCreateMat(points.size(), 2, CV_16UC1);
+                    CvMemStorage *stor = cvCreateMemStorage(0);
+                    CvSeq *tmp = cvCreateSeq(CV_SEQ_ELTYPE_POINT, sizeof(CvSeq), sizeof(CvPoint), stor);
+                    for (int i=0; i<points.size(); i++)
+                    {
+                        CvPoint *tmpp = new CvPoint();
+                        tmpp->x = points.at(i).x;
+                        tmpp->y = points.at(i).y;
+                        cvSeqPush(tmp, tmpp);
+                    }
+                    cvMinEnclosingCircle(tmp, &center, &f_r);
+                    pupil_x = center.x;
+                    pupil_y = center.y;
+                    pupil_r = f_r;
                     cvReleaseImage(&border_points);
-                    //cvMinEnclosingCircle(border_points, &center, &f_r);
+                    cvReleaseMemStorage(&stor);
 
                     //qDebug() << pupil_r;
                 }
 
-                /** Funkcja realizuj¹ca operacjê eksploduj¹cych okrêgów dla Ÿrenicy. Szuka najwiêkszego zmniejszenia jasnoœci */
+                /** Funkcja realizuj¹ca operacjê eksploduj¹cych promieni 4 dla Ÿrenicy. Szuka jasnoœci powyzej 50*/
                 void find_pupil_by(IplImage *image)
                 {
                     //IplImage *border_points = cvCreateImage(cvSize(angles_count, 2), 1, 1);
@@ -1101,6 +1123,29 @@ while (cvWaitKey(1000) < 0);*/
                     while (cvWaitKey(100) < 0);
                     //find_center(border_points);
 
+                }
+
+                void getPoints(IplImage* Src, vector<CvPoint>& Dest)
+                {
+                  int h = Src->height;
+                  int w = Src->width;
+                  int i, j;
+                  Dest.clear();
+                  for (i=0; i<h; i++)
+                  {
+                    for (j=0; j<w; j++)
+                    {
+                      if (cvGetReal2D(Src, i, j) == 255)
+                      {
+                        Dest.push_back(cvPoint((float)j, (float)i));
+                      }
+                    }
+                  }
+                  if ( Dest.empty())
+
+                  {
+                    Dest.push_back(cvPoint(0.0, 0.0));
+                  }
                 }
 		
 };
