@@ -121,8 +121,8 @@ class Iris {
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), this->pupil_r, this->pupil_color, 1, 8, 0);
                         cvCircle(this->img, cvPoint(this->pupil_x, this->pupil_y), 2, this->pupil_color, 1, 8, 0);
 
-                        cvShowImage("zrenica", img);
-                        while (cvWaitKey(100) < 0);
+//                        cvShowImage("zrenica", img);
+  //                      while (cvWaitKey(100) < 0);
                         cvDestroyAllWindows();
                         cvReleaseImage(&image);
                         return true;
