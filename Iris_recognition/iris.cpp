@@ -665,12 +665,12 @@ class Iris {
 /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
-#define DEBUG_T
+//#define DEBUG_T
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
 #endif
-                        element = cvCreateStructuringElementEx(21, 21, 10, 10, CV_SHAPE_ELLIPSE, NULL);
+                        element = cvCreateStructuringElementEx(31, 31, 15, 15, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
@@ -694,37 +694,30 @@ while (cvWaitKey(1000) < 0);*/
                         cvShowImage(filename.toStdString().c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
 #endif
-                        cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
-                        cvResetImageROI(tmp);
-                        res = Image::clearborders(tmp);
-                        cvReleaseImage(&tmp);
-                        tmp = res;
+//                        cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
+//                        cvResetImageROI(tmp);
+//                        res = Image::clearborders(tmp);
+//                        cvReleaseImage(&tmp);
+//                        tmp = res;
 
-                        element = cvCreateStructuringElementEx(21, 21, 10, 10, CV_SHAPE_ELLIPSE, NULL);
+
+                        //usuniecie ewentualnych obiektow na granicy ROI
+                        cvResetImageROI(tmp);
+
+                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
                         cvErode(tmp, tmp, element, 1);
                         cvDilate(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
 
-/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
-cvShowImage("clear", tmp2);
-while (cvWaitKey(1000) < 0);
-cvDestroyAllWindows();
-return tmp;*/
-//                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
-  //                      cvErode(tmp, tmp, element, 1);
-    //                    cvDilate(tmp, tmp, element, 1);
-/*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
-cvShowImage("Po", tmp2);
-while (cvWaitKey(1000) < 0);*/
-                     //   cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
-
-                        cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
+//                        cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
   //                      string ttt = filename.toStdString() + "_tmp.bmp";
     //                    cvSaveImage(ttt.c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
 #endif
+
+
 
                         middle = this->find_center(tmp);
                         delete [] middle;
@@ -808,25 +801,33 @@ while (cvWaitKey(1000) < 0);*/
                 {
                     //qDebug() << filename;
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
-                    cvThreshold(image, bin, 254, 1, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+                    cvThreshold(image, bin, 254, 255, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+#ifdef DEBUG_T
+                    cvShowImage("Bin", bin);
+                    while (cvWaitKey(100) < 0);
+#endif
                     /*//ERTMPPPPPP
                     IplImage *tmpppp = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
                     cvThreshold(bin, tmpppp, 0, 255, CV_THRESH_BINARY);
                     cvSaveImage("binaryzacja.jpg", tmpppp);
                     //ERTMPPPPPPP*/
-                    const int pupil_threshold = 60;
+                    //poziom jasnosci zrenicy
+                    const int pupil_threshold = 70;
+                    //liczba pikseli, ile powinny oddzielac odblask od granicy obrazu, ¿eby wogóle zdjêcie mia³o sens
+                    const int pupil_limit = 25;
                     int dark_count = 0;
                     bool no_found = true;
-                    for (int i=20; i<bin->height - 20 && no_found; i++) //iteracja po kolumnach
+                    for (int i=pupil_limit; i<bin->height - pupil_limit && no_found; i++) //iteracja po kolumnach
                     {
-                        for (int j=20; j<bin->width - 20 && no_found; j++) //iteracja po wierszach
+                        for (int j=pupil_limit; j<bin->width - pupil_limit && no_found; j++) //iteracja po wierszach
                         {
-                            if (cvGetReal2D(bin, i, j) == 1) //znaleziono œwiat³o, sprawdzenie otoczenia
+                            if (cvGetReal2D(bin, i, j) == 255) //znaleziono œwiat³o, sprawdzenie otoczenia
                             {
                                 dark_count = 0;
-                                for (int k=10; k<25; k++)
+                                for (int k=10; k<pupil_limit; k++)
                                 {
-                                    if (cvGetReal2D(image, i-k, j-k) < pupil_threshold || cvGetReal2D(image, i+k, j+k) < pupil_threshold) //sprawdzamy czy jest ciemne na obrazie
+                                    if ((cvGetReal2D(image, i-k, j-k) < pupil_threshold || cvGetReal2D(image, i+k, j-k) < pupil_threshold) &&
+                                        (cvGetReal2D(image, i-k, j+k) < pupil_threshold || cvGetReal2D(image, i-k, j-k) < pupil_threshold)) //sprawdzamy czy jest ciemne na obrazie
                                     {
                                         dark_count++;
                                     }
