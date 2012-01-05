@@ -265,12 +265,15 @@ void MainWindow::on_actionTestuj_folder_triggered()
     QFileInfoList list = dir.entryInfoList(images_extensions);
     for (int i=0; i<list.size(); i++)
     {
+        string file_name;
+        qDebug() << list.at(i).fileName();
         Iris tmp;
         tmp.init(list.at(i).absoluteFilePath());
         try
         {
             if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
             {
+                file_name = "ok";
                 //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
                 //cvDestroyAllWindows();
                 //Image::showImage(tmp.img, "1. Find pupil");
@@ -278,7 +281,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
                 //while (cvWaitKey(100) < 0);
 
                 //zapisanie obrazu
-//                cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
+                //cvSaveImage(list.at(i).fileName().toStdString().c_str(), tmp.img);
 
                 //wyszukiwanie granic têczówki
                 tmp.iris();
@@ -298,10 +301,14 @@ void MainWindow::on_actionTestuj_folder_triggered()
             }
             else
             {
-                QMessageBox box;
+                file_name = "nok";
+                /*QMessageBox box;
                 box.setText("Dla zdjecia nie znaleziono zrenicy");
-                box.exec();
+                box.exec();*/
+                qDebug() << "Zle zdjecie";
             }
+            file_name +=list.at(i).fileName().toStdString();
+            cvSaveImage(file_name.c_str(), tmp.img);
         }
         catch (...)
         {
@@ -339,6 +346,7 @@ void MainWindow::on_actionTestuj_baz_triggered()
     QFileInfoList list = dir.entryInfoList(images_extensions);
     for (int i=0; i<list.size(); i++)
     {
+        qDebug() << list.at(i).fileName();
         Iris tmp;
         tmp.init(list.at(i).absoluteFilePath());
         try
@@ -396,9 +404,10 @@ void MainWindow::on_actionTestuj_baz_triggered()
             }
             else
             {
-                QMessageBox box;
+                /*QMessageBox box;
                 box.setText("Dla zdjecia nie znaleziono zrenicy");
-                box.exec();
+                box.exec();*/
+                qDebug() << "Zle zdjecie";
             }
         }
         catch (...)

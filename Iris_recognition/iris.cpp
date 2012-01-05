@@ -125,7 +125,8 @@ class Iris {
   //                      while (cvWaitKey(100) < 0);
                         cvDestroyAllWindows();
                         cvReleaseImage(&image);
-                        return true;
+                        const int max_r = 125;
+                        return pupil_r < max_r;
 		}
 		
 		/* Funkcja znajduj�ca obszar t�cz�wki */
@@ -308,14 +309,14 @@ class Iris {
                 }
                 for (int i=0; i<no_rot; i++)
                 {
-                    qDebug() << "sum[" << i << "]" << sum[i];
+                  //  qDebug() << "sum[" << i << "]" << sum[i];
                     if (sum[i] < minsum)
                     {
                         minsum = sum[i];
                     }
                 }
                 //TODO rotacja
-                qDebug() << minsum << ": MINSUM";
+                //qDebug() << minsum << ": MINSUM";
 
 		
                 this->hamming = (double) minsum/size;
@@ -593,8 +594,8 @@ class Iris {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                        // IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
-//                        IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
-//                        IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
 
@@ -604,11 +605,11 @@ class Iris {
                         //while (cvWaitKey(1000) < 0);
                         //cvSaveImage("poprzednie.jpg", tmp);
              //           while (cvWaitKey(1000) < 0);
-                        cvThreshold(src, tmp, 50, 255, CV_THRESH_BINARY_INV);
-/*                        cvThreshold(src, tmpw, 254, 1, CV_THRESH_BINARY);
+                        cvThreshold(src, tmpb, 50, 255, CV_THRESH_BINARY_INV);
+                        cvThreshold(src, tmpw, 254, 255, CV_THRESH_BINARY);
                         cvOr(tmpb, tmpw, tmp);
                         cvReleaseImage(&tmpb);
-                        cvReleaseImage(&tmpw);*/
+                        cvReleaseImage(&tmpw);
 
                         IplConvKernel* element;// = cvCreateStructuringElementEx(5, 5, 2, 2, CV_SHAPE_ELLIPSE, NULL);
 /*                        cvDilate(tmp, tmp, element, 1);
@@ -632,23 +633,35 @@ class Iris {
 /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
-                //        cvShowImage(filename.toStdString().c_str(), tmp);
-                  //      while (cvWaitKey(1000) < 0);
-
-                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
-                        cvErode(tmp, tmp, element, 1);
-                        cvDilate(tmp, tmp, element, 1);
-                        cvReleaseStructuringElement(&element);
-              //          cvShowImage(filename.toStdString().c_str(), tmp);
-            //            while (cvWaitKey(1000) < 0);
-
-                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
+//#define DEBUG_T
+#ifdef DEBUG_T
+                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        while (cvWaitKey(1000) < 0);
+#endif
+                        element = cvCreateStructuringElementEx(21, 21, 10, 10, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
-          //              cvShowImage(filename.toStdString().c_str(), tmp);
-        //                while (cvWaitKey(1000) < 0);
-
+#ifdef DEBUG_T
+                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        while (cvWaitKey(1000) < 0);
+#endif
+                        /*
+                        element = cvCreateStructuringElementEx(61, 61, 30, 30, CV_SHAPE_ELLIPSE, NULL);
+                        cvErode(tmp, tmp, element, 1);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        while (cvWaitKey(1000) < 0);
+*/
+                        element = cvCreateStructuringElementEx(81, 81, 40, 40, CV_SHAPE_ELLIPSE, NULL);
+                        cvErode(tmp, tmp, element, 1);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+#ifdef DEBUG_T
+                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        while (cvWaitKey(1000) < 0);
+#endif
                         cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
                         tmp = Image::clearborders(tmp);
 
@@ -671,10 +684,12 @@ while (cvWaitKey(1000) < 0);*/
                      //   cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 
                         cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
-//                        cvShowImage(filename.toStdString().c_str(), tmp);
+#ifdef DEBUG_T
+                        cvShowImage(filename.toStdString().c_str(), tmp);
   //                      string ttt = filename.toStdString() + "_tmp.bmp";
     //                    cvSaveImage(ttt.c_str(), tmp);
-      //                  while (cvWaitKey(1000) < 0);
+                        while (cvWaitKey(1000) < 0);
+#endif
 
                         middle = this->find_center(tmp);
 
@@ -727,7 +742,13 @@ while (cvWaitKey(1000) < 0);*/
 					}
 				}
 			}
-			
+                        if (!cnt)
+                        {
+                            tab[0] = 0;
+                            tab[1] = 0;
+                            tab[2] = pupil_r = 1024;
+                            return tab;
+                        }
                         tab[0] = this->pupil_x = sum_x/cnt;
                         tab[1] = this->pupil_y = sum_y/cnt;
 
