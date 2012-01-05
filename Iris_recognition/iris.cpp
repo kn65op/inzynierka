@@ -611,11 +611,14 @@ class Iris {
                         cvSet(tmpw, cvScalar(0));
 
                         //szukanie odblasku
+                        CvRect roi;
                         if (find_flash_on_pupil(src))
                         {
                             //ustawienie ROI
                             const int pupil_size = 200;
-                            CvRect roi = cvRect (pupil_x - pupil_size, pupil_y - pupil_size, 2 * pupil_size, 2 * pupil_size);
+                            roi.x = pupil_x - pupil_size;
+                            roi.y = pupil_y - pupil_size;
+                            roi.width = roi.height = 2 * pupil_size;
                             cvSetImageROI(src, roi);
                             cvSetImageROI(tmpb, roi);
                             cvSetImageROI(tmpw, roi);
@@ -665,7 +668,7 @@ class Iris {
 /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
-//#define DEBUG_T
+#define DEBUG_T
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
@@ -696,20 +699,47 @@ while (cvWaitKey(1000) < 0);*/
 #endif
 //                        cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
 //                        cvResetImageROI(tmp);
-//                        res = Image::clearborders(tmp);
-//                        cvReleaseImage(&tmp);
-//                        tmp = res;
+                        //to jest potrzebne jakby zosta³o jescze trochê brwi lub rzês
+                        element = cvCreateStructuringElementEx(101, 101, 50, 50, CV_SHAPE_ELLIPSE, NULL);
+                        cvErode(tmp, tmp, element, 1);
+                        cvDilate(tmp, tmp, element, 1);
+                        cvReleaseStructuringElement(&element);
+
+#ifdef DEBUG_T
+                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        while (cvWaitKey(1000) < 0);
+#endif
+
+                        //czyszczenie brzegu w ramach ROI
+                        IplImage *tmpcb = cvCreateImage(cvSize(roi.width, roi.height), tmp->depth, 1);
+                        cvCopy(tmp, tmpcb);
+#ifdef DEBUG_T
+//                        cvThreshold(tmpcb, tmpcb, 0, 255, CV_THRESH_BINARY);
+                        cvShowImage("tmpcb", tmpcb);
+                        while (cvWaitKey(1000) < 0);
+#endif
+                        cvThreshold(tmpcb, tmpcb, 254, 1, CV_THRESH_BINARY);
+                        res = Image::clearborders(tmpcb);
+                        cvThreshold(res, res, 0, 255, CV_THRESH_BINARY);
+#ifdef DEBUG_T
+                        cvShowImage("tmpcb", res);
+                        while (cvWaitKey(1000) < 0);
+//                        cvThreshold(tmpcb, tmpcb, 254, 1, CV_THRESH_BINARY);
+#endif
+                        cvCopy(res, tmp);
+                        cvReleaseImage(&tmpcb);
+                        cvReleaseImage(&res);
 
 
                         //usuniecie ewentualnych obiektow na granicy ROI
                         cvResetImageROI(tmp);
 
-                        element = cvCreateStructuringElementEx(41, 41, 20, 20, CV_SHAPE_ELLIPSE, NULL);
+                        /*element = cvCreateStructuringElementEx(81, 81, 40, 40, CV_SHAPE_ELLIPSE, NULL);
                         cvErode(tmp, tmp, element, 1);
                         cvDilate(tmp, tmp, element, 1);
-                        cvReleaseStructuringElement(&element);
+                        cvReleaseStructuringElement(&element);*/
 
-//                        cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
+//                       cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
   //                      string ttt = filename.toStdString() + "_tmp.bmp";
