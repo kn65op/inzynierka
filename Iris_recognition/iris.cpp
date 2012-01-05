@@ -134,10 +134,11 @@ class Iris {
 		/* Funkcja znajduj�ca obszar t�cz�wki */
 		void iris() {
 			IplImage *image = cvCloneImage(this->gray);
+                        IplImage *res;
 			cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie t�cz�wki
-                        this->find_iris2(image);
+                        res = this->find_iris2(image);
 			
 			// Obrysowanie znalezionymi promieniami
 			int n = 32;
@@ -170,7 +171,10 @@ class Iris {
 			cvPolyLine(this->img, &r_points, &n, 1, 0, this->iris_right_color, 1, 8);
 			cvPolyLine(this->img, &l_points, &n, 1, 0, this->iris_left_color, 1, 8);
 
+                        free(r_points);
+                        free(l_points);
                         cvReleaseImage(&image);
+                        cvReleaseImage(&res);
 		}
 
 	void draw_semicircles() {
