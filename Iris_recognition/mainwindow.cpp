@@ -265,7 +265,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
     QFileInfoList list = dir.entryInfoList(images_extensions);
     for (int i=0; i<list.size(); i++)
     {
-        string file_name;
+        string file_name = "zrenica\\";
         qDebug() << list.at(i).fileName();
         Iris tmp;
         tmp.init(list.at(i).absoluteFilePath());
@@ -273,7 +273,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
         {
             if (tmp.pupil()) //szukanie Ÿrenicy, jeœli nie znajzdiemy to nie idziemy dalej
             {
-                file_name = "ok";
+                file_name += "ok";
                 //wyœwietlanie zdjêcia z zaznaczon¹ Ÿrenic¹
                 //cvDestroyAllWindows();
                 //Image::showImage(tmp.img, "1. Find pupil");
@@ -301,7 +301,7 @@ void MainWindow::on_actionTestuj_folder_triggered()
             }
             else
             {
-                file_name = "nok";
+                file_name += "nok";
                 /*QMessageBox box;
                 box.setText("Dla zdjecia nie znaleziono zrenicy");
                 box.exec();*/

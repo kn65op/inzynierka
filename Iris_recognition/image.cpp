@@ -85,7 +85,7 @@ class Image {
                 }
 
                 static IplImage* deletelabel(IplImage *src, double label) {
-                        IplImage* result = cvCloneImage(src);
+                        IplImage* result = src;
 
                         for(int i=0; i < src->height; i++) {
                                 for(int j=0; j < src->width; j++) {

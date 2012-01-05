@@ -97,12 +97,13 @@ class Iris {
                 potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu. */
                 bool pupil(int binary_value = 110) {
 			// Rozmycie filtrem Gaussa
-                        IplImage *image = cvCloneImage(this->gray);
+                        IplImage *src = cvCloneImage(this->gray);
+                        IplImage *image;
 
                      //   cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie ï¿½rodka ï¿½renicy
-                        image = this->find_center_pupil(image, binary_value); //staro-nowe
+                        image = this->find_center_pupil(src, binary_value); //staro-nowe
 /*nowe dobre                        if (!this->find_flash_on_pupil(image)) //szukanie odblasku
                         {
                             return false;
@@ -125,6 +126,7 @@ class Iris {
   //                      while (cvWaitKey(100) < 0);
                         cvDestroyAllWindows();
                         cvReleaseImage(&image);
+                        cvReleaseImage(&src);
                         const int max_r = 125;
                         return pupil_r < max_r;
 		}
@@ -593,6 +595,7 @@ class Iris {
                 IplImage* find_center_pupil(IplImage *src, int binary_value = 50) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
+                        IplImage *res;
                        // IplImage *tmp2 = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
@@ -663,7 +666,9 @@ while (cvWaitKey(1000) < 0);*/
                         while (cvWaitKey(1000) < 0);
 #endif
                         cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
-                        tmp = Image::clearborders(tmp);
+                        res = Image::clearborders(tmp);
+                        cvReleaseImage(&tmp);
+                        tmp = res;
 
                         element = cvCreateStructuringElementEx(21, 21, 10, 10, CV_SHAPE_ELLIPSE, NULL);
                         cvErode(tmp, tmp, element, 1);
@@ -692,6 +697,7 @@ while (cvWaitKey(1000) < 0);*/
 #endif
 
                         middle = this->find_center(tmp);
+                        delete [] middle;
 
                         return tmp;
 		}
