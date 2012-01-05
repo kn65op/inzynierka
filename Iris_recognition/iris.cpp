@@ -127,7 +127,7 @@ class Iris {
                         cvDestroyAllWindows();
                         cvReleaseImage(&image);
                         cvReleaseImage(&src);
-                        const int max_r = 125;
+                        const int max_r = 200;
                         return pupil_r < max_r;
 		}
 		
@@ -604,6 +604,31 @@ class Iris {
                         IplImage *tmpb = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *tmpw = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
 
+                        //wypelnienie obrazow tymczasowych czarnym
+                        //cvFillImage(tmpb, 0);
+                        //cvFillImage(tmpw, 0);
+                        cvSet(tmpb, cvScalar(0));
+                        cvSet(tmpw, cvScalar(0));
+
+                        //szukanie odblasku
+                        if (find_flash_on_pupil(src))
+                        {
+                            //ustawienie ROI
+                            const int pupil_size = 200;
+                            CvRect roi = cvRect (pupil_x - pupil_size, pupil_y - pupil_size, 2 * pupil_size, 2 * pupil_size);
+                            cvSetImageROI(src, roi);
+                            cvSetImageROI(tmpb, roi);
+                            cvSetImageROI(tmpw, roi);
+                            cvSetImageROI(tmp, roi);
+                        }
+                        else
+                        {
+                            cvReleaseImage(&tmpb);
+                            cvReleaseImage(&tmpw);
+                            return tmp;
+                        }
+
+
                         // Binaryzacja z progiem pobranym z inputa - wyznaczenie odblasku i czesci bialka oka
 
                 //        cvThreshold(src, tmp, binary_value, 255, CV_THRESH_BINARY_INV);
@@ -612,7 +637,7 @@ class Iris {
                         //while (cvWaitKey(1000) < 0);
                         //cvSaveImage("poprzednie.jpg", tmp);
              //           while (cvWaitKey(1000) < 0);
-                        cvThreshold(src, tmpb, 50, 255, CV_THRESH_BINARY_INV);
+                        cvThreshold(src, tmpb, 60, 255, CV_THRESH_BINARY_INV);
                         cvThreshold(src, tmpw, 254, 255, CV_THRESH_BINARY);
                         cvOr(tmpb, tmpw, tmp);
                         cvReleaseImage(&tmpb);
@@ -640,7 +665,7 @@ class Iris {
 /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
-//#define DEBUG_T
+#define DEBUG_T
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
@@ -670,6 +695,7 @@ while (cvWaitKey(1000) < 0);*/
                         while (cvWaitKey(1000) < 0);
 #endif
                         cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
+                        cvResetImageROI(tmp);
                         res = Image::clearborders(tmp);
                         cvReleaseImage(&tmp);
                         tmp = res;
@@ -780,7 +806,7 @@ while (cvWaitKey(1000) < 0);*/
                   */
                 bool find_flash_on_pupil(IplImage *image)
                 {
-                    qDebug() << filename;
+                    //qDebug() << filename;
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
                     cvThreshold(image, bin, 254, 1, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
                     /*//ERTMPPPPPP
@@ -788,6 +814,7 @@ while (cvWaitKey(1000) < 0);*/
                     cvThreshold(bin, tmpppp, 0, 255, CV_THRESH_BINARY);
                     cvSaveImage("binaryzacja.jpg", tmpppp);
                     //ERTMPPPPPPP*/
+                    const int pupil_threshold = 60;
                     int dark_count = 0;
                     bool no_found = true;
                     for (int i=20; i<bin->height - 20 && no_found; i++) //iteracja po kolumnach
@@ -799,12 +826,12 @@ while (cvWaitKey(1000) < 0);*/
                                 dark_count = 0;
                                 for (int k=10; k<25; k++)
                                 {
-                                    if (cvGetReal2D(image, i-k, j-k) < 50 && cvGetReal2D(image, i+k, j+k) < 50) //sprawdzamy czy jest ciemne na obrazie
+                                    if (cvGetReal2D(image, i-k, j-k) < pupil_threshold || cvGetReal2D(image, i+k, j+k) < pupil_threshold) //sprawdzamy czy jest ciemne na obrazie
                                     {
                                         dark_count++;
                                     }
                                 }
-                                if (dark_count>6) // liczba czarnych jest wystarczaj¹ca
+                                if (dark_count>10) // liczba czarnych jest wystarczaj¹ca
                                 {
                                   no_found = false;
                                   this->pupil_x = j;
