@@ -19,7 +19,7 @@ W porównaniu ~z tradycyjnymi metodami identyfikacji bądź weryfikacji tożsamo
 \item oparte na posiadanych tokenach (ang. token-based), takich, jak dowód tożsamości, paszport czy karta kredytowa
 \item oparte na posiadanej wiedzy (and. knowledge-based), czyli haśle, numerze PIN czy innym kodzie dostępu,
 \end{itemize}
-metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu, lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła w posiadanie danych dostępowych w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
+Metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu, lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła w posiadanie danych dostępowych w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
 
 Biometria miała zastosowanie już ~w przeszłości, na przykład poprzez pobieranie odcisków palców ~w celu potwierdzenia transakcji handlowych ~w czasach starożytnych, czy ~w trakcie rejestracji więźniów ~w XIX wieku \cite{Bio02}\cite{HF1}. Współcześnie, jest to jedna ~z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, której rozwiązania służą najczęściej jako forma kontroli dostępu ~i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych ~i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka ~i efektywna forma odprawy paszportowej pasażerów na lotniskach ~i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób ~w bazie ~i monitoringu czasu pracy ~w firmach \cite{Bio01}\cite{Bio02}.
 
@@ -54,9 +54,9 @@ Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu prz
 Schemat przedstawiający działanie typowego systemu identyfikacji biometrycznej na podstawie tęczówki oka znajduje się na diagramie ~\ref{fig:identyfikacja}. Został on utworzony w oparciu ~o ogólne schematy działania typowych systemów identyfikacji biometrycznej, umieszczonych w ~\cite{Bio02} ~i \cite{Jain00}.
 \begin{center}
 \begin{figure}
-\label{fig:identyfikacja}
 \includegraphics{schemat.jpg}
 \caption{Schemat typowego systemu identyfikacji biometrycznej na podstawie tęczówki oka}
+\label{fig:identyfikacja}
 \end{figure}
 \end{center}
 
@@ -79,12 +79,11 @@ $ ~I(x,y) $ - jasność piksela na obrazie\\
 $ G_{\sigma}(r) $ - rozkład Gaussa\\
 
 Dzięki temu możemy odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą ~a tęczówką oraz między tęczówką ~a rogówką. Częste jest ~w niej zastosowanie łuku dla szukania granicy między tęczówką ~a rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]. Po skutecznie zrealizowanym algorytmie otrzymuje obraz podobny do przedstawionego na rysunku \ref{fig:przykladDaugman}.
-
 \begin{center}
 \begin{figure}
-\label{fig:przykladDaugman}
 \includegraphics[scale=0.5]{calosc.png}
 \caption{Obraz po realizacji algorytmu Daugmana}
+\label{fig:przykladDaugman}
 \end{figure}
 \end{center}
 
@@ -114,9 +113,9 @@ Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną
 
 \begin{center}
 \begin{figure}
-\label{fig:przykladPunkty}
 \includegraphics[scale=0.5]{punkty.png}
 \caption{Przykładowy wybór punktów}
+\label{fig:przykladPunkty}
 \end{figure}
 \end{center}
 
@@ -124,4 +123,4 @@ Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują uż
 
 \section{Metody porównania kodów tęczówek}
 \label{sec:metodyPorownaniaKodow}
-Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. !!TRZEBA POPRAWIĆ!!. Polega na liczeniu ilości bitów, których wartości nie zgadzają się w dwóch porównywanych kodach.
+Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa ilości bitów, których wartości są różne w dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota inplementacji, dlatego została użyta w naszej pracy. Inne metody są przedstawione w pracy \cite{KoGl}.
