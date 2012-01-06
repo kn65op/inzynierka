@@ -37,7 +37,7 @@ Tęczówka ludzkiego oka jest jednym ~z najbardziej charakterystycznych element�
 
 Pobranie stabilnego ~i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery ~i sprzęt, projektowane specjalnie do tego typu identyfikacji, są  coraz lepiej przystosowane do automatycznej akwizycji obrazu wysokiej rozdzielczości. ~W związku ~z tym możliwe jest, iż ~z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
 
-Współcześnie stosowane kamery, wykorzystywane ~w celu akwizycji obrazu oka, operują we współpracy ~z czujnikami działającymi w środowisku bliskiej ~z użyciem podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone efektywnie wspomaga pobieranie tego typu obrazów ze względu na kilka czynników:
+Współcześnie stosowane kamery, wykorzystywane ~w celu akwizycji obrazu oka, operują we współpracy ~z czujnikami działającymi w środowisku bliskiej podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone efektywnie wspomaga pobieranie tego typu obrazów ze względu na kilka czynników:
 \begin{itemize} 
 \item ~w zakresie widma NIR wyraźnie uwidaczniają się cechy posiadanej przez znaczną część populacji ludzkiej tęczówki ~w  odcieniach brązu
 \item promieniowanie to pomaga ~w likwidowaniu powstałych na powierzchni oka odblasków światła ~z otoczenia 
@@ -56,7 +56,7 @@ Schemat przedstawiający działanie typowego systemu identyfikacji biometrycznej
 \begin{figure}
 \label{fig:identyfikacja}
 \includegraphics{schemat.jpg}
-\caption{Schemat typowego systemu identyfikacji biometrycznej}
+\caption{Schemat typowego systemu identyfikacji biometrycznej na podstawie tęczówki oka}
 \end{figure}
 \end{center}
 
@@ -110,7 +110,7 @@ $r$ - promień we współrzędnych biegunowych \\
 $\theta$ - kąt w radianach we współrzędnych biegunowych \\
 $ \omega $ - częstotliwość \\
 $ \alpha, \beta $ - stałe \\
-Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera, lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymujemy bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od ilości wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
+Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera, lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymywany jest bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od ilości wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
 
 \begin{center}
 \begin{figure}
