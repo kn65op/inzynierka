@@ -615,10 +615,21 @@ class Iris {
                         if (find_flash_on_pupil(src))
                         {
                             //ustawienie ROI
-                            const int pupil_size = 200;
+                            const int pupil_size = 220;
                             roi.x = pupil_x - pupil_size;
                             roi.y = pupil_y - pupil_size;
                             roi.width = roi.height = 2 * pupil_size;
+//                            qDebug() << roi.x;
+                            if (roi.x < 0)
+                            {
+                                roi.width += roi.x;
+                                roi.x = 0;
+                            }
+                            if (roi.y < 0)
+                            {
+                                roi.height += roi.y;
+                                roi.y = 0;
+                            }
                             cvSetImageROI(src, roi);
                             cvSetImageROI(tmpb, roi);
                             cvSetImageROI(tmpw, roi);
@@ -668,12 +679,12 @@ class Iris {
 /*cvThreshold(tmp, tmp2, 0, 255, CV_THRESH_BINARY);
 cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
-#define DEBUG_T
+//#define DEBUG_T
 #ifdef DEBUG_T
                         cvShowImage(filename.toStdString().c_str(), tmp);
                         while (cvWaitKey(1000) < 0);
 #endif
-                        element = cvCreateStructuringElementEx(31, 31, 15, 15, CV_SHAPE_ELLIPSE, NULL);
+                        element = cvCreateStructuringElementEx(25, 25, 12, 12, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
