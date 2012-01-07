@@ -326,7 +326,7 @@ class Iris {
 
 		
                 this->hamming = (double) minsum/size;
-                qDebug() << this->hamming;
+                //qDebug() << this->hamming;
                 return this->hamming;
 		
 /*                if(this->hamming < HAMMING)
