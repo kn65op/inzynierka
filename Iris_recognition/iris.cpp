@@ -681,16 +681,27 @@ cvShowImage("Po", tmp2);
 while (cvWaitKey(1000) < 0);*/
 //#define DEBUG_T
 #ifdef DEBUG_T
-                        cvShowImage(filename.toStdString().c_str(), tmp);
-                        while (cvWaitKey(1000) < 0);
+                        static int number = 0;
+                        number++;
+                        stringstream ss;
+                        ss << number;
+                        static string folder = "screeny\\";
+                        string sss;
+
+                        //cvShowImage(filename.toStdString().c_str(), tmp);
+                        sss = folder + "bin" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 #endif
                         element = cvCreateStructuringElementEx(25, 25, 12, 12, CV_SHAPE_ELLIPSE, NULL);
                         cvDilate(tmp, tmp, element, 1);
                         cvErode(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
 #ifdef DEBUG_T
-                        cvShowImage(filename.toStdString().c_str(), tmp);
-                        while (cvWaitKey(1000) < 0);
+                        //cvShowImage(filename.toStdString().c_str(), tmp);
+                        sss = folder + "zamkniecie" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 #endif
                         /*
                         element = cvCreateStructuringElementEx(61, 61, 30, 30, CV_SHAPE_ELLIPSE, NULL);
@@ -705,8 +716,10 @@ while (cvWaitKey(1000) < 0);*/
                         cvDilate(tmp, tmp, element, 1);
                         cvReleaseStructuringElement(&element);
 #ifdef DEBUG_T
-                        cvShowImage(filename.toStdString().c_str(), tmp);
-                        while (cvWaitKey(1000) < 0);
+                        //cvShowImage(filename.toStdString().c_str(), tmp);
+                        sss = folder + "otwarcie1" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 #endif
 //                        cvThreshold(tmp, tmp, 254, 1, CV_THRESH_BINARY);
 //                        cvResetImageROI(tmp);
@@ -717,8 +730,10 @@ while (cvWaitKey(1000) < 0);*/
                         cvReleaseStructuringElement(&element);
 
 #ifdef DEBUG_T
-                        cvShowImage(filename.toStdString().c_str(), tmp);
-                        while (cvWaitKey(1000) < 0);
+                        //cvShowImage(filename.toStdString().c_str(), tmp);
+                        sss = folder + "otwarcie2" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 #endif
 
                         //czyszczenie brzegu w ramach ROI
@@ -726,15 +741,19 @@ while (cvWaitKey(1000) < 0);*/
                         cvCopy(tmp, tmpcb);
 #ifdef DEBUG_T
 //                        cvThreshold(tmpcb, tmpcb, 0, 255, CV_THRESH_BINARY);
-                        cvShowImage("tmpcb", tmpcb);
-                        while (cvWaitKey(1000) < 0);
+                        //cvShowImage("tmpcb", tmpcb);
+                        sss = folder + "roi1" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 #endif
                         cvThreshold(tmpcb, tmpcb, 254, 1, CV_THRESH_BINARY);
                         res = Image::clearborders(tmpcb);
                         cvThreshold(res, res, 0, 255, CV_THRESH_BINARY);
 #ifdef DEBUG_T
-                        cvShowImage("tmpcb", res);
-                        while (cvWaitKey(1000) < 0);
+                        //cvShowImage("tmpcb", res);
+                        sss = folder + "roi2" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
+                        //while (cvWaitKey(1000) < 0);
 //                        cvThreshold(tmpcb, tmpcb, 254, 1, CV_THRESH_BINARY);
 #endif
                         cvCopy(res, tmp);
@@ -752,10 +771,12 @@ while (cvWaitKey(1000) < 0);*/
 
 //                       cvThreshold(tmp, tmp, 0, 255, CV_THRESH_BINARY);
 #ifdef DEBUG_T
-                        cvShowImage(filename.toStdString().c_str(), tmp);
+                        //cvShowImage(filename.toStdString().c_str(), tmp);
+                        sss = folder + "clean" + ss.str() + ".jpg";
+                        cvSaveImage(sss.c_str(), tmp);
   //                      string ttt = filename.toStdString() + "_tmp.bmp";
     //                    cvSaveImage(ttt.c_str(), tmp);
-                        while (cvWaitKey(1000) < 0);
+                        //while (cvWaitKey(1000) < 0);
 #endif
 
 
@@ -843,6 +864,7 @@ while (cvWaitKey(1000) < 0);*/
                     //qDebug() << filename;
                     IplImage *bin = cvCreateImage(cvSize(image->width, image->height), image->depth, 1);
                     cvThreshold(image, bin, 254, 255, CV_THRESH_BINARY); //binaryzacja z progiem 254, zostaj¹ tylko najjaœniejszepiksele
+#undef DEBUG_T
 #ifdef DEBUG_T
                     cvShowImage("Bin", bin);
                     while (cvWaitKey(100) < 0);
