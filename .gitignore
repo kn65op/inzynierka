@@ -46,3 +46,6 @@ Iris_recognition-build*
 *.bbl
 *.blg
 *.out
+*.nav
+*.snm
+prezentacja/przyklady
