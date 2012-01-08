@@ -31,7 +31,7 @@ Wadą zastosowanego rozwiązania było jednak zmniejszenie jasności uzyskiwanyc
 
 Pobierany obraz zapisywany był w skali szarości i formacie BMP, co umożliwiło łatwiejsze jego przetwarzanie przez algorytm. Po wykonaniu odpowiedniej ilości przebiegów programu na pobranych zdjęciach, okazało się jednak, iż nie cechowały się one wystarczająco wysoką jakością, która konieczna była dla poprawnego działania algorytmów generujących i porównujących kody tęczówek. W związku z tym, niezbędna była ponowna rekonstrukcja stanowiska, tym razem z zastosowaniem kamery o sprawdzonej skuteczności pobierania obrazu, użytej w pracy \cite{Gl11}.
 
-W trakcie drugiej próby konstrukcji stanowiska, zdecydowano się na zastosowanie urządzenia firmy o parametrach: . Problemem wywołującym trudności podczas pobierania obrazów przy pomocy poprzedniej kamery była jej mała rozdzielczość, co udało się pokonać stosując nową kamerę. Ponadto, wewnątrz kartonowego pudełka jasność otoczenia była zbyt niska, pomimo użytej lampy, jednak udało się to zniwelować wyłącznie z użyciem oświetlacza IR, dzięki czemu na obrazie widocznych było mniej odblasków.
+W trakcie drugiej próby konstrukcji stanowiska, zdecydowano się na zastosowanie urządzenia firmy o parametrach: . Problemem wywołującym trudności podczas pobierania obrazów przy pomocy poprzedniej kamery była jej mała rozdzielczość, co udało się pokonać stosując nową kamerę. Ponadto, wewnątrz kartonowego pudełka jasność otoczenia była zbyt niska, pomimo użytej lampy, jednak udało się to zniwelować wyłącznie z użyciem oświetlacza IR, dzięki czemu na obrazie widocznych było mniej odblasków. Oświetlacz został zamontowany na kamerze.
 
 Postanowiono pozostać przy obiektywie, który został użyty podczas pierwszej konstrukcji stanowiska. Pozostałe części, takie, jak kartonowe pudełko, stojak, statyw oraz oświetlacz IR, również nie uległy modyfikacji.
 
@@ -71,7 +71,44 @@ Po znalezieniu wszystkich pikseli należących do odblasku, jego kształt jest a
 \end{center}
 \end{figure}
 
-Opis działana nowego algorytmu wykrywania źrenicy, dla zdjęć z nowej kamery.
+Po zmianie kamery algorytm wykrywania źrenicy został zmieniony. Było to spowodowane poprawą jasności zdjęcia oraz zmianą położenia niektórych elementów stanowiska. Odblask na źrenicy, wcześniej będący się w środku źrenicy po zmienie stanowiska znajduje się ponad środkiem. W związku z tym nie można go wykorzystać do ustalenia środka źrenicy.
+
+Można natomiast wykarzystać wykrycie odblasku do oszacowania, w którym miejscu na obrazie znajduje się źrenica. Pozwala to ograniczyć wielkość obrazu podlegającemu późniejszym przekształceniom. Wybierany jest kwadrat o boku 440 pikseli. Taki obszar jest wystarczający, ponieważ promień źrenicy na rejestrowanych obrazach nie przekracza 150 piksleli. Taki zabieg pozwala na osiągnięcie dwóch korzyści. Pierwszą jest zmniejszenie obszaru, który podlega przekształceniom co przyśpiesza działanie programi. Drugą jest ograniczenie innych obiektów na zdjęciu, jak brwi czy rzęsy, które mogą być uznane podczas binaryzacji za fragmenty źrenicy. Pozwala to na ograniczenie błędów podczas segmentacji. W tym obszarze przeprowadzna są następujące operacje:
+\begin{itemize}
+\item Najpierw stosowana jest binaryzacja z dwoma programi, wybierane są piksele należące do źrenicy (o jasności mniejszej niż 60) oraz piksele należące do odblasku (o jasności 255). Dzięki temu, otrzymuje bardziej zwarty obszar źrenicy. Po tej operacji powstaje obraz \ref{fig:binaryzacja2}, na którym widać większą część źrenicy.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{bianryzacja2.jpg}
+\caption{Wykryta źrenica}
+\label{fig:binaryzacja2}
+\end{center}
+\end{figure}
+\item Zamknięcie, po którym obszary znajdujące się w środku źrenicy w otoczeniu odblasku, które mają mniejszą jasność niż on sam zostają włączone do obszaru źrenicy. Na obrazie \ref{fig:zamkniecie2} po tej operacji wyraźnie widać, że źrenica jest wyznaczona w całości.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{zamkniecie.jpg}
+\caption{Wykryta źrenica}
+\label{fig:zamkniecie2}
+\end{center}
+\end{figure}
+\item Dwuktrotne otwarcie, po którym usuwane są w większej części obszary rzęs, które pozostają po wcześniejszych operacjach. Czasem po binaryzacji powstaje obraz, na którym rzęsy są połączone ze źrenicą. Ta operacja pozwala rozdzielić je od siebie.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{otwarcie2.jpg}
+\caption{Wykryta źrenica}
+\label{fig:otwarcie2}
+\end{center}
+\end{figure}
+\item Czyszczenie brzegów w ramach wybranego wcześniej obszaru. Po tej operacji na obrazie zostaje sama źrenica i znikają ewentualne pozostałości po wykrytych rzęsach. Jest to ostatni etap wyznaczania obszaru źrenicy i otrzymujemy obraz \ref{fig:zrenica2}.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.5]{zrenica2.jpg}
+\caption{Wykryta źrenica}
+\label{fig:zrenica2}
+\end{center}
+\end{figure}
+\end{itemize}
+
 
 \section{Wykrycie tęczówki}
 \label{sec:wykrycieTeczowki}
@@ -111,5 +148,5 @@ gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
 Po tej operacji wartość $H$ określa procent różnych pikseli dla dwóch różnych kodów.
 
-Głowa danej osoby może być w pozycji nieznacznie obróconej ~w trakcie pobierania zdjęcia służącego identyfikacji ~w stosunku do zdjęcia, ~na podstawie  którego powstał kod zapisany  ~w bazie. ~W celu zminimalizowania błędu stosowana jest rotacja jednego z porównywanych kodów. Kod jest przesuwany ~w obydwie strony ~o dwa piksele (ponieważ ~z jednej lokalizacji na obrazie otrzymujemy dwa bity kodu). Wykonywanych jest 9 porównań kodów. Wybierana jest najniższa wyliczona wartość odległości Hamminga. Ustalonym progiem zgodności dwóch kodów jest 0.32 \cite{Daugman}.
+Głowa danej osoby może być w pozycji nieznacznie obróconej ~w trakcie pobierania zdjęcia służącego identyfikacji ~w stosunku do zdjęcia, ~na podstawie  którego powstał kod zapisany  ~w bazie. ~W celu zminimalizowania błędu stosowana jest rotacja jednego z porównywanych kodów. Kod jest przesuwany ~w obydwie strony ~o dwa piksele (ponieważ ~z jednej lokalizacji na obrazie otrzymujemy dwa bity kodu). Wykonywanych jest 9 porównań kodów. Wybierana jest najniższa wyliczona wartość odległości Hamminga. Ustalonym progiem zgodności dwóch kodów jest 0.18 \cite{Daugman}.
 
