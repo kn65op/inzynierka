@@ -25,10 +25,14 @@ Aplikacja rozwinięta na potrzeby niniejszej pracy została wzbogacona o funkcje
 
 Opis dodanych możliwości korzystania z aplikacji przedstawiono w dalszej części pracy.
 
+Interfejs użytkownika systemu został rozwinięty o zbiór specjalnych zakładek, pozwalających na wprowadzanie danych do bazy zgodnie ze schematem na rysunku \ref{fig:program}. Dostępne są one po naciśnięciu przycisku Zaawansowane opcje dodawania, widocznym na rysunku \ref{fig:oknoGlowne}. 
+
+Pierwszą zakładką, umożliwiającą uzupełnienie bazy o nowe informacje, jest Dodaj kierunek, pokazana na rysunku \ref{fig:dodajSpecjalizacje}. Składa się ona z pól Nazwa kierunku i Nazwa wydziału, które należy wypełnić odpowiednio pełną nazwą kierunku oraz pełną nazwą wydziału. W przypadku edycji danych dotyczących istniejącego kierunku, możliwy jest wybór jego nazwy z listy rozwijalnej, w wyniku czego pola ulegną samouzupełnieniu powiązanymi danymi. Ponadto, pola te zostały wyposażone w podpowiedzi, pełniące funkcje pomocy w przypadku, gdy użytkownik nie jest pewny, jakiej postaci powinny być wpisywane dane. 
 \begin{figure}
 \label{fig:dodajSpecjalizacje}
 \end{figure}
 
+Następną zakładką dającą możliwość wprowadzania danych jest Dodaj przedmiot. Posiada ona pola Nazwy kierunku, Nazwy przedmiotu oraz Roku studiów, w trakcie którego przedmiot jest prowadzony. Nazwę kierunku można wybrać z listy rozwijalnej, na której podane są informacje dotyczące każdej ze specjalności dostępnej w bazie. W celu zmiany danych istniejącego w bazie przedmiotu, można wybrać go z listy w polu Nazwy przedmiotu, wówczas pozostałe pola ulegną uzupełnieniu informacjami. Podobnie jak w przypadku dodawania kierunku, również w tej zakładce dostępna jest pomoc dla użytkownika w postaci pojawiających się podpowiedzi. 
 \begin{figure}
 \label{fig:dodajGrupe}
 \end{figure}
@@ -37,6 +41,8 @@ Opis dodanych możliwości korzystania z aplikacji przedstawiono w dalszej czę�
 \label{fig:dodajPrzedmiot}
 \end{figure}
 
+W zakładce Dodaj temat, obecnej na rysunku \ref{fig:dodajTemat}, możliwe jest dodawanie tematów realizowanych w obszarze danego przedmiotu. Dostępne pola na tej zakładce to Nazwa przedmiotu oraz Nazwa tematu. Pole nazwy przedmiotu należy uzupełnić poprzez wybór informacji z listy rozwijalnej. W przypadku edycji istniejącego tematu, można wybrać go z listy takiej, jak w Nazwie przedmiotu. W przeciwnym wypadku trzeba wpisać informacje ręcznie.
+
 \begin{figure}
 \label{fig:dodajTemat}
 \end{figure}
@@ -44,6 +50,9 @@ Opis dodanych możliwości korzystania z aplikacji przedstawiono w dalszej czę�
 \begin{figure}
 \label{fig:dodajZajecia}
 \end{figure}
+Kolejna zakładka o nazwie Dodaj grupę, umożliwia tworzenie grup studentów uczęszczających na zajęcia z przedmiotów. Pola niezbędne do wypełnienia na niej to Nazwa kierunku, Nazwa przedmiotu, Dzień odbywania się zajęć (do wybrania z listy dni tygodnia), Godzina odbywania się zajęć (w formie GG:MM, gdzie GG odpowiada godzinie, a MM minutom), oraz Nazwa grupy, która jest domyślnie uzupełniana w oparciu o inne pola, przyjmując postać: Kierunek_Przedmiot_Dzień_Godzina. Domyślna wartość jest możliwa do modyfikacji, jednak wymagane jest, aby była ona różna od wszystkich innych nazw grup obecnych w bazie.
+
+Następna zakładka pozwalająca na uzupełnienie bazy danych to Dodaj zajęcia. Obecne na niej pola Nazwy przedmiotu, kierunku oraz grupy umożliwiają wprowadzenie do bazy zajęć odbywających się w terminie wybranym w polu Data zajęć, podczas których realizowany będzie określony temat. W zakładce tej również pojawiają się podpowiedzi informujące o formie wprowadzanych nazw i daty.
 
 \begin{figure}
 \label{fig:oknoGlowne}
@@ -52,6 +61,13 @@ Opis dodanych możliwości korzystania z aplikacji przedstawiono w dalszej czę�
 \begin{figure}
 \label{fig:wybraneTabele}
 \end{figure}
+
+Po uzupełnieniu bazy kierunkami, przedmiotami, grupami, tematami i zajęciami można przystąpić do dodawania użytkowników. W tym celu potrzeba wypełnić w oknie głównym programu pola Imię, Nazwisko, Kierunek, Przedmiot i Grupa, w formie ręcznego wprowadzania danych bądź wyboru informacji z listy.
+
+Możliwe jest również wprowadzenie użytkowników bez wcześniejszego uzupełnienia kierunków, przedmiotów i grup, ale wymaga to późniejszej modifikacji informacji w zakładkach w celu zachowania spójności danych w bazie.
+
+Aby przypisać użytkownikowi biometrykę, należy postępować zgodnie ze schematem przedstawionym w dalszych częściach pracy.
+W celu sprawdzenia obecności użytkowników, wymagane jest pobranie zdjęć poszczególnych osób i wyznaczenie kodów potrzebnych do ich identyfikacji. W przypadku pozytywnej identyfikacji danej osoby pola danych osobowych ulegają uzupełnieniu. Można wówczas wybrać zajęcia, na których obecna jest osoba, oraz ewentualnie temat odrabianych zajęć, jeśli jest to student odrabiający. W przypadku nierozpoznania osoby, informacje nie są uzupełniane i nie można przypisać użytkownika do zajęć w bazie.
 
 \subsection{Baza danych}
 \label{subsec:baza}
