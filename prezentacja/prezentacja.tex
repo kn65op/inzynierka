@@ -203,13 +203,66 @@ Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaj
 %---------------------------------------------------------------------------
 
 \begin{frame}
+\frametitle{Wykrycie tęczówki}
+Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.25]{teczowka_nasza.jpg}
+\end{center}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{Wykrycie tęczówki}
+Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.25]{teczowka_nasza.jpg}
+\end{center}
+\end{figure}
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{Tworzenie kodu tęczówki}
+Kod tęczówki jest tworzony w następujący sposób:
+\begin{itemize}
+\item Wybieranych jest odpowiednia liczba obszarów, tak aby powstał kod o długości 2048 bitów,
+\item Każdy z obszarów jest filtrowany filtrami Gabora (jest ich 8, każdy o innym kierunku),
+\item Sumowane są otrzymane liczby zespolone,
+\item Koduje się sumy, osobno część rzeczywistą oraz urojoną: 1 dla sumy danej części większej od 0, 0 dla sumy danej części mniejszej lub równej 0.
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{Porównywanie kodów}
+Kody porównuje się licząc ile jest różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
+$$ H = \sum \frac{XOR(A,B)}{2048} $$
+gdzie:
+$A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+\begin{frame}
+\frametitle{Wynik porównania}
+Uznaje się, że dwa zdjęcia są zdjęciami jednej tęczówki w przypadku, gdy wyliczona odległość Haminnga ma wartość poniżej 0.18. Jeśli jest równa lub większa to uznaje się, że obrazy przedstawiają różne tęczówki.
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+\begin{frame}
 \frametitle{Koniec}
 
 \begin{block}{}
 Dziękujemy za uwagę.\\
 Pytania?
 \end{block}
-
 
 \end{frame}
 
