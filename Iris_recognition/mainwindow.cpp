@@ -62,7 +62,7 @@ void MainWindow::on_submitButton_clicked()
    stringstream ss;
    ss << file_nr++;
    QString file_no = ss.str().c_str();
-   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".bmp";
+   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
    QString catalog  = "capture/";
    path = catalog + filename;
 
@@ -146,7 +146,7 @@ void MainWindow::on_choosePhotoButton_clicked()
         QPixmap img = QPixmap(filepath);
         ui->imageLabel->setPixmap(img.scaled(700, 525));
         image_loaded = true;
-        ui->cameraWidget->setVisible(false);
+        //ui->cameraWidget->setVisible(false);
     }
 }
 
@@ -159,7 +159,7 @@ void MainWindow::on_findPupilButton_clicked()
         box.exec();
         return;
     }
-    eye.pupil(ui->binaryEdit->text().toInt());
+    eye.pupil();
     cvDestroyAllWindows();
     Image::showImage(eye.img, "1. Find pupil");
 }
@@ -217,8 +217,8 @@ void MainWindow::on_searchButton_clicked()
         return;
     }
     ui->resultLabel->setText("");
-    QString binary = ui->binaryEdit->text();
-    eye.pupil(binary.toInt());
+
+    eye.pupil();
     eye.iris();
     eye.masking();
 

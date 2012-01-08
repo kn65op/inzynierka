@@ -95,7 +95,7 @@ class Iris {
                 /**
                     Funkcja znajduj¹ca Ÿrenicê na podstawie jasnego odlasku w œrodku Ÿrenicy. Najpierw znadjowany jest odblask,
                 potem algorytmem ekslopduj¹cych okrêgów jest szukany promieñ okrêgu. */
-                bool pupil(int binary_value = 110) {
+                bool pupil() {
 			// Rozmycie filtrem Gaussa
                         IplImage *src = cvCloneImage(this->gray);
                         IplImage *image;
@@ -103,7 +103,7 @@ class Iris {
                      //   cvSmooth(image, image, CV_GAUSSIAN, 7, 7, 1, 1);
 			
 			// Znalezienie ï¿½rodka ï¿½renicy
-                        image = this->find_center_pupil(src, binary_value); //staro-nowe
+                        image = this->find_center_pupil(src); //staro-nowe
 /*nowe dobre                        if (!this->find_flash_on_pupil(image)) //szukanie odblasku
                         {
                             return false;
@@ -596,7 +596,7 @@ class Iris {
 		
                 //TODO: prÃ³g binaryzacji, pÃ³Åºniej jak bÄ™dziemy mieli nowe obrazy
 		/* Funkcja znajdujï¿½ca ï¿½rodek ï¿½renicy */
-                IplImage* find_center_pupil(IplImage *src, int binary_value = 50) {
+                IplImage* find_center_pupil(IplImage *src) {
                         int *middle;
                         IplImage *tmp = cvCreateImage(cvSize(src->width, src->height), src->depth, 1);
                         IplImage *res;
@@ -752,7 +752,7 @@ while (cvWaitKey(1000) < 0);*/
 #ifdef DEBUG_T
                         //cvShowImage("tmpcb", res);
                         sss = folder + "roi2" + ss.str() + ".jpg";
-                        cvSaveImage(sss.c_str(), tmp);
+                        cvSaveImage(sss.c_str(), res);
                         //while (cvWaitKey(1000) < 0);
 //                        cvThreshold(tmpcb, tmpcb, 254, 1, CV_THRESH_BINARY);
 #endif

@@ -268,38 +268,6 @@ p, li { white-space: pre-wrap; }
      <string>Znajdź użytkownika</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="binaryEdit">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>71</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>110</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>111</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Próg binaryzacji</string>
-    </property>
-   </widget>
    <widget class="QOpenCVWidget" name="cameraWidget" native="true">
     <property name="enabled">
      <bool>true</bool>
@@ -379,7 +347,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>activeCameraButton</tabstop>
   <tabstop>makeMaskButton</tabstop>
   <tabstop>searchButton</tabstop>
-  <tabstop>binaryEdit</tabstop>
   <tabstop>choosePhotoButton</tabstop>
  </tabstops>
  <resources/>
