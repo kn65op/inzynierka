@@ -153,15 +153,51 @@ Następnie w wybranym fragmencie obrazu stosujemy operację binaryzacji w celu w
 %---------------------------------------------------------------------------
 
 \begin{frame}
-\frametitle{pusty slajd}
-
+\frametitle{Wykrycie źrenicy}
+Kolejno są stosowane operacje zamknięcia i dwukrotnie otwarcia (za drugim razem ze zwiększonym obiektem strukturalnym) w celu otrzymania koła określającego źrenicę.
+\begin{columns}
+	\column{0.3\textwidth}
+		\begin{figure}
+		\begin{center}
+		\includegraphics[scale=0.25]{zamkniecie.jpg}
+		\end{center}
+		\end{figure}
+	\column{0.3\textwidth}
+		\begin{figure}
+		\begin{center}
+		\includegraphics[scale=0.25]{otwarcie1.jpg}
+		\end{center}
+		\end{figure}
+	\column{0.3\textwidth}
+		\begin{figure}
+		\begin{center}
+		\includegraphics[scale=0.25]{otwarcie2.jpg}
+		\end{center}
+		\end{figure}
+\end{columns}
 \end{frame}
 
 %---------------------------------------------------------------------------
 
 \begin{frame}
-\frametitle{pusty slajd}
-
+\frametitle{Wykrycie źrenicy}
+Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaje biały obszar w miejscu, gdzie na obrazie występują rzęsy oraz tym, że ten obszar zawsze jest styczny z brzegiem fragmentu obrazu to stosowany jest algorytm czyszczenia brzegów.
+\begin{columns}
+	\column{0.5\textwidth}
+		\begin{figure}
+		\begin{center}
+		\includegraphics[scale=0.25]{roi1.jpg}
+%		\caption{Obraz przed czyszczeniem brzegów}
+		\end{center}
+		\end{figure}
+	\column{0.5\textwidth}
+		\begin{figure}
+		\begin{center}
+		\includegraphics[scale=0.25]{roi2.jpg}
+%		\caption{Obraz po czyszczenu brzegów}
+		\end{center}
+		\end{figure}
+\end{columns}
 \end{frame}
 
 %---------------------------------------------------------------------------
