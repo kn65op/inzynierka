@@ -4,7 +4,7 @@
 #include <QtCore/QTextStream>
 #include <cv.h>
 
-# define HAMMING 0.32
+# define HAMMING 0.18
 
 class Iris {
 	public:
@@ -292,7 +292,7 @@ class Iris {
             return str;
         }
 	
-        double compare(QString code) {
+        bool compare(QString code) {
                 int    size = 2048;
                 int    k = 0;
                 int    no_rot = 9; //liczba porównañ (rotacji) powinno byæ nieparzyste (bo jest te¿ bez rotacji)
@@ -327,15 +327,15 @@ class Iris {
 		
                 this->hamming = (double) minsum/size;
                 //qDebug() << this->hamming;
-                return this->hamming;
+                //return this->hamming;
 		
-/*                if(this->hamming < HAMMING)
+                /*if(this->hamming < HAMMING)
 			res = true;
 		else
-			res = false;
+                        res = false;*/
 
-                return res;
-*/        }
+                return hamming < HAMMING;
+        }
 
         IplImage* getMaskImage() {
             IplImage *result  = cvCreateImage(cvSize(256*2, 8*2), IPL_DEPTH_8U, 1);

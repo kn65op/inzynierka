@@ -260,7 +260,30 @@ void MainWindow::on_searchButton_clicked()
     eye.iris();
     eye.masking();
 
-    QString iris_code;
+    QSqlQuery *query = db.searchUsers();
+
+    QString result = "Nie znaleziono osoby";
+    while (query->next())
+    {
+        if (eye.compare(query->value(1).toString()))
+        {
+            //QMessageBox box;
+            //box.setText(
+            result = "Osoba jest podobna do osoby " + query->value(2).toString() + " " + query->value(3).toString();//);
+            //box.exec();
+            break;
+        }
+        /*else
+        {
+            file_out << "0;";
+            QMessageBox box;
+            box.setText("Osoba " + list.at(i).fileName() + " NIE jest podobna do osoby z id " + query->value(0).toString());
+            box.exec();
+        }*/
+    }
+    delete query;
+
+/*    QString iris_code;
     QSqlQuery query("SELECT `id`, `name`, `surname`, `iris_code`, `group` FROM users");
     query.exec();
 
@@ -277,7 +300,7 @@ void MainWindow::on_searchButton_clicked()
 
         qDebug() << query.value(1).toString() << query.value(2).toString() << query.value(4).toString() << ", H: " << eye.hamming;
     }
-
+*/
     ui->resultLabel->setText(result);
 }
 
