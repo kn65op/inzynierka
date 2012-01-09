@@ -56,6 +56,8 @@ private slots:
     void timerEvent(QTimerEvent *);
     void on_actionTestuj_folder_triggered();
     void on_actionTestuj_baz_triggered();
+    void on_actionEdycja_bazy_danych_triggered();
+    void on_actionStw_rz_baz_danych_usunie_istniej_ce_dane_triggered();
 };
 
 #endif // MAINWINDOW_H

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "checkdialog.h"
+#include "dbdialog.h"
 #include <QMessageBox>
 #include <sstream>
 #include <QDir>
@@ -508,4 +509,16 @@ void MainWindow::addToDB()
 {
     eye.masking();
     db.insertUser(ui->nameField->text(), ui->surnameField->text(), ui->groupField->text(), ui->facultyField->text(), eye.get_mask());
+}
+
+void MainWindow::on_actionEdycja_bazy_danych_triggered()
+{
+    DbDialog dbdialog(this);
+    dbdialog.show();
+    dbdialog.exec();
+}
+
+void MainWindow::on_actionStw_rz_baz_danych_usunie_istniej_ce_dane_triggered()
+{
+    db.createDB();
 }

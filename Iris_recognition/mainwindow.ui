@@ -298,7 +298,16 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionTestuj_folder"/>
     <addaction name="actionTestuj_baz"/>
    </widget>
+   <widget class="QMenu" name="menuBaza_danych">
+    <property name="title">
+     <string>Baza danych</string>
+    </property>
+    <addaction name="actionEdycja_bazy_danych"/>
+    <addaction name="separator"/>
+    <addaction name="actionStw_rz_baz_danych_usunie_istniej_ce_dane"/>
+   </widget>
    <addaction name="menuPlik"/>
+   <addaction name="menuBaza_danych"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -323,6 +332,19 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionEdycja_bazy_danych">
+   <property name="text">
+    <string>Edycja bazy danych</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionStw_rz_baz_danych_usunie_istniej_ce_dane">
+   <property name="text">
+    <string>Stwórz bazę danych (usunie istniejące dane)</string>
    </property>
   </action>
  </widget>
