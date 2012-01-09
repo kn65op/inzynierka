@@ -135,7 +135,7 @@ Celem tej części algorytmy jest opisanie źrenicy jako okrąg, czyli znalezien
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Następnie wyszukiwany jest odblask widoczny na źrenicy i pochodzący od oświetlacza IR. Wyszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 220 pikseli z odblaskiem w środku.
+Następnie wyszukiwany jest odblask widoczny na źrenicy i pochodzący od oświetlacza IR. Wyszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 440 pikseli z odblaskiem w środku).
 \end{frame}
 
 %---------------------------------------------------------------------------
@@ -231,7 +231,7 @@ Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z po
 Kod tęczówki jest tworzony w następujący sposób:
 \begin{itemize}
 \item Wybieranych jest odpowiednia liczba obszarów, tak aby powstał kod o długości 2048 bitów,
-\item Każdy z obszarów jest filtrowany filtrami Gabora (jest ich 8, każdy o innym kierunku),
+\item Każdy z obszarów jest filtrowany filtrami Gabora (8, każdy o innym kierunku),
 \item Sumowane są otrzymane liczby zespolone,
 \item Koduje się sumy, osobno część rzeczywistą oraz urojoną: 1 dla sumy danej części większej od 0, 0 dla sumy danej części mniejszej lub równej 0.
 \end{itemize}
@@ -242,7 +242,7 @@ Kod tęczówki jest tworzony w następujący sposób:
 \begin{frame}
 \frametitle{Porównywanie kodów}
 Kody porównuje się licząc ile jest różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
-$$ H = \sum \frac{XOR(A,B)}{2048} $$
+$$ H = \frac{\sum XOR(A,B)}{2048} $$
 gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
 \end{frame}
