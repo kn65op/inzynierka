@@ -78,7 +78,7 @@ Można natomiast wykarzystać wykrycie odblasku do oszacowania, w którym miejsc
 \item Najpierw stosowana jest binaryzacja z dwoma programi, wybierane są piksele należące do źrenicy (o jasności mniejszej niż 60) oraz piksele należące do odblasku (o jasności 255). Dzięki temu, otrzymuje bardziej zwarty obszar źrenicy. Po tej operacji powstaje obraz \ref{fig:binaryzacja2}, na którym widać większą część źrenicy.
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{bianryzacja2.jpg}
+\includegraphics[scale=0.5]{binaryzacja2.jpg}
 \caption{Wykryta źrenica}
 \label{fig:binaryzacja2}
 \end{center}
@@ -142,7 +142,7 @@ Obraz jest przetwarzany ~z użyciem wspomnianych filtrów. Po tym zabiegu otrzym
 ~W celu określenia, czy dane dwie tęczówki należą do tej samej osoby, niezbędne jest porównanie otrzymanych kodów. Porównanie wykonywane jest za pomocą operacji XOR zgodnie ze wzorem \ref{eq:Hamming}.
 \begin{equation}
 \label{eq:Hamming}
-H = \sum \frac{XOR(A,B)}{2048}
+H = \frac{\sum XOR(A,B)}{2048}
 \end{equation}
 gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\

@@ -13,7 +13,7 @@
 
 \date[2012]{9.01.2012}
 
-\institute[AGH-EAIE]
+\institute[AGH-UST]
 {Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki\\ 
 Katedra Automatyki
 }
@@ -60,9 +60,9 @@ Tworzony przez nas system składa się z trzech głównych części:
 Moduł odpowiedzialny za pobranie obrazu tęczówki od badanych osób. Najważniejszym elementem jest kamera oraz zapewnienie odpowiednich warunków.
 \end{block}
 \column{0.3\textwidth}
-\begin{block}{Część biometryczna}
-Część odpowiedzialna na zamianę obrazu tęczówki na kod tęczówki oraz późniejsze porównywanie utworzonych kodów.
-\end{block}
+\begin{block}{Cześć biometryczna}
+Część odpowiedzialna na zamianę obrazu tęczówki na jej kod oraz późniejsze porównywanie utworzonych kodów.
+>>>>>>> f5c5e31f3a9237fdb3e2709a98877ffc1f487bf6
 \column{0.3\textwidth}
 \begin{block}{Część bazodanowa}
 Część odpowiedzialna za przechowywanie danych osób wprowadzanych do systemu.
@@ -134,7 +134,7 @@ Celem tej części algorytmu jest opisanie źrenicy przy pomocy sparametryzowane
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Następnie wyszukiwany jest odblask widoczny na źrenicy, pochodzący od oświetlacza IR. Poszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 220 pikseli z odblaskiem w środku).
+Następnie wyszukiwany jest odblask widoczny na źrenicy, pochodzący od oświetlacza IR. Poszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 440 pikseli z odblaskiem w środku).
 \end{frame}
 
 %---------------------------------------------------------------------------
@@ -240,8 +240,8 @@ Kod tęczówki jest tworzony w następujący sposób:
 
 \begin{frame}
 \frametitle{Porównywanie kodów}
-Kody porównuje się licząc ilość różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
-$$ H = \sum \frac{XOR(A,B)}{2048} $$
+Kody porównuje się licząc ile jest różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
+$$ H = \frac{\sum XOR(A,B)}{2048} $$
 gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
 \end{frame}
@@ -315,6 +315,30 @@ Zakładka Dodaj grupę pozwala na utworzenie grup studentów mających zajęcia 
 \frametitle{Zakładka Dodaj zajęcia}
 W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z podaniem terminu ich odbycia się oraz grupy i realizowanego tematu:
 
+\end{frame}
+
+\begin{frame}
+\frametitle{Iplementacja}
+\begin{itemize}
+\item Język C++.
+\item Biblioteka do przetwarzania obrazów: OpenCV.
+\item Biblioteka do tworzenia interfejsu graficznego: Qt.
+\item System zarządzania bazami danych: SQLite.
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------------------
+
+
+\begin{frame}
+\frametitle{Wyniki i wnioski}
+\begin{itemize}
+\item Udało się skonstruować system do identyfikacji na podstawie tęczówki.
+\item Najważniejsze jest uzyskanie dobrego obrazu, z jak najmniejszą liczbą zakłóceń.
+\item Stworzone stanowisko nie jest przenośne.
+\item Tęczówka na zdjęciu musi być duża, potrzeba jest dużej liczby szczegółów tęczówki.
+\item Najtrudniejszym etapem podczas tworzenia kodu tęczowki jest segmentacja źrenicy.
+\end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{Koniec}
