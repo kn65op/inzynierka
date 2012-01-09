@@ -639,6 +639,7 @@ class Iris {
                         {
                             cvReleaseImage(&tmpb);
                             cvReleaseImage(&tmpw);
+                            pupil_r = 1024;
                             return tmp;
                         }
 

@@ -40,6 +40,8 @@ private:
 //    CvCapture *camera;
     static Camera c;
     IplImage *image;
+    bool checkSegmentation();
+    void addToDB();
 
 private slots:
     void on_searchButton_clicked();

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "checkdialog.h"
 #include <QMessageBox>
 #include <sstream>
 #include <QDir>
@@ -40,10 +41,14 @@ void MainWindow::changeEvent(QEvent *e)
 
 void MainWindow::on_submitButton_clicked()
 {
-   /*if (!image)
+   if (image_loaded)
    {
-       return;
-   }*/
+       if (checkSegmentation())
+       {
+           addToDB();
+       }
+   }
+   return;
    static int file_nr = 0;
     m_netwManager = new QNetworkAccessManager(this);
     connect(m_netwManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slot_netwManagerFinished(QNetworkReply*)));
@@ -106,7 +111,30 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
     QByteArray jpegData = reply->readAll();
     QPixmap pixmap;
     pixmap.loadFromData(jpegData);
+    pixmap.save("tmp111.jpg");
+
+    QString name    = ui->nameField->text();
+    QString surname = ui->surnameField->text();
+    QString group   = ui->groupField->text();
+    QString faculty = ui->facultyField->text();
+    stringstream ss;
+//odkomentowaæ!!!
+    //ss << file_nr++;
+//odkomentowaæ!!!
+    QString file_no = ss.str().c_str();
+    QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
+    QString catalog  = "capture/";
+    path = catalog + filename;
+
     qDebug() << "path: " << path;
+
+    //sprawdzenie
+    if (!checkSegmentation())
+    {
+        return;
+    }
+    //dodanie do bazy
+    addToDB();
 
     if(pixmap.save(path, "jpg")) {
         qDebug() << "File was saved!";
@@ -144,6 +172,16 @@ void MainWindow::on_choosePhotoButton_clicked()
     {
         eye.init(filepath);
         QPixmap img = QPixmap(filepath);
+        if (img.isNull())
+        {
+            QMessageBox box;
+            box.setText("Zdjêcie jest niepoprawne");
+            box.exec();
+            return;
+        }
+        //tmp
+        img.save("tmp.jpg");
+        //tmp
         ui->imageLabel->setPixmap(img.scaled(700, 525));
         image_loaded = true;
         //ui->cameraWidget->setVisible(false);
@@ -231,10 +269,10 @@ void MainWindow::on_searchButton_clicked()
     while(query.next()) {
         iris_code = query.value(3).toString();
         if(eye.compare(iris_code)) {
-            // result = "You are: " + query.value(1).toString() + " " + query.value(2).toString() + ".\nWelcome!";
-            // break;
+             result = "You are: " + query.value(1).toString() + " " + query.value(2).toString() + ".\nWelcome!";
+             break;
         } else {
-            // result = "Don't find You.";
+             result = "Don't find You.";
         }
 
         qDebug() << query.value(1).toString() << query.value(2).toString() << query.value(4).toString() << ", H: " << eye.hamming;
@@ -423,4 +461,28 @@ void MainWindow::on_actionTestuj_baz_triggered()
     QMessageBox box;
     box.setText("Koniec");
     box.exec();
+}
+
+bool MainWindow::checkSegmentation()
+{
+    eye.init(QString("tmp.jpg"));
+    if (!eye.pupil())
+    {
+        QMessageBox box;
+        box.setText("Segmentacja têczówki nie powiod³a siê.");
+        box.exec();
+        return false;
+    }
+    eye.iris();
+    cvSaveImage("tmpwc.jpg", eye.img);
+    checkDialog dialog(this);
+    dialog.setImage(QString("tmpwc.jpg"));
+    dialog.show();
+    return dialog.exec() == QDialog::Accepted;
+}
+
+void MainWindow::addToDB()
+{
+    eye.masking();
+    db.insertUser(ui->nameField->text(), ui->surnameField->text(), ui->groupField->text(), ui->facultyField->text(), eye.get_mask());
 }
