@@ -33,7 +33,7 @@ Katedra Automatyki
 %---------------------------------------------------------------------------
 
 \begin{frame}
-\frametitle{Tematyka projetku}
+\frametitle{Tematyka projektu}
 
 \begin{block}{Cel projektu}
 Celem naszego projektu było stworzenie/rozbudowa systemu do identyfikacji osób na podstawie tęczówki oka.
@@ -53,14 +53,14 @@ Celem naszego projektu było stworzenie/rozbudowa systemu do identyfikacji osób
 \begin{frame}
 \frametitle{Podział systemu}
 
-Tworzony przez nas system składa się z trzech głównych cześci:
+Tworzony przez nas system składa się z trzech głównych części:
 \begin{columns}[t]
 \column{0.3\textwidth}
 \begin{block}{Część sprzętowa}
-Odpowiedzialna za pobranie obrazu tęczówki od badanych osób. Najważniejszym elementem jest kamera oraz zapewnienie odpowiednich warunków.
+Moduł odpowiedzialny za pobranie obrazu tęczówki od badanych osób. Najważniejszym elementem jest kamera oraz zapewnienie odpowiednich warunków.
 \end{block}
 \column{0.3\textwidth}
-\begin{block}{Cześć biometryczna}
+\begin{block}{Część biometryczna}
 Część odpowiedzialna na zamianę obrazu tęczówki na kod tęczówki oraz późniejsze porównywanie utworzonych kodów.
 \end{block}
 \column{0.3\textwidth}
@@ -79,7 +79,7 @@ Stanowisko do pobierania obrazów musi spełniać odpowiednie wymagania. Im leps
 \begin{itemize}
 \item Likwidacja odblasków pochodzących z oświetlenia (naturalnego oraz sztucznego),
 \item Odpowiednia jasność obrazu,
-\item Odpowiednia jakość obrazu,
+\item Wysoka jakość obrazu,
 \item Odpowiednia wielkość tęczówki na obrazie.
 \end{itemize}
 \end{frame}
@@ -89,9 +89,9 @@ Stanowisko do pobierania obrazów musi spełniać odpowiednie wymagania. Im leps
 \frametitle{Konstrukcja stanowiska}
 Udało się skonstruować stanowisko spełniające wymagania:
 \begin{itemize}
-\item Odblaski usunięto poprzez zasłonięcie źródeł światła (za pomocą kartonowego pudła),
+\item Odblaski usunięto poprzez przesłonięcie źródeł światła (za pomocą kartonowego pudła),
 \item Odpowiednią jasność zapewnia oświetlacz IR,
-\item Odpowiednią jakość obrazu zapewnia odpowiednia kamera, która potrafi rejestrować obrazy w dużej rozdzielczości,
+\item Wysoką jakość obrazu zapewnia odpowiednia kamera, która potrafi rejestrować obrazy w dużej rozdzielczości,
 \item Odpowiednią wielkość tęczówki otrzymujemy stosując przybliżenie za pomocą obiektywu.
 \end{itemize}
 \end{frame}
@@ -100,7 +100,6 @@ Udało się skonstruować stanowisko spełniające wymagania:
 
 \begin{frame}
 \frametitle{Stworzone stanowisko}
-Kilka zdjęć
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.04]{stanowisko.jpg}
@@ -123,7 +122,7 @@ Kilka zdjęć
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Celem tej części algorytmy jest opisanie źrenicy jako okrąg, czyli znalezienie środka okręgu na obrazie oraz jego promienia. Punktem startowym jest pobrany obraz z kamery.
+Celem tej części algorytmu jest opisanie źrenicy przy pomocy sparametryzowanego okręgu, czyli znalezienie środka okręgu na obrazie oraz jego promienia. Punktem startowym jest pobrany obraz z kamery.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.13]{szarosc.jpg}
@@ -135,7 +134,7 @@ Celem tej części algorytmy jest opisanie źrenicy jako okrąg, czyli znalezien
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Następnie wyszukiwany jest odblask widoczny na źrenicy i pochodzący od oświetlacza IR. Wyszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 220 pikseli z odblaskiem w środku.
+Następnie wyszukiwany jest odblask widoczny na źrenicy, pochodzący od oświetlacza IR. Poszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 220 pikseli z odblaskiem w środku).
 \end{frame}
 
 %---------------------------------------------------------------------------
@@ -154,7 +153,7 @@ Następnie w wybranym fragmencie obrazu stosujemy operację binaryzacji w celu w
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Kolejno są stosowane operacje zamknięcia i dwukrotnie otwarcia (za drugim razem ze zwiększonym obiektem strukturalnym) w celu otrzymania koła określającego źrenicę.
+Kolejno stosowane są operacje zamknięcia i dwukrotnego otwarcia (za drugim razem ze zwiększonym obiektem strukturalnym) w celu otrzymania koła określającego źrenicę.
 \begin{columns}
 	\column{0.3\textwidth}
 		\begin{figure}
@@ -181,7 +180,7 @@ Kolejno są stosowane operacje zamknięcia i dwukrotnie otwarcia (za drugim raze
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaje biały obszar w miejscu, gdzie na obrazie występują rzęsy oraz tym, że ten obszar zawsze jest styczny z brzegiem fragmentu obrazu to stosowany jest algorytm czyszczenia brzegów.
+Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaje biały obszar w miejscu, gdzie na obrazie występują rzęsy oraz obszar ten obszar zawsze jest styczny z brzegiem fragmentu obrazu, stosowany jest algorytm czyszczenia brzegów.
 \begin{columns}
 	\column{0.5\textwidth}
 		\begin{figure}
@@ -202,21 +201,21 @@ Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaj
 
 %---------------------------------------------------------------------------
 
-\begin{frame}
-\frametitle{Wykrycie tęczówki}
-Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.25]{teczowka_nasza.jpg}
-\end{center}
-\end{figure}
-\end{frame}
+%\begin{frame}
+%\frametitle{Wykrycie tęczówki}
+%Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
+%\begin{figure}
+%\begin{center}
+%\includegraphics[scale=0.25]{teczowka_nasza.jpg}
+%\end{center}
+%\end{figure}
+%\end{frame}
 
 %---------------------------------------------------------------------------
 
 \begin{frame}
 \frametitle{Wykrycie tęczówki}
-Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
+Sposób wykrywania tęczówki jest zgodny z patentem Daugmana; został zastosowany również w zeszłorocznej pracy. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.25]{teczowka_nasza.jpg}
@@ -230,7 +229,7 @@ Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z po
 \frametitle{Tworzenie kodu tęczówki}
 Kod tęczówki jest tworzony w następujący sposób:
 \begin{itemize}
-\item Wybieranych jest odpowiednia liczba obszarów, tak aby powstał kod o długości 2048 bitów,
+\item Wybierana jest odpowiednia liczba obszarów, tak, aby powstał kod o długości 2048 bitów,
 \item Każdy z obszarów jest filtrowany filtrami Gabora (jest ich 8, każdy o innym kierunku),
 \item Sumowane są otrzymane liczby zespolone,
 \item Koduje się sumy, osobno część rzeczywistą oraz urojoną: 1 dla sumy danej części większej od 0, 0 dla sumy danej części mniejszej lub równej 0.
@@ -241,7 +240,7 @@ Kod tęczówki jest tworzony w następujący sposób:
 
 \begin{frame}
 \frametitle{Porównywanie kodów}
-Kody porównuje się licząc ile jest różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
+Kody porównuje się licząc ilość różnych pikseli dla dwóch kodów w stosunku do długości kodu. Używany jest wzór:
 $$ H = \sum \frac{XOR(A,B)}{2048} $$
 gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
@@ -251,11 +250,72 @@ $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
 
 \begin{frame}
 \frametitle{Wynik porównania}
-Uznaje się, że dwa zdjęcia są zdjęciami jednej tęczówki w przypadku, gdy wyliczona odległość Haminnga ma wartość poniżej 0.18. Jeśli jest równa lub większa to uznaje się, że obrazy przedstawiają różne tęczówki.
+Uznaje się, że dwa zdjęcia są obrazami tej samej tęczówki w przypadku, gdy wyliczona odległość Hamminga ma wartość poniżej 0.18. Jeśli jest równa lub większa to uznaje się, że obrazy przedstawiają różne tęczówki.
 \end{frame}
 
 %---------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Baza danych programu}
+W celu poszerzenia funkcjonalności aplikacji, postanowiono rozbudować istniejącą bazę danych systemu. Schemat przebudowanej bazy wygląda następująco:
 
+\begin{figure}
+\includegraphics{diagram.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Podstawowy interfejs aplikacji}
+W podstawowej wersji programu obecny był wyłącznie podstawowy interfejs użytkownika, oferujący nieliczne funkcje wprowadzania informacji.
+\begin{figure}
+\includegraphics{oknoGlowne.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rozszerzony interfejs aplikacji}
+Rozbudowa bazy danych wiązała się z poszerzeniem interfejsu programu. Dodano funkcjonalności i zakładki:
+
+\begin{itemize}
+\item Zaawansowane opcje dodawania - zakładki: Dodaj kierunek, Dodaj przedmiot, Dodaj temat, Dodaj grupę, Dodaj zajęcia
+\item Generowanie listy obecności
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Okno główne aplikacji}
+Po przebudowie aplikacji, okno główne przyjęło postać:
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Zakładka Dodaj kierunek}
+Pierwszą zakładką, w której możliwe jest uzupełnienie danych, jest Dodaj kierunek. Pozwala ona na dodanie specjalności o podanej nazwie i wydziale.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Zakładka Dodaj przedmiot}
+W zakładce drugiej możliwe jest dodanie przedmiotu o określonej nazwie, odbywającym się na konkretnym kierunku i roku studiów:
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Zakładka Dodaj temat}
+W kolejnej zakładce można w ramach przedmiotu dodać realizowane tematy:
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Zakładka Dodaj grupę}
+Zakładka Dodaj grupę pozwala na utworzenie grup studentów mających zajęcia w określone dni tygodnia i danych godzinach:
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Zakładka Dodaj zajęcia}
+W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z podaniem terminu ich odbycia się oraz grupy i realizowanego tematu:
+
+\end{frame}
 \begin{frame}
 \frametitle{Koniec}
 
