@@ -17,7 +17,7 @@
    <string>Baza danych</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>3</number>
   </property>
   <widget class="QWidget" name="specialisation">
    <attribute name="title">
@@ -81,7 +81,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>90</y>
+      <y>120</y>
       <width>121</width>
       <height>16</height>
      </rect>
@@ -94,7 +94,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>120</y>
+      <y>90</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -116,7 +116,7 @@
      <string>Rok studiów</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="subjects_year">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -126,11 +126,11 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="subjects_faculty">
+   <widget class="QComboBox" name="subjects_specialisation">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>120</y>
+      <y>90</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -140,13 +140,36 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>90</y>
+      <y>120</y>
       <width>141</width>
       <height>22</height>
      </rect>
     </property>
     <property name="editable">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>60</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wydział</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="subjects_faculty">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>60</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -157,9 +180,9 @@
    <widget class="QComboBox" name="topics_all">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>110</y>
-      <width>131</width>
+      <x>180</x>
+      <y>190</y>
+      <width>141</width>
       <height>22</height>
      </rect>
     </property>
@@ -170,8 +193,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>110</y>
+      <x>80</x>
+      <y>190</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -183,9 +206,9 @@
    <widget class="QComboBox" name="topics_subject">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>60</y>
-      <width>131</width>
+      <x>180</x>
+      <y>140</y>
+      <width>141</width>
       <height>22</height>
      </rect>
     </property>
@@ -193,14 +216,60 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>60</y>
+      <x>80</x>
+      <y>140</y>
       <width>91</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>Wybierz przedmiot</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="topics_faculty">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>60</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="topics_specialisation">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>90</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>60</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wydział</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Kierunek</string>
     </property>
    </widget>
   </widget>
@@ -221,11 +290,11 @@
      <string>Nazwa grupy</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="groups_faculty">
+   <widget class="QComboBox" name="groups_specialisation">
     <property name="geometry">
      <rect>
       <x>170</x>
-      <y>160</y>
+      <y>40</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -261,7 +330,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>160</y>
+      <y>40</y>
       <width>46</width>
       <height>13</height>
      </rect>
@@ -280,7 +349,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTimeEdit" name="timeEdit">
+   <widget class="QTimeEdit" name="groups_hour">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -291,6 +360,9 @@
     </property>
     <property name="displayFormat">
      <string>HH:mm</string>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QComboBox" name="groups_all">
@@ -304,6 +376,29 @@
     </property>
     <property name="editable">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="groups_faculty">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>10</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wydział</string>
     </property>
    </widget>
   </widget>
@@ -404,6 +499,9 @@
       <width>141</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="calendarPopup">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_19">

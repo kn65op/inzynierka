@@ -26,30 +26,57 @@ public:
     explicit TabWidget(QWidget *parent = 0);
     ~TabWidget();
 
-    void fillFaculties();
-    void fillSubjects();
-    void fillTopics();
-    void fillGroups();
+    void fillFaculties(int index = 0);
+    void fillSubjects(int indexf = 0, int indexs = 0);
+    void fillTopics(int indexf = 0, int indexs = 0, int indexsub = 0);
+    void fillGroups(int indexf = 0, int indexs = 0);
     void fillClasses();
     void setDatabase(Database *d);
+    bool save();
 
 private slots:
     void on_faculties_all_currentIndexChanged(int index);
 
     void on_faculties_all_activated(int index);
 
+    void on_subjects_faculty_activated(int index);
+
+    void on_subjects_specialisation_activated(int index);
+
+    void on_subjects_faculty_currentIndexChanged(int index);
+
+    void on_subjects_specialisation_currentIndexChanged(int index);
+
+    void on_subjects_all_currentIndexChanged(int index);
+
+    void on_topics_faculty_currentIndexChanged(int index);
+
+    void on_topics_specialisation_currentIndexChanged(int index);
+
+    void on_topics_subject_currentIndexChanged(int index);
+
+    void on_groups_faculty_currentIndexChanged(int index);
+
+    void on_groups_specialisation_currentIndexChanged(int index);
+
+    void on_groups_all_currentIndexChanged(int index);
+
 private:
     Ui::TabWidget *ui;
-    void fillFaculties(QComboBox *to);
-    void fillSpecialisations(QComboBox *to, int faculty_id);
-    void fillSubjects(QComboBox *to);
-    void fillTopics(QComboBox *to);
-    void fillGroups(QComboBox *to);
-    void fillClasses(QComboBox *to);
-    void resetComboBox(QComboBox *what);
+    void fillFaculties(QComboBox *to, bool empty_space = true);
+    void fillSpecialisations(QComboBox *to, int faculty_id, bool empty_space = true);
+    void fillSubjects(QComboBox *to, int specialisation_id, bool empty_space = true);
+    void fillTopics(QComboBox *to, int subject_id, bool empty_space = true);
+    void fillGroups(QComboBox *to, int subject_id, bool empty_space = true);
+    void fillClasses(QComboBox *to, bool empty_space = true);
+    void resetComboBox(QComboBox *what, bool empty_space);
 
     Database *db;
     std::vector<int> faculties_map;
+    std::vector<int> specialisations_map;
+    std::vector<int> subjects_map;
+    std::vector<int> topics_map;
+    std::vector<int> groups_map;
 };
 
 #endif // TABWIDGET_H

@@ -55,12 +55,15 @@ void DbDialog::setDatabase(Database *d)
 
 void DbDialog::on_okButton_clicked()
 {
-
+    if (ui->tabWidget->save())
+    {
+        done(0);
+    }
 }
 
 void DbDialog::on_applyButton_clicked()
 {
-
+    ui->tabWidget->save();
 }
 
 void DbDialog::on_cancelButton_clicked()
