@@ -77,9 +77,9 @@ Można natomiast wykorzystać wykrycie odblasku do oszacowania, ~w którym miejs
 
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{obszar.jpg}
-\caption{Wykryta źrenica}
-\label{fig:binaryzacja2}
+\includegraphics[scale=0.25]{obszar.jpg}
+\caption{Obraz z zaznaczonym obszarem do dalszych przekształceń}
+\label{fig:obszar}
 \end{center}
 \end{figure}
 
@@ -91,7 +91,7 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{binaryzacja2.jpg}
-\caption{Wykryta źrenica}
+\caption{Obraz po binaryzacji}
 \label{fig:binaryzacja2}
 \end{center}
 \end{figure}
@@ -99,7 +99,7 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{zamkniecie.jpg}
-\caption{Wykryta źrenica}
+\caption{Obraz po operacji zamkniecia}
 \label{fig:zamkniecie2}
 \end{center}
 \end{figure}
@@ -107,15 +107,15 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{otwarcie2.jpg}
-\caption{Wykryta źrenica}
+\caption{Obraz po operacjach otwarcia}
 \label{fig:otwarcie2}
 \end{center}
 \end{figure}
 \item Czyszczenie brzegów ~w ramach wybranego wcześniej obszaru. Po tej operacji na obrazie zostaje sama źrenica ~i znikają ewentualne pozostałości po wykrytych rzęsach. Jest to ostatni etap wyznaczania obszaru źrenicy ~i otrzymujemy obraz \ref{fig:zrenica2}.
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.5]{zrenica2.jpg}
-\caption{Wykryta źrenica}
+\includegraphics[scale=0.5]{roi2.jpg}
+\caption{Obraz po wyczyszczeniu brzegów}
 \label{fig:zrenica2}
 \end{center}
 \end{figure}
@@ -137,9 +137,55 @@ Algorytm odpowiedzialny za wykrycie tęczówki oparty został na użytym ~w prac
 \label{sec:ekstrakcja}
 Zadaniem części algorytmu odpowiedzialnej za ektrakcję cech tęczówki jest ograniczenie ilości danych reprezentujących daną tęczówkę. Po przeprowadzeniu tej operacji zostaje utworzony wektor ~o długości 2048 bitów. Dzięki temu można znacznie zmniejszyć rozmiar przechowywanych danych, potrzebnych do poprawnego rozpoznania osoby. Ważne jest, by otrzymany wektor był wyraźnie odmienny dla różnych osób oraz aby dla jednej osoby różne zdjęcia generowały podobny zestaw bitów. 
 
-~w celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem (tu będą wzory ale na linuxie to zrobię)
+~W celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem \ref{eq:Gabor}:
+\begin{equation}
+\label{eq:Gabor}
+g(x,y) = s(x,y)\cdot w_{r}(x,y)
+\end{equation}
+gdzie:\\
+$s(x,y)$ - sinusoida zespolona określona wzorem \ref{eq:sin_complex},\\
+$w_{r}(x,y)$ - ,,koperta Gaussowska'' określona wzorem \ref{eq:koperta_Gaussa}.\\
+\begin{equation}
+\label{eq:sin_complex}
+s(x,y) = e^{i(2 \pi F_{0} \cdot (xcos(\omega_{0}) + ysin(\omega_{0})) + P)}
+\end{equation}
+gdzie:\\
+$F_{0}$ - amplituda,\\
+$\omega_{0}$ - kierunek filtru,\\
+$P$ - przesunięcie filtru.\\
+\begin{equation}
+\label{eq:koperta_Gaussa}
+w_{r}(x,y) = K \cdot e^{-\pi(a^{2}(x-x_{0})_{r}^{2}) + b^{2}(y-y_{0})_{r}^{2}}
+\end{equation}
+gdzie:\\
+$K$ - amplituda koperty Gaussa,\\
+$a$ - skalowanie koperty Gaussa w osi x,\\
+$b$ - skalowanie koperty Gaussa w osi y,\\
+$(x-x_{0})_{r}$ - jest określone równaniem \ref{eq:xr},\\
+$(y-y_{0})_{r}$ - jest określone równaniem \ref{eq:yr}.\\
+\begin{equation}
+\label{eq:xr}
+(x-x_{0})_{r} = (x-x_{0})cos(\theta)+(y-y_{0})sin(\theta)
+\end{equation}
+\begin{equation}
+\label{eq:yr}
+(y-y_{0})_{r} = (x-x_{0})sin(\theta)+(y-y_{0})cos(\theta)
+\end{equation}
+gdzie:\\
+$x_{0}$ - położenie szczytu koperty Gaussa na osi x,\\
+$y_{0}$ - położenie szczytu koperty Gaussa na osi y,\\
+$\theta$ - obrót koperty Gaussa.
 
-Obraz jest przetwarzany ~z użyciem wspomnianych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy ~w pewnych obszarach. Obszary wybierane są na powierzchni tęczówki ~w punktach zależnych od jej rozmiaru. Jest to spowodowane tym, że ~w zależności od jasności otoczenia źrenica zwiększa się lub zmniejsza, co powoduje zwężenie lub rozszerzenie tęczówki. Otrzymane sumy kodowane są ~w ten sposób, że osobno rozpatrując część rzeczywistą ~i urojoną, zapisywane jest 1 ~w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. ~w ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosowane jest 8 różnych orientacji filtru Gabora, potrzebny jest wybór 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc wymagany jest wybór 64 obszarów na każdej stronie. Przykład wyznaczonych obszarów przedstawiony jest na rysunku \ref{fig:obszaryNasze}.
+~W niniejszej pracy używane są filtry Gabora ~o wielkości 11 na 11 pikseli ~o następujących parametrach:\\
+$F_{0} = \frac{8}{\pi}$,\\
+$P = 0$,\\
+$a = \frac{1}{2}$,\\
+$b = \frac{3}{10}$,\\
+$\theta = \pi / 4$,\\
+$x_{0} = 0$, $y_{0} = 0$ - punkt $(0,0)$ znajduje się w środku filtru,\\
+Używanych jest 8 kierunków $\omega_{0} =\frac {k \cdot \pi} {8} $ dla $k = 0, 1, ..., 8$.
+
+Obraz jest przetwarzany ~z użyciem wspomnianych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy ~w pewnych obszarach. Obszary wybierane są na powierzchni tęczówki ~w punktach zależnych od jej rozmiaru. Jest to spowodowane tym, że ~w zależności od jasności otoczenia źrenica zwiększa się lub zmniejsza, co powoduje zwężenie lub rozszerzenie tęczówki. Otrzymane sumy kodowane są ~w ten sposób, że osobno rozpatrując część rzeczywistą ~i urojoną, zapisywane jest 1 ~w przypadku, gdy suma jest większa od zera oraz 0 jeśli jest mniejsza lub równa. ~W ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosowane jest 8 różnych orientacji filtru Gabora, potrzebny jest wybór 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc wymagany jest wybór 64 obszarów na każdej stronie. Przykład wyznaczonych obszarów przedstawiony jest na rysunku \ref{fig:obszaryNasze}.
 
 \begin{figure}
 \begin{center}
