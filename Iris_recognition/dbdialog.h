@@ -21,6 +21,12 @@ public:
 private slots:
     void on_tabWidget_currentChanged(int index);
 
+    void on_okButton_clicked();
+
+    void on_applyButton_clicked();
+
+    void on_cancelButton_clicked();
+
 private:
     Ui::DbDialog *ui;
 };

@@ -8,6 +8,7 @@ DbDialog::DbDialog(QWidget *parent) :
     ui(new Ui::DbDialog)
 {
     ui->setupUi(this);
+    ui->tabWidget->fillFaculties();
 }
 
 DbDialog::~DbDialog()
@@ -49,4 +50,20 @@ void DbDialog::on_tabWidget_currentChanged(int index)
 void DbDialog::setDatabase(Database *d)
 {
     ui->tabWidget->setDatabase(d);
+}
+
+
+void DbDialog::on_okButton_clicked()
+{
+
+}
+
+void DbDialog::on_applyButton_clicked()
+{
+
+}
+
+void DbDialog::on_cancelButton_clicked()
+{
+    done(0);
 }

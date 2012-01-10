@@ -18,6 +18,8 @@ class Database
         QSqlQueryModel model;
         ~Database();
         QSqlQuery *getFaculties();
+        QSqlQuery *getSpecialisations();
+        QSqlQuery *getSpecialisationsByFacultyId(int);
         QSqlQuery *getSubjects();
         QSqlQuery *getTopics();
         QSqlQuery *getGroups();

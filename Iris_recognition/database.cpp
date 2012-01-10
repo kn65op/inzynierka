@@ -148,7 +148,35 @@ Database::~Database()
 
 QSqlQuery * Database::getFaculties()
 {
-    QSqlQuery *query = new QSqlQuery("SELECT `specialisation_id`, `faculty`, `specialisation` FROM Specialisations");
+    QSqlQuery *query = new QSqlQuery("SELECT `faculty_id`, `faculty` FROM Faculties");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+
+QSqlQuery * Database::getSpecialisations()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `specialisation_id`, `faculty_id`, `specialisation` FROM Specialisations");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+
+QSqlQuery * Database::getSpecialisationsByFacultyId(int id)
+{
+    QSqlQuery *query = new QSqlQuery(db);
+    query->prepare("SELECT `specialisation_id`, `faculty_id`, `specialisation` FROM Specialisations where `faculty_id` = :id");
+    query->bindValue(":id", id);
     query->exec();
 
     if( query->lastError().isValid()) {

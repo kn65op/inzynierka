@@ -3,7 +3,7 @@
 
 #include "QMessageBox"
 
-#include <map>
+#include <stdexcept>
 
 TabWidget::TabWidget(QWidget *parent) :
     QTabWidget(parent),
@@ -17,13 +17,10 @@ TabWidget::~TabWidget()
     delete ui;
 }
 
-void TabWidget::on_TabWidget_currentChanged(int index)
-{
-}
-
 void TabWidget::fillFaculties()
 {
     fillFaculties(ui->faculties_all);
+    ui->faculties_specialisation->setEditable(false);
 }
 
 void TabWidget::fillClasses()
@@ -54,13 +51,27 @@ void TabWidget::fillTopics()
 
 void TabWidget::fillFaculties(QComboBox *to)
 {
-    to->clear();
+    faculties_map.clear();
+    resetComboBox(to);
     QSqlQuery *query = db->getFaculties();
     //zapisanie wszystkich
     while(query->next())
     {
-        to->addItem(query->value(1).toString() + query->value(2).toString());
+        faculties_map.push_back(query->value(0).toInt());
+        to->addItem(query->value(1).toString());
     }
+    if (query) delete query;
+}
+
+void TabWidget::fillSpecialisations(QComboBox *to, int faculty_id)
+{
+    resetComboBox(to);
+    QSqlQuery *query = db->getSpecialisationsByFacultyId(faculty_id);
+    while(query->next())
+    {
+        to->addItem(query->value(2).toString());
+    }
+    if (query) delete query;
 }
 
 void TabWidget::fillClasses(QComboBox *to)
@@ -86,4 +97,29 @@ void TabWidget::fillTopics(QComboBox *to)
 void TabWidget::setDatabase(Database *d)
 {
     db = d;
+}
+
+void TabWidget::resetComboBox(QComboBox *what)
+{
+    what->clear();
+    what->addItem("");
+}
+
+void TabWidget::on_faculties_all_currentIndexChanged(int index)
+{
+
+}
+
+void TabWidget::on_faculties_all_activated(int index)
+{
+    try
+    {
+        fillSpecialisations(ui->faculties_specialisation, faculties_map.at(index-1));
+        ui->faculties_specialisation->setEditable(true);
+    }
+    catch (std::out_of_range)
+    {
+        ui->faculties_specialisation->setEditable(false);
+        resetComboBox(ui->faculties_specialisation);
+    }
 }

@@ -5,6 +5,7 @@
 #include <QComboBox>
 
 #include <database.h>
+#include <vector>
 
 #define TAB_FACULTY 0
 #define TAB_SUBJECT 1
@@ -33,17 +34,22 @@ public:
     void setDatabase(Database *d);
 
 private slots:
-    void on_TabWidget_currentChanged(int index);
+    void on_faculties_all_currentIndexChanged(int index);
+
+    void on_faculties_all_activated(int index);
 
 private:
     Ui::TabWidget *ui;
     void fillFaculties(QComboBox *to);
+    void fillSpecialisations(QComboBox *to, int faculty_id);
     void fillSubjects(QComboBox *to);
     void fillTopics(QComboBox *to);
     void fillGroups(QComboBox *to);
     void fillClasses(QComboBox *to);
+    void resetComboBox(QComboBox *what);
 
     Database *db;
+    std::vector<int> faculties_map;
 };
 
 #endif // TABWIDGET_H
