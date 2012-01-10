@@ -17,7 +17,7 @@ void Database::createDB()
     //Przy pierwszym uruchomieniu, aby utworzyæ bazê nale¿y odkomentowaæ poprzedni¹ linijkê
     //
     db.exec("DROP TABLE if exists Biometrics;");
-    db.exec("DROP TABLE if exists Specializations;");
+    db.exec("DROP TABLE if exists Specialisations;");
     db.exec("DROP TABLE if exists Students;");
     db.exec("DROP TABLE if exists Students_Groups;");
     db.exec("DROP TABLE if exists Groups;");
@@ -72,7 +72,8 @@ void Database::createDB()
             ");");
     db.exec("CREATE TABLE if not exists Topics ("
             "topic_id integer primary key autoincrement,"
-         "subject_id integer references Subjects"
+         "subject_id integer references Subjects,"
+            "topic text"
             ");");
     db.exec("CREATE TABLE if not exists Attendance("
             "student_id integer  references Students,"
@@ -121,4 +122,66 @@ QSqlQuery * Database::searchUsers() {
 Database::~Database()
 {
     db.close();
+}
+
+QSqlQuery * Database::getFaculties()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `specialisation_id`, `faculty`, `specialisation` FROM Specialisations");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+
+QSqlQuery * Database::getClasses()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `class_id`, `subject`, `class_date`, `topic_id`, `group_id` FROM Classes");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+QSqlQuery * Database::getGroups()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `group_id`, `group_name`, `day_of_week`, `time_of_classes`, `specialisation_id` FROM Groups");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+QSqlQuery * Database::getSubjects()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `subject_id`, `specialisation_id`, `year_of_studies`, `subject` FROM Subjects");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+QSqlQuery * Database::getTopics()
+{
+    QSqlQuery *query = new QSqlQuery("SELECT `topic_id`, `subject_id`, `topic` FROM Topics");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
 }

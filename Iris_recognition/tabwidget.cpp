@@ -3,6 +3,8 @@
 
 #include "QMessageBox"
 
+#include <map>
+
 TabWidget::TabWidget(QWidget *parent) :
     QTabWidget(parent),
     ui(new Ui::TabWidget)
@@ -41,7 +43,7 @@ void TabWidget::fillGroups()
 void TabWidget::fillSubjects()
 {
     fillSubjects(ui->subjects_all);
-    fillFaculties(ui->faculties_all);
+    fillFaculties(ui->subjects_faculty);
 }
 
 void TabWidget::fillTopics()
@@ -52,7 +54,13 @@ void TabWidget::fillTopics()
 
 void TabWidget::fillFaculties(QComboBox *to)
 {
-
+    to->clear();
+    QSqlQuery *query = db->getFaculties();
+    //zapisanie wszystkich
+    while(query->next())
+    {
+        to->addItem(query->value(1).toString() + query->value(2).toString());
+    }
 }
 
 void TabWidget::fillClasses(QComboBox *to)

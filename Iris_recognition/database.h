@@ -17,6 +17,11 @@ class Database
         QSqlDatabase db;
         QSqlQueryModel model;
         ~Database();
+        QSqlQuery *getFaculties();
+        QSqlQuery *getSubjects();
+        QSqlQuery *getTopics();
+        QSqlQuery *getGroups();
+        QSqlQuery *getClasses();
 
 };
 
