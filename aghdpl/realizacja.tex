@@ -137,7 +137,7 @@ Algorytm odpowiedzialny za wykrycie tęczówki oparty został na użytym ~w prac
 \label{sec:ekstrakcja}
 Zadaniem części algorytmu odpowiedzialnej za ektrakcję cech tęczówki jest ograniczenie ilości danych reprezentujących daną tęczówkę. Po przeprowadzeniu tej operacji zostaje utworzony wektor ~o długości 2048 bitów. Dzięki temu można znacznie zmniejszyć rozmiar przechowywanych danych, potrzebnych do poprawnego rozpoznania osoby. Ważne jest, by otrzymany wektor był wyraźnie odmienny dla różnych osób oraz aby dla jednej osoby różne zdjęcia generowały podobny zestaw bitów. 
 
-~W celu określenia cech danej tęczówki stosuje się filtry Gabora określone wzorem \ref{eq:Gabor}:
+~W celu określenia cech danej tęczówki stosowane są filtry Gabora określone wzorem \ref{eq:Gabor}:
 \begin{equation}
 \label{eq:Gabor}
 g(x,y) = s(x,y)\cdot w_{r}(x,y)
