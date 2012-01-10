@@ -28,7 +28,7 @@ void TabWidget::fillFaculties()
 
 void TabWidget::fillClasses()
 {
-    fillClasses(ui->classes_all);
+ //   fillClasses(ui->classes_all);
     fillFaculties(ui->classes_faculty);
     fillGroups(ui->classes_group);
     fillSubjects(ui->classes_subject);
