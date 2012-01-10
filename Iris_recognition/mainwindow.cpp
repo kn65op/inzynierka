@@ -514,6 +514,7 @@ void MainWindow::addToDB()
 void MainWindow::on_actionEdycja_bazy_danych_triggered()
 {
     DbDialog dbdialog(this);
+    dbdialog.setDatabase(&db);
     dbdialog.show();
     dbdialog.exec();
 }

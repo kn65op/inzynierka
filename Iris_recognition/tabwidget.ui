@@ -17,7 +17,7 @@
    <string>Baza danych</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>4</number>
   </property>
   <widget class="QWidget" name="specialisation">
    <attribute name="title">
@@ -108,7 +108,7 @@
      <string>Wyczyść</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_3">
+   <widget class="QComboBox" name="faculties_all">
     <property name="geometry">
      <rect>
       <x>138</x>
@@ -221,7 +221,7 @@
      <string>Wyczyść</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_4">
+   <widget class="QComboBox" name="subjects_faculty">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -231,7 +231,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_5">
+   <widget class="QComboBox" name="subjects_all">
     <property name="geometry">
      <rect>
       <x>188</x>
@@ -246,7 +246,7 @@
    <attribute name="title">
     <string>Tematy</string>
    </attribute>
-   <widget class="QComboBox" name="comboBox_8">
+   <widget class="QComboBox" name="topics_all">
     <property name="geometry">
      <rect>
       <x>158</x>
@@ -282,7 +282,7 @@
      <string>Przedmiot</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_9">
+   <widget class="QComboBox" name="topics_subject">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -320,7 +320,7 @@
      <string>Nazwa grupy</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="groups_faculty">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -389,7 +389,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_10">
+   <widget class="QComboBox" name="groups_day">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -409,7 +409,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_11">
+   <widget class="QComboBox" name="groups_all">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -424,7 +424,7 @@
    <attribute name="title">
     <string>Zajęcia</string>
    </attribute>
-   <widget class="QComboBox" name="comboBox_12">
+   <widget class="QComboBox" name="classes_all">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -434,7 +434,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_13">
+   <widget class="QComboBox" name="classes_faculty">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -444,7 +444,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_14">
+   <widget class="QComboBox" name="classes_subject">
     <property name="geometry">
      <rect>
       <x>180</x>
@@ -454,7 +454,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_15">
+   <widget class="QComboBox" name="classes_group">
     <property name="geometry">
      <rect>
       <x>180</x>

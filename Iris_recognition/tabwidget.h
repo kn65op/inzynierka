@@ -2,6 +2,9 @@
 #define TABWIDGET_H
 
 #include <QTabWidget>
+#include <QComboBox>
+
+#include <database.h>
 
 #define TAB_FACULTY 0
 #define TAB_SUBJECT 1
@@ -27,13 +30,20 @@ public:
     void fillTopics();
     void fillGroups();
     void fillClasses();
+    void setDatabase(Database *d);
 
 private slots:
     void on_TabWidget_currentChanged(int index);
 
 private:
     Ui::TabWidget *ui;
+    void fillFaculties(QComboBox *to);
+    void fillSubjects(QComboBox *to);
+    void fillTopics(QComboBox *to);
+    void fillGroups(QComboBox *to);
+    void fillClasses(QComboBox *to);
 
+    Database *db;
 };
 
 #endif // TABWIDGET_H

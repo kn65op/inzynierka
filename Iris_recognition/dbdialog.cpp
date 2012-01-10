@@ -45,3 +45,8 @@ void DbDialog::on_tabWidget_currentChanged(int index)
             break;
     }
 }
+
+void DbDialog::setDatabase(Database *d)
+{
+    ui->tabWidget->setDatabase(d);
+}
