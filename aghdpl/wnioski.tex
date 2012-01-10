@@ -15,9 +15,10 @@ Sytuacja fałszywej identyfikacji jest groźniejsza, ~a także trudniejsza do el
 
 Przy użyciu pierwszej kamery wyniki testów nie były obiecujące. Wartości odległości Hamminga dla różnych obrazów tęczówek niewiele się różniły od odległości wyliczonych dla obrazów tej samej tęczówki. Co więcej zdarzało się, że odległość dla różnych obrazów tęczówek była niższa niż dla obrazów tej samej. ~W związku ~z tym ustalenie granicy odległości Hamminga, która wskazuje na zdjęcia tej samej tęczówki stało się zadaniem niewykonalnym. Osiągnięte wyniki były ~w głównej mierze spowodowane małą rozdzielczością kamery oraz słabym oświetleniem tęczówki.
 
-Tabela \ref{tab:pierwsza} przedstawia wyniki testów dla pierwszej kamery. Przedstawione są na niej wyniki porównań kodów tęczówek czterech osób (A, B, C, D) po 3 zdjęcia dla każdej osoby (numery zdjęć 1, 2 i 3). Widać wyraźnie, że uzyskane wartości nie pozwalają na poprawne rozpoznanie osób. Często się zdarza, że najmniejsze osiągnięte wartości odległości Hamminga są osiągane dla obrazów przedstawiających różne tęczówki.
+Tabela \ref{tab:pierwsza} przedstawia wyniki testów dla pierwszej kamery. Przedstawione są na niej wyniki porównań kodów tęczówek czterech osób (A, B, C, D) po trzy zdjęcia dla każdej osoby (numery zdjęć 1, 2 i 3). Widać wyraźnie, że uzyskane wartości nie pozwalają na poprawne rozpoznanie osób. Często się zdarza, że najmniejsze osiągnięte wartości odległości Hamminga są osiągane dla obrazów przedstawiających różne tęczówki.
 
 \begin{table}
+\begin{center}
 \caption{Tabela przedstawiająca fragment testów systemu dla obrazów pobranych pierwszą kamerą}
 \label{tab:pierwsza}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -36,74 +37,89 @@ D1 & 0,235&0,245&0,235&0,228&0,228&0,229&0,233&0,229&0,234&0&0,199&0,202\\ \hlin
 D2 & 0,233&0,232&0,243&0,242&0,242&0,232&0,243&0,239&0,233&0,199&0&0,200\\ \hline
 D3 & 0,243&0,237&0,243&0,226&0,235&0,228&0,233&0,221&0,229&0,202&0,200&0\\ \hline
 \end{tabular}
+\end{center}
 \end{table}
 
 ~W związku ~z tym należało użyć kamery ~o większej rozdzielczości. Po zastosowaniu takiej kamery wyniki były ~o wiele lepsze, ponadto nie wystąpił problem ze zbyt małym oświetleniem tęczówki. Widać wyraźną różnicę pomiędzy odległościami Hamminga dla obrazów tej samej tęczówki oraz dla obrazów różnych tęczówek.
 
+Tabele \ref{tab:druga1} ~i \ref{tab:druga2} przedstawiają wynik systemu dla obrazów pobieranych za pomocą drugiej kamery. Przedstawione są na niej wyniki porównań kodów tęczówek dla sześciu osób (A, B, C, D, E ~i F), których kody tęczówek są już zapisane w bazie (kolumny w tabeli) oraz trzech osób (G, H, I), dla których nie ma kodów ~w bazie ~i nie powinny zostać rozpoznane. ~W ostatniej kolumnie przedstawiono wniosek z porównań:
+\begin{itemize}
+\item rozpoznanie - dana osoba posiada zdjęcie w porównywanej bazie ~i została poprawnie rozpoznana,
+\item nie rozpoznano - dana osoba nie posiada zdjęcia w porównywanej bazie ~i nie została rozpoznana,
+\item błędnie rozpoznano - dana osoba nie posiada zdjęcia w porównywanej bazie, ale została rozpoznana,
+\item błędnie nie rozpoznano - dana osoba posiada zdjęcie w porównywanej bazie, ale nie została rozpoznana.
+\end{itemize}
+
+Widać, że osiągnięto jedynie dwie pierwsze sytuacje przedstawione powyżej. Oznacza to, że system dla danych testowych działa w pełni poprawnie.
+
 \begin{table}
+\begin{center}
 \caption{Tabela przedstawiająca fragment testów systemu dla obrazów pobranych drugą kamerą}
 \label{tab:druga1}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|l|}
 \hline
- & A1 & A2 & A3 & B1 & B2 & B3 & C1 & C2 & C3 \\ \hline
-A1 & 0&0,114&0,121&0,194&0,196&0,195&0,212&0,213&0,208\\ \hline
-A2 & 0,114&0&0,078&0,192&0,186&0,184&0,207&0,21&0,207\\ \hline
-A3 & 0,121&0,078&0&0,198&0,194&0,189&0,207&0,213&0,208\\ \hline
-B1 & 0,194&0,192&0,198&0&0,124&0,108&0,2&0,206&0,198\\ \hline
-B2 & 0,196&0,186&0,194&0,124&0&0,065&0,191&0,203&0,202\\ \hline
-B3 & 0,195&0,184&0,189&0,108&0,065&0&0,199&0,202&0,204\\ \hline
-C1 & 0,212&0,207&0,207&0,2&0,191&0,199&0&0,121&0,145\\ \hline
-C2 & 0,213&0,21&0,213&0,206&0,203&0,202&0,121&0&0,093\\ \hline
-C3 & 0,208&0,207&0,208&0,198&0,202&0,204&0,145&0,093&0\\ \hline
-D1 & 0,186&0,197&0,201&0,219&0,216&0,213&0,21&0,211&0,212\\ \hline
-D2 & 0,186&0,194&0,197&0,212&0,208&0,208&0,211&0,214&0,216\\ \hline
-D3 & 0,185&0,199&0,197&0,223&0,216&0,211&0,216&0,222&0,225\\ \hline
-E1 & 0,186&0,2&0,198&0,216&0,205&0,206&0,215&0,218&0,208\\ \hline
-E2 & 0,181&0,192&0,191&0,218&0,205&0,204&0,209&0,214&0,209\\ \hline
-E3 & 0,182&0,198&0,196&0,213&0,195&0,196&0,214&0,218&0,202\\ \hline
-F1 & 0,2&0,201&0,2&0,211&0,195&0,192&0,21&0,21&0,206\\ \hline
-F2 & 0,206&0,219&0,222&0,23&0,218&0,222&0,225&0,227&0,224\\ \hline
-F3 & 0,192&0,198&0,197&0,201&0,201&0,196&0,213&0,215&0,213\\ \hline
-G1 & 0,193&0,208&0,207&0,216&0,202&0,197&0,216&0,218&0,229 \\ \hline
-G2 & 0,196&0,204&0,202&0,213&0,192&0,195&0,217&0,22&0,226 \\ \hline
-H1 & 0,19&0,2&0,207&0,211&0,206&0,217&0,217&0,218&0,207 \\ \hline
-H2 & 0,186&0,201&0,207&0,211&0,207&0,214&0,206&0,213&0,211 \\ \hline
-I1 & 0,188&0,211&0,209&0,214&0,205&0,209&0,215&0,219&0,218 \\ \hline
-I2 & 0,188&0,207&0,209&0,213&0,207&0,207&0,212&0,22&0,22 \\ \hline
+ & A1 & A2 & A3 & B1 & B2 & B3 & C1 & C2 & C3 & wniosek\\ \hline
+A1 & 0&0,114&0,121&0,194&0,196&0,195&0,212&0,213&0,208 & rozpoznano\\ \hline
+A2 & 0,114&0&0,078&0,192&0,186&0,184&0,207&0,21&0,207 & rozpoznano\\ \hline
+A3 & 0,121&0,078&0&0,198&0,194&0,189&0,207&0,213&0,208 & rozpoznano\\ \hline
+B1 & 0,194&0,192&0,198&0&0,124&0,108&0,2&0,206&0,198 & rozpoznano\\ \hline
+B2 & 0,196&0,186&0,194&0,124&0&0,065&0,191&0,203&0,202 & rozpoznano\\ \hline
+B3 & 0,195&0,184&0,189&0,108&0,065&0&0,199&0,202&0,204 & rozpoznano\\ \hline
+C1 & 0,212&0,207&0,207&0,2&0,191&0,199&0&0,121&0,145 & rozpoznano\\ \hline
+C2 & 0,213&0,21&0,213&0,206&0,203&0,202&0,121&0&0,093 & rozpoznano\\ \hline
+C3 & 0,208&0,207&0,208&0,198&0,202&0,204&0,145&0,093&0 & rozpoznano\\ \hline
+D1 & 0,186&0,197&0,201&0,219&0,216&0,213&0,21&0,211&0,212 & nie rozpoznano\\ \hline
+D2 & 0,186&0,194&0,197&0,212&0,208&0,208&0,211&0,214&0,216 & nie rozpoznano\\ \hline
+D3 & 0,185&0,199&0,197&0,223&0,216&0,211&0,216&0,222&0,225 & nie rozpoznano\\ \hline
+E1 & 0,186&0,2&0,198&0,216&0,205&0,206&0,215&0,218&0,208 & nie rozpoznano\\ \hline
+E2 & 0,181&0,192&0,191&0,218&0,205&0,204&0,209&0,214&0,209 & nie rozpoznano\\ \hline
+E3 & 0,182&0,198&0,196&0,213&0,195&0,196&0,214&0,218&0,202 & nie rozpoznano\\ \hline
+F1 & 0,2&0,201&0,2&0,211&0,195&0,192&0,21&0,21&0,206 & nie rozpoznano\\ \hline
+F2 & 0,206&0,219&0,222&0,23&0,218&0,222&0,225&0,227&0,224 & nie rozpoznano\\ \hline
+F3 & 0,192&0,198&0,197&0,201&0,201&0,196&0,213&0,215&0,213 & nie rozpoznano\\ \hline
+G1 & 0,193&0,208&0,207&0,216&0,202&0,197&0,216&0,218&0,229 & nie rozpoznano\\ \hline
+G2 & 0,196&0,204&0,202&0,213&0,192&0,195&0,217&0,22&0,226 & nie rozpoznano\\ \hline
+H1 & 0,19&0,2&0,207&0,211&0,206&0,217&0,217&0,218&0,207 & nie rozpoznano\\ \hline
+H2 & 0,186&0,201&0,207&0,211&0,207&0,214&0,206&0,213&0,211 & nie rozpoznano\\ \hline
+I1 & 0,188&0,211&0,209&0,214&0,205&0,209&0,215&0,219&0,218 & nie rozpoznano\\ \hline
+I2 & 0,188&0,207&0,209&0,213&0,207&0,207&0,212&0,22&0,22 & nie rozpoznano\\ \hline
 \end{tabular}
+\end{center}
 \end{table}
 
 \begin{table}
+\begin{center}
 \caption{Tabela przedstawiająca fragment testów systemu dla obrazów pobranych drugą kamerą}
 \label{tab:druga2}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|l|}
 \hline
- & D1 & D2 & D3 & E1 & E2 & E3 & F1 & F2 & F3 \\ \hline
-A1 & 0,186&0,186&0,185&0,186&0,181&0,182&0,2&0,206&0,192 \\ \hline
-A2 & 0,197&0,194&0,199&0,2&0,192&0,198&0,201&0,219&0,198 \\ \hline
-A3 & 0,201&0,197&0,197&0,198&0,191&0,196&0,2&0,222&0,197 \\ \hline
-B1 & 0,219&0,212&0,223&0,216&0,218&0,213&0,211&0,23&0,201 \\ \hline
-B2 & 0,216&0,208&0,216&0,205&0,205&0,195&0,195&0,218&0,201 \\ \hline
-B3 & 0,213&0,208&0,211&0,206&0,204&0,196&0,192&0,222&0,196 \\ \hline
-C1 & 0,21&0,211&0,216&0,215&0,209&0,214&0,21&0,225&0,213 \\ \hline
-C2 & 0,211&0,214&0,222&0,218&0,214&0,218&0,21&0,227&0,215 \\ \hline
-C3 & 0,212&0,216&0,225&0,208&0,209&0,202&0,206&0,224&0,213 \\ \hline
-D1 & 0&0,071&0,067&0,198&0,201&0,197&0,191&0,222&0,191 \\ \hline
-D2 & 0,071&0&0,06&0,189&0,189&0,186&0,189&0,227&0,193 \\ \hline
-D3 & 0,067&0,06&0&0,196&0,2&0,191&0,192&0,225&0,187 \\ \hline
-E1 & 0,198&0,189&0,196&0&0,049&0,041&0,205&0,195&0,183 \\ \hline
-E2 & 0,201&0,189&0,2&0,049&0&0,054&0,211&0,202&0,189 \\ \hline
-E3 & 0,197&0,186&0,191&0,041&0,054&0&0,208&0,193&0,19 \\ \hline
-F1 & 0,191&0,189&0,192&0,205&0,211&0,208&0&0,211&0,175 \\ \hline
-F2 & 0,222&0,227&0,225&0,195&0,202&0,193&0,211&0&0,162 \\ \hline
-F3 & 0,191&0,193&0,187&0,183&0,189&0,19&0,175&0,162&0 \\ \hline
-G1 & 0,195&0,192&0,194&0,203&0,208&0,2&0,203&0,223&0,203 \\ \hline
-G2 & 0,189&0,187&0,194&0,201&0,2&0,196&0,2&0,224&0,196 \\ \hline
-H1 & 0,207&0,208&0,214&0,193&0,192&0,2&0,211&0,208&0,208 \\ \hline
-H2 & 0,198&0,202&0,207&0,192&0,191&0,192&0,208&0,206&0,206 \\ \hline
-I1 & 0,188&0,185&0,19&0,184&0,186&0,186&0,189&0,201&0,181 \\ \hline
-I2 & 0,196&0,194&0,196&0,185&0,18&0,18&0,191&0,198&0,191 \\ \hline
+ & D1 & D2 & D3 & E1 & E2 & E3 & F1 & F2 & F3 & wniosek\\ \hline
+A1 & 0,186&0,186&0,185&0,186&0,181&0,182&0,2&0,206&0,192 & nie rozpoznano\\ \hline
+A2 & 0,197&0,194&0,199&0,2&0,192&0,198&0,201&0,219&0,198 & nie rozpoznano\\ \hline
+A3 & 0,201&0,197&0,197&0,198&0,191&0,196&0,2&0,222&0,197 & nie rozpoznano\\ \hline
+B1 & 0,219&0,212&0,223&0,216&0,218&0,213&0,211&0,23&0,201 & nie rozpoznano\\ \hline
+B2 & 0,216&0,208&0,216&0,205&0,205&0,195&0,195&0,218&0,201 & nie rozpoznano\\ \hline
+B3 & 0,213&0,208&0,211&0,206&0,204&0,196&0,192&0,222&0,196 & nie rozpoznano\\ \hline
+C1 & 0,21&0,211&0,216&0,215&0,209&0,214&0,21&0,225&0,213 & nie rozpoznano\\ \hline
+C2 & 0,211&0,214&0,222&0,218&0,214&0,218&0,21&0,227&0,215 & nie rozpoznano\\ \hline
+C3 & 0,212&0,216&0,225&0,208&0,209&0,202&0,206&0,224&0,213 & nie rozpoznano\\ \hline
+D1 & 0&0,071&0,067&0,198&0,201&0,197&0,191&0,222&0,191 & rozpoznano\\ \hline
+D2 & 0,071&0&0,06&0,189&0,189&0,186&0,189&0,227&0,193 & rozpoznano\\ \hline
+D3 & 0,067&0,06&0&0,196&0,2&0,191&0,192&0,225&0,187 & rozpoznano\\ \hline
+E1 & 0,198&0,189&0,196&0&0,049&0,041&0,205&0,195&0,183 & rozpoznano\\ \hline
+E2 & 0,201&0,189&0,2&0,049&0&0,054&0,211&0,202&0,189 & rozpoznano\\ \hline
+E3 & 0,197&0,186&0,191&0,041&0,054&0&0,208&0,193&0,19 & rozpoznano\\ \hline
+F1 & 0,191&0,189&0,192&0,205&0,211&0,208&0&0.121&0,175 & rozpoznano\\ \hline
+F2 & 0,222&0,227&0,225&0,195&0,202&0,193&0.121&0&0,162 & rozpoznano\\ \hline
+F3 & 0,191&0,193&0,187&0,183&0,189&0,19&0,175&0,162&0 & rozpoznano\\ \hline
+G1 & 0,195&0,192&0,194&0,203&0,208&0,2&0,203&0,223&0,203 & nie rozpoznano\\ \hline
+G2 & 0,189&0,187&0,194&0,201&0,2&0,196&0,2&0,224&0,196 & nie rozpoznano\\ \hline
+H1 & 0,207&0,208&0,214&0,193&0,192&0,2&0,211&0,208&0,208 & nie rozpoznano\\ \hline
+H2 & 0,198&0,202&0,207&0,192&0,191&0,192&0,208&0,206&0,206 & nie rozpoznano\\ \hline
+I1 & 0,188&0,185&0,19&0,184&0,186&0,186&0,189&0,201&0,181 & nie rozpoznano\\ \hline
+I2 & 0,196&0,194&0,196&0,185&0,18&0,18&0,191&0,198&0,191 & nie rozpoznano\\ \hline
 \end{tabular}
+\end{center}
 \end{table}
 
 \section{Wnioski}
