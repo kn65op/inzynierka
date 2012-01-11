@@ -275,7 +275,6 @@ void MainWindow::on_searchButton_clicked()
     QString result = "Nie znaleziono osoby";
     while (query->next())
     {
-        qDebug() << query->value(1).toString() << " " << eye.compare(query->value(2).toString());
         if (eye.compare(query->value(2).toString()))
         {
             //QMessageBox box;
