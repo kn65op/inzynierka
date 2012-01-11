@@ -141,6 +141,18 @@ QSqlQuery * Database::searchUsers() {
     return query;
 }
 
+QSqlQuery * Database::searchStudents() {
+    QSqlQuery *query = new QSqlQuery("SELECT `name`, `surname`, `iris_pattern` FROM Students natural join biometrics");
+    query->exec();
+
+    if( query->lastError().isValid()) {
+        qDebug() << query->lastError().text();
+        qDebug() << query->lastQuery();
+    }
+
+    return query;
+}
+
 Database::~Database()
 {
     db.close();
@@ -464,5 +476,51 @@ bool Database::addClass(int subj_id, int topic_id, int group_id, QDate date)
     query.bindValue(":tid", topic_id);
     query.bindValue(":gid", group_id);
     query.bindValue(":date", date);
+    return query.exec();
+}
+
+
+QString Database::getFacultyById(int id)
+{
+    QSqlQuery query(db);
+    query.prepare("SELECT `faculty` FROM Faculties where `faculty_id` = :id");
+    query.bindValue(":id", id);
+    query.exec();
+    query.next();
+    return query.value(0).toString();
+}
+
+int Database::insertEyeCode(QString code)
+{
+    QSqlQuery query(db);
+    query.prepare("insert into biometrics (iris_pattern) values (:code)");
+    query.bindValue(":code", code);
+    if (query.exec())
+    {
+        QSqlQuery query(db);
+        query.prepare("select seq from sqlite_sequence where name = 'Biometrics'");
+        query.exec();
+        query.next();
+        int tmp = query.value(0).toInt();
+        return query.value(0).toInt();
+    }
+}
+
+bool Database::insertStudent(QString name, QString surname, int spec_id, int bio_id)
+{
+    QSqlQuery query(db);
+    query.prepare("insert into students (name, surname, specialisation_id, biometrics_id) values (:name, :surname, :sid, :bid)");
+    query.bindValue(":name", name);
+    query.bindValue(":surname", surname);
+    query.bindValue(":sid", spec_id);
+    query.bindValue(":bid", bio_id);
+    return query.exec();
+}
+
+bool Database::addLastStudentToGroup(int gid)
+{
+    QSqlQuery query(db);
+    query.prepare("insert into students_groups (student_id, group_id) values ((select seq from sqlite_sequence where name = 'Students'), :gid)");
+    query.bindValue(":gid", gid);
     return query.exec();
 }

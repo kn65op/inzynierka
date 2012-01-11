@@ -20,6 +20,15 @@ MainWindow::MainWindow(QWidget *parent) :
     //    assert(camera);
         image = 0;
         ui->cameraWidget->setVisible(false);
+        //dodanie kierunkow
+        QSqlQuery *query = db.getSpecialisations();
+        while (query->next())
+        {
+            ui->Specialisation->addItem(query->value(2).toString() + " " + db.getFacultyById(query->value(1).toInt()));
+            specialisation_map.push_back(query->value(0).toInt());
+        }
+        delete query;
+        on_Specialisation_activated(0);
     }
 
 MainWindow::~MainWindow()
@@ -63,14 +72,14 @@ void MainWindow::on_submitButton_clicked()
 
    QString name    = ui->nameField->text();
    QString surname = ui->surnameField->text();
-   QString group   = ui->groupField->text();
-   QString faculty = ui->facultyField->text();
+//   QString group   = ui->groupField->text();
+//   QString faculty = ui->facultyField->text();
    stringstream ss;
    ss << file_nr++;
    QString file_no = ss.str().c_str();
-   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
+//   QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
    QString catalog  = "capture/";
-   path = catalog + filename;
+//   path = catalog + filename;
 
    //cvSaveImage(path.toStdString().c_str(), image);
 
@@ -116,16 +125,16 @@ void MainWindow::slot_netwManagerFinished(QNetworkReply *reply)
 
     QString name    = ui->nameField->text();
     QString surname = ui->surnameField->text();
-    QString group   = ui->groupField->text();
-    QString faculty = ui->facultyField->text();
+//    QString group   = ui->groupField->text();
+//    QString faculty = ui->facultyField->text();
     stringstream ss;
 //odkomentowaæ!!!
     //ss << file_nr++;
 //odkomentowaæ!!!
     QString file_no = ss.str().c_str();
-    QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
+//    QString filename = group + "-" + name + "-" + surname + "-" + faculty + file_no + ".jpg";
     QString catalog  = "capture/";
-    path = catalog + filename;
+//    path = catalog + filename;
 
     qDebug() << "path: " << path;
 
@@ -261,16 +270,16 @@ void MainWindow::on_searchButton_clicked()
     eye.iris();
     eye.masking();
 
-    QSqlQuery *query = db.searchUsers();
+    QSqlQuery *query = db.searchStudents();
 
     QString result = "Nie znaleziono osoby";
     while (query->next())
     {
-        if (eye.compare(query->value(1).toString()))
+        if (eye.compare(query->value(2).toString()))
         {
             //QMessageBox box;
             //box.setText(
-            result = "Osoba jest podobna do osoby " + query->value(2).toString() + " " + query->value(3).toString();//);
+            result = "Osoba jest podobna do osoby " + query->value(0).toString() + " " + query->value(1).toString();//);
             //box.exec();
             break;
         }
@@ -508,7 +517,9 @@ bool MainWindow::checkSegmentation()
 void MainWindow::addToDB()
 {
     eye.masking();
-    db.insertUser(ui->nameField->text(), ui->surnameField->text(), ui->groupField->text(), ui->facultyField->text(), eye.get_mask());
+    //db.insertUser(ui->nameField->text(), ui->surnameField->text(), ui->groupField->text(), ui->facultyField->text(), eye.get_mask());
+    db.insertStudent(ui->nameField->text(), ui->surnameField->text(), specialisation_map[ui->Specialisation->currentIndex()], db.insertEyeCode(eye.get_mask()));
+    db.addLastStudentToGroup(group_map[ui->group->currentIndex()]);
 }
 
 void MainWindow::on_actionEdycja_bazy_danych_triggered()
@@ -522,4 +533,25 @@ void MainWindow::on_actionEdycja_bazy_danych_triggered()
 void MainWindow::on_actionStw_rz_baz_danych_usunie_istniej_ce_dane_triggered()
 {
     db.createDB();
+}
+
+void MainWindow::on_Specialisation_currentIndexChanged(int index)
+{
+
+}
+
+void MainWindow::on_Specialisation_activated(int index)
+{
+    if (index < 0)
+    {
+        return;
+    }
+    QSqlQuery *query = db.getGroupsBySpecialisationId(specialisation_map[index]);
+    ui->group->clear();
+    group_map.clear();
+    while (query->next())
+    {
+        group_map.push_back(query->value(0).toInt());
+        ui->group->addItem(query->value(1).toString());
+    }
 }

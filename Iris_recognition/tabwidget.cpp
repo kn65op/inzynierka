@@ -362,7 +362,7 @@ void TabWidget::on_classes_faculty_currentIndexChanged(int index)
 {
     if (index > 0)
     {
-        fillSpecialisations(ui->classes_specialisations, index);
+        fillSpecialisations(ui->classes_specialisations, faculties_map[index]);
     }
 }
 
@@ -370,8 +370,8 @@ void TabWidget::on_classes_specialisations_currentIndexChanged(int index)
 {
     if (index > 0)
     {
-        fillSubjects(ui->classes_subject, index);
-        fillGroups(ui->classes_group, index);
+        fillSubjects(ui->classes_subject, specialisations_map[index]);
+        fillGroups(ui->classes_group, specialisations_map[index]);
     }
 }
 
@@ -379,6 +379,6 @@ void TabWidget::on_classes_subject_currentIndexChanged(int index)
 {
     if (index > 0)
     {
-        fillTopics(ui->classes_topic, index);
+        fillTopics(ui->classes_topic, subjects_map[index]);
     }
 }

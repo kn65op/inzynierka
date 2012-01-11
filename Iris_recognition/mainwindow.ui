@@ -114,16 +114,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="groupField">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>450</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="facultyLabel">
     <property name="geometry">
      <rect>
@@ -135,16 +125,6 @@
     </property>
     <property name="text">
      <string>Kierunek:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="facultyField">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>500</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="choosePhotoButton">
@@ -281,6 +261,26 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
+   <widget class="QComboBox" name="group">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>450</y>
+      <width>251</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="Specialisation">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>251</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -360,8 +360,6 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>nameField</tabstop>
   <tabstop>surnameField</tabstop>
-  <tabstop>groupField</tabstop>
-  <tabstop>facultyField</tabstop>
   <tabstop>submitButton</tabstop>
   <tabstop>findPupilButton</tabstop>
   <tabstop>divideIrisButton</tabstop>

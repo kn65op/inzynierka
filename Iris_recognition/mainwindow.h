@@ -12,6 +12,7 @@
 #include <highgui.h>
 #include <cv.h>
 #include "camera.h"
+#include "vector"
 
 namespace Ui {
     class MainWindow;
@@ -42,6 +43,8 @@ private:
     IplImage *image;
     bool checkSegmentation();
     void addToDB();
+    std::vector<int> specialisation_map;
+    std::vector<int> group_map;
 
 private slots:
     void on_searchButton_clicked();
@@ -58,6 +61,8 @@ private slots:
     void on_actionTestuj_baz_triggered();
     void on_actionEdycja_bazy_danych_triggered();
     void on_actionStw_rz_baz_danych_usunie_istniej_ce_dane_triggered();
+    void on_Specialisation_currentIndexChanged(int index);
+    void on_Specialisation_activated(int index);
 };
 
 #endif // MAINWINDOW_H

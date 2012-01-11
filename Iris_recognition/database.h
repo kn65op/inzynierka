@@ -14,12 +14,17 @@ class Database
     public:
         Database();
         bool insertUser(QString, QString, QString, QString, QString);
+        int insertEyeCode(QString code);
+        bool insertStudent(QString, QString, int, int);
+        bool addLastStudentToGroup(int gid);
         QSqlQuery *searchUsers();
+        QSqlQuery *searchStudents();
         void createDB();
         QSqlDatabase db;
         QSqlQueryModel model;
         ~Database();
         QSqlQuery *getFaculties();
+        QString getFacultyById(int);
         QSqlQuery *getSpecialisations();
         QSqlQuery *getSpecialisationsByFacultyId(int);
         QSqlQuery *getSubjects();
