@@ -208,3 +208,15 @@ Po tej operacji wartość $H$ określa procent różnych pikseli dla dwóch ró�
 
 Głowa danej osoby może być w pozycji nieznacznie obróconej ~w trakcie pobierania zdjęcia służącego identyfikacji ~w stosunku do zdjęcia, ~na podstawie  którego powstał kod zapisany  ~w bazie. ~W celu zminimalizowania błędu stosowana jest rotacja jednego z porównywanych kodów. Kod jest przesuwany ~w obydwie strony ~o dwa piksele (ponieważ ~z jednej lokalizacji na obrazie otrzymujemy dwa bity kodu). Wykonywanych jest 9 porównań kodów. Wybierana jest najniższa wyliczona wartość odległości Hamminga. Ustalonym progiem zgodności dwóch kodów jest wartość 0.18. Jest to inna wartość niż w patencie Daugamana \cite{Daugman}. Jest to związane ze zmianą parametrów filtrów Gabora.
 
+\section{Sposób realizacji części biometrycznej}
+\label{subsec:realizacjaBio}
+
+\subsection{Język programowania}
+\label{sec:jezykProgramowania}
+Wybranym językiem programowania jest C++. Wszelkie zalety tego języka, które miały wpływ na wybór zostały przedstawione ~w pracy \cite{Gl11}. Dzięki doświadczeniu w używaniu tego języka programowania można było szybciej oraz wydajniej zrealizować projekt.
+
+\subsection{Biblioteka do przetwarzania obrazow}
+\label{sec:bibliotekaObrazow}
+Często używaną biblioteką używaną przy przetwarzaniu obrazów dla języka C++ jest biblioteka OpenCV. Posiada dużą liczbę zaimplementowanych algorytmów oraz wykazuje szybką ich realizację. Także ~w tym projekcie została ona użyta. Główne czynniki wpływające na ten wybór są przedstawione ~w pracy \cite{Gl11}. Także doświadczenie ~w używaniu tej biblioteki miało wpływ. Dzięki temu można był szybciej oraz efektywniej zrealizować projekt.
+
+
