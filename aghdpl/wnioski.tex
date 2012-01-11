@@ -129,10 +129,11 @@ Pomyślnie udało się zrealizować główne zadanie jakim było stworzenie apli
 
 Głównym problemem jest pierwszy etap: akwizycja obrazu. Obraz uzyskany jest dość dobrej jakości, jednak sposób rejestracji obrazu (stanowisko, pozycja badanego). Utrudnia to ~w znacznym stopniu zastosowanie systemu ~w różnych lokalizacjach, aby móc skorzystać ~z niego ~w innym miejscu, poza przeniesieniem wymaganych elementów, należałoby również ustawić wszystko ~w odpowiednim układzie (kamera, podpórka pod głowę, pudło). Byłoby to czasochłonne oraz mogłoby się okazać, że nie ~w każdym pomieszczeniu można zestawić stanowisko. Dodatkowo ostrość ustawiana jest ręcznie co utrudnia korzystanie ~z urządzenia. ~W celu poprawy należało zainwestować ~w lepsze urządzenia: kamerę potrafiącą rejestrować tylko ~w podczerwieni (co pozwoliłoby na ograniczenie odblasków) oraz obiektyw ~z automatycznym ustawianiem ostrości.
 
+Problemy również sprawiały powieki oraz rzęsy, które zasłaniają większą część oka podczas akwizycji. Powoduje to problemy przy segmentacji źrenicy (źrenica łączy się z rzęsami podczas binaryzacji) oraz przy tworzeniu kodu tęczówki (górna ~i dolna część tęczówki nie jest używana, ale zasłaniane są fragmenty ~z boku, które są używane). Badany, aby zostać poprawnie rozpoznanym musi rozszerzyć powieki. Głównie jest to widoczne przy górnej powiece ~i problem pojawia się zawsze, nawet przy obniżeniu kamery. Miało to na celu spowodować, że badany patrząc na kamerę będzie patrzył ~w dół, co spowoduje, że powieka będzie zasłaniać mniejszą część oka, ale nie zaobserwowanego takie zachowania powieki. ~W związku z tym należy ~w przyszłości podjąć próby rozwiązania tego problemu ~w inny sposób.
+
 ~W przypadku zmiany kamery mogłoby się okazać, że sposób znajdowania źrenicy ~i tęczówki wymagałby modyfikacji. Przy obecnie wykorzystywanych te algorytmy działają poprawnie oraz ~w pełni automatycznie.
 
+Podczas rejestracji użytkownika należy zwrócić uwagę na to, by zdjęcie, ~z którego będzie tworzony kod tęczówki zapisany w bazie było dobrej jakości. ~W przypadku błednego wprowadzenia kodu późniejsza identyfikacja może być niemożliwa. Później, gdy system będzie miał za zadanie zidentyfikować użytkowanika będzie można, ~w przypadku zdjęcia, ~z którego nie da się wysegmentować tęczówki, szybko zrobić nowe zdjęcie.
+
 Baza danych na chwilę obecną jest dobrze zaprojektowana. Podczas używania ~z uwagi na zmianę czynników zewnętrznych może się okazać, że potrzebne będą nowe pola lub niektóre okażą się niepotrzebne. ~Z uwagi na odpowiedni podział na tabele nie powinno to przysparzać większych kłopotów.
-
-
-
 
