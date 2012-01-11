@@ -16,8 +16,8 @@ Identyfikacja biometryczna uwzględnia ~w swoich metodach dwa rodzaje cech czło
 
 Wśród tradycyjnych metod identyfikacji bądź weryfikacji tożsamości możemy wyróżnić \cite{Jain00}\cite{Jain08}:
 \begin{itemize}
-\item oparte na posiadanych tokenach (ang. token-based), takich jak dowód tożsamości, paszport czy karta kredytowa,
-\item oparte na posiadanej wiedzy (and. knowledge-based), czyli haśle, numerze PIN czy innym kodzie dostępu,
+\item oparte na posiadanych tokenach (ang. \emph{token-based}), takich jak dowód tożsamości, paszport czy karta kredytowa,
+\item oparte na posiadanej wiedzy (ang. \emph{knowledge-based}), czyli haśle, numerze PIN czy innym kodzie dostępu,
 \end{itemize}
 ~W porównaniu ~z tradycyjnymi sposobami rozpoznawania i weryfikacji tożsamości, metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła ~w posiadanie danych dostępowych ~w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
 
@@ -37,13 +37,13 @@ Tęczówka ludzkiego oka jest jednym ~z najbardziej charakterystycznych element�
 
 Pobranie stabilnego ~i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery ~i sprzęt projektowane specjalnie do tego typu identyfikacji, są  coraz lepiej przystosowane do automatycznej akwizycji obrazu wysokiej rozdzielczości. ~W związku ~z tym możliwe jest, iż ~z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
 
-Współcześnie stosowane kamery, wykorzystywane ~w celu akwizycji obrazu oka, operują we współpracy ~z czujnikami działającymi w środowisku bliskiej podczerwieni (NIR, ang. Near-Infra Red) lub obserwowalnej długości fali (VW, ang. Visible Wavelength). Promieniowanie podczerwone efektywnie wspomaga pobieranie tego typu obrazów ze względu na kilka czynników:
+Współcześnie stosowane kamery, wykorzystywane ~w celu akwizycji obrazu oka, operują we współpracy ~z czujnikami działającymi w środowisku bliskiej podczerwieni (NIR, ang. \emph{Near-Infra Red}) lub obserwowalnej długości fali (VW, ang. \emph{Visible Wavelength}). Promieniowanie podczerwone efektywnie wspomaga pobieranie tego typu obrazów ze względu na kilka czynników:
 \begin{itemize} 
 \item ~w zakresie widma NIR wyraźnie uwidaczniają się cechy posiadanej przez znaczną część populacji ludzkiej tęczówki ~w  odcieniach brązu,
 \item promieniowanie to pomaga ~w likwidowaniu powstałych na powierzchni oka odblasków światła ~z otoczenia,
 \item jest ono nieinwazyjne, w związku ~z czym nieszkodliwe dla oka.
 \end{itemize}
-Natomiast technika Visible Wavelength zachowuje informację na temat barwników przeważających w budowie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety ~i wady; ich porównanie oraz próby połączenia ~w celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki ~i większej ilości niesionych wraz ~z tym informacji zostały opisane ~w pracy \cite{Hos10}. 
+Natomiast technika \emph{Visible Wavelength} zachowuje informację na temat barwników przeważających w budowie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety ~i wady; ich porównanie oraz próby połączenia ~w celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki ~i większej ilości niesionych wraz ~z tym informacji zostały opisane ~w pracy \cite{Hos10}. 
 
 Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu przy pomocy kamery, dzieli się na kilka głównych etapów: \begin{itemize}
 \item segmentacja, mająca na celu wyodrębnienie wewnętrznej ~i zewnętrznej granicy tęczówki na obrazie oka, wraz ~z szeregiem operacji, mających za zadanie wyeliminowanie zakłóceń na zdjęciu, ~w postaci otaczających tęczówkę rzęs, powiek czy powstałych ~w wyniku wpływu oświetlenia odblasków,
@@ -125,7 +125,7 @@ Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną
 \end{center}
 \end{figure}
 
-Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują użycie tak zwanych ordinal measures do rozpoznawania na podstawie tęczówki. Wybiera się w nich dwa obszary, oblicza sumę jasności pikseli w tych obszarach ~i w zależności od tego, który obszar ma wyższą sumę, koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
+Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują użycie tak zwanych \emph{ordinal measures} do rozpoznawania na podstawie tęczówki. Wybiera się w nich dwa obszary, oblicza sumę jasności pikseli w tych obszarach ~i w zależności od tego, który obszar ma wyższą sumę, koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
 
 \section{Metody porównania kodów tęczówek}
 \label{sec:metodyPorownaniaKodow}
