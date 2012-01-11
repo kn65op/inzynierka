@@ -107,7 +107,7 @@ Program umożliwia również generację list obecności na danych zajęciach. Fu
 \section{Baza danych}
 \label{sec:bazadanych}
 
-Program opisany w pracy \cite{Gl11} działał w oparciu o nieskomplikowaną bazę danych, składającą się z pojedynczej tabeli o polach \verb!id!, \verb!name!, \verb!surname!, \verb!group!, \verb!faculty!, \verb!iris_code!. Taki układ bazy sprzyjał niskiej złożoności wykonywanych operacji, prostocie zapytań wysyłanych do bazy oraz dużej szybkości działania programu. Było to związane z brakiem konieczności łączenia tabel dla uzyskania informacji dotyczących użytkownika. Jednocześnie jednak taka budowa ograniczała rozszerzenie opcji aplikacji, które umożliwiałyby wiązanie kierunków z przedmiotami, a przedmiotów z grupami studentów oraz konkretnymi zajęciami. W związku z zaistniałą niedogodnością, w aplikacji rozwiniętej na potrzeby niniejszej wersji systemu podjęto próbę utworzenia rozbudowanej bazy danych.
+Program opisany w pracy \cite{Gl11} działał w oparciu o nieskomplikowaną bazę danych, składającą się z pojedynczej tabeli o polach \verb!id!, \verb!name!, \verb!surname!, \verb!group!, \verb!faculty!, \verb!iris_code!. Taki układ bazy sprzyjał niskiej złożoności wykonywanych operacji, prostocie zapytań wysyłanych do bazy oraz dużej szybkości działania programu. Było to związane z brakiem konieczności łączenia tabel dla uzyskania informacji dotyczących użytkownika. Jednocześnie taka budowa ograniczała rozszerzenie o opcje aplikacji, które umożliwiałyby wiązanie kierunków z przedmiotami, a przedmiotów z grupami studentów oraz konkretnymi zajęciami. W związku z zaistniałą niedogodnością, w obecnej wersji systemu stworzono rozbudowaną bazę danych.
 
 Schemat przebudowanej bazy przedstawiony jest na diagramie \ref{fig:bazaDanych}.
 
@@ -134,7 +134,7 @@ Aby w pełni wykorzystać możliwości systemu, należy wprowadzać informacje p
 
 Opis danych wprowadzanych do bazy podczas wypełniania pól na kolejnych zakładkach został przedstawiony poniżej.
 
-Pierwszą zakładką, w której możliwe jest wprowadzenie danych do bazy, jest Dodaj kierunek, ukazana na rysunku \ref{fig:dodajSpecjalizacje}. W trakcie dodawania kierunku bądź edycji już istniejącego, wraz z wypełnieniem pól i potwierdzeniem wpisywanych informacji, uzupełniane lub modyfikowane są następujące atrybuty:
+Pierwszą zakładką, w której możliwe jest wprowadzenie danych do bazy, jest zakładka Dodaj kierunek, ukazana na rysunku \ref{fig:dodajSpecjalizacje}. W trakcie dodawania kierunku bądź edycji już istniejącego, wraz z wypełnieniem pól i potwierdzeniem wpisywanych informacji, uzupełniane lub modyfikowane są następujące atrybuty:
 
 W tabeli Wydziały (\verb!Faculties!):
 
