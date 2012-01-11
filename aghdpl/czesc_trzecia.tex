@@ -240,10 +240,10 @@ Dodawanie informacji do tych tabel możliwe jest w przypadku, gdy osoba identyfi
 \section{Zastosowane technologie}
 \label{sec:implementacja}
 
-Podczas rozbudowy podstawowej wersji aplikacji użyto technologii zaproponowanych w pracy \cite{Gl11}, ze względu na oferowane przez nie zalety. Jedynie w procesie projektowania bazy danych zdecydowano się na wdrożenie odmiennej technologii. Spowodowane to było niedostępnością dodatku obsługującego MySQL w używanym środowisku programistycznym, stosowanym do zaprojektowania systemu.
+Podczas rozbudowy podstawowej wersji aplikacji użyto technologii zaproponowanych w pracy \cite{Gl11}, ze względu na oferowane przez nie zalety. Jedynie w procesie projektowania bazy danych zdecydowano się na wdrożenie odmiennej technologii. Spowodowane to było niedostępnością sterownika do obłsugi systemu zarządzania bazą danych MySQL w używanym środowisku programistycznym, stosowanym do zaprojektowania systemu.
 
-Językiem programowania, użytym podczas implementacji obsługi bazy danych, był C++. Jest to rozbudowany, obiektowy język oferujący wiele różnych bibliotek, w tym pomocnej w przesyłaniu zapytań. C++ posiada bogate API, co ułatwia korzystanie z gotowych funkcji interfejsu.
+Językiem programowania, użytym podczas implementacji obsługi bazy danych, był C++. Jest to rozbudowany, obiektowy język oferujący wiele różnych bibliotek. Użytą biblioteką do obsługi bazy danych oraz tworzenia interfejsu jest Qt. C++ posiada bogate API, co ułatwia korzystanie z gotowych funkcji interfejsu.
 
 Środowiskiem programistycznym służącym do tworzenia aplikacji był QtCreator, z wbudowaną biblioteką Qt w wersji 4. Biblioteka ta umożliwia tworzenie zaawansowanych interfejsów użytkownika przy użyciu gotowych widgetów i form, bez konieczności budowania GUI od podstaw.
 
-Wśród wielu technologii bazodanowych, najlepszą okazała się być SQLite. Nie wymaga ona uruchamiania serwera bazy danych i wszystkie dane przechowywane są w jedym pliku. W związku z tym, że uruchomienia aplikacji nie jest potrzebny lokalny serwer bazy danych ani dostęp do zdalnego serwera aplikację można uruchomić w każdym miejscu. Zdefiniowane w niej rodzaje struktur przechowywanych danych są wystarczające do realizowanych celów.
+Wśród wielu technologii bazodanowych, najlepszą okazała się być SQLite. Nie wymaga ona uruchamiania serwera bazy danych i wszystkie dane przechowywane są w jednym pliku. W związku z tym, aplikację można uruchomić w każdym miejscu. Zdefiniowane w niej rodzaje struktur przechowywanych danych są wystarczające do realizowanych celów.
