@@ -630,6 +630,8 @@ class Iris {
                                 roi.height += roi.y;
                                 roi.y = 0;
                             }
+//                            cvRectangle(src, cvPoint(roi.x, roi.y), cvPoint(roi.x+roi.width, roi.y+roi.height), cvScalar(255, 0, 0));
+  //                          cvSaveImage("obszar.jpg", src);
                             cvSetImageROI(src, roi);
                             cvSetImageROI(tmpb, roi);
                             cvSetImageROI(tmpw, roi);
