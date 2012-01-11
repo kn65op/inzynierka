@@ -1,4 +1,4 @@
-\chapter{Realizacja biometrycznego systemu kontroli dostępu}
+\chapter{Część biometryczna - wykrywanie tęczówki oka na obrazie ~i identyfikacja bądź weryfikacja tożsamości na jej podstawie}
 \label{cha:realizacja}
 ~W tym rozdziale przedstawiono sposób realizacji modułu sprzętowego oraz algorytmicznego biometrycznego systemu kontroli dostępu, wykorzystującego obraz tęczówki oka jako elementu na podstawie którego następuje rozpoznanie. System ten składa się ze stanowiska służącego do akwizycji obrazu oka, algorytmów przetwarzających pobrany obraz, generujących ~i porównujących kody tęczówek oraz aplikacji, mającej na celu ułatwienie korzystania ~z funkcji systemu ~i zapewniającej dostęp do bazy danych przechowującej informacje. Program jest rozbudowaną wersją systemu opracowanego ~w pracy \cite{Gl11}. ~W niniejszej pracy w stosunku do poprzedniego systemu wprowadzony został szereg ulepszeń, zarówno pod kątem poprawy algorytmu działania, jak ~i wzbogacenia interfejsu użytkownika oraz bazy danych, służącej do przechowywania informacji dotyczących rozpoznawanych osób. ~W związku ~z rozległością opisu części związanej ~z tworzeniem oraz obsługą bazy danych, został on przedstawiony w rozdziale \ref{sec:bazadanych}.
 %~W tym rozdziale przedstawiono sposób realizacji systemu do kontroli dostępu wykorzystującego obraz tęczówki oka jako elementu na podstawie, którego następuje rozpoznanie. System składa się ze stanowiska do akwizycji obrazu tęczówki oka oraz aplikacji generującej kod tęczówki oraz porównującej kody ze sobą. Aplikacja składa się ~z kliku modułów: wykrycie źrenicy, wykrycie granic tęczówki, tworzenie kodu tęczówki oraz ewentualnie porównania wygenerowane kodu ~z już istniejącym.
@@ -122,7 +122,7 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 \end{itemize}
 
 
-\subsection{Wykrycie tęczówki na pobranym obrazie}
+\subsection{Wykrywanie tęczówki na pobranym obrazie}
 \label{subsec:wykrycieTeczowki}
 Algorytm odpowiedzialny za wykrycie tęczówki oparty został na użytym ~w pracy \cite{Gl11}. Przykładowy obraz ~z wykrytą tęczówką jest przedstawiony na rysunku \ref{fig:teczowkaNasza}.
 \begin{figure}
