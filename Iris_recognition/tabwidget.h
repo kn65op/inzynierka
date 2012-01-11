@@ -61,6 +61,12 @@ private slots:
 
     void on_groups_all_currentIndexChanged(int index);
 
+    void on_classes_faculty_currentIndexChanged(int index);
+
+    void on_classes_specialisations_currentIndexChanged(int index);
+
+    void on_classes_subject_currentIndexChanged(int index);
+
 private:
     Ui::TabWidget *ui;
     void fillFaculties(QComboBox *to, bool empty_space = true);

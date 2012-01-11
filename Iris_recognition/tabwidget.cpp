@@ -220,6 +220,7 @@ bool TabWidget::save()
             fillFaculties(ui->faculties_all->currentIndex() == 0 ? ui->faculties_all->count() : ui->faculties_all->currentIndex() );
             break;
         case TAB_CLASS:
+        ret = db->addClass(subjects_map[ui->classes_subject->currentIndex()], topics_map[ui->classes_topic->currentIndex()], groups_map[ui->classes_group->currentIndex()], ui->classes_date->date());
             break;
         case TAB_GROUP:
         //edycja grupy
@@ -354,5 +355,30 @@ void TabWidget::on_groups_all_currentIndexChanged(int index)
         ui->groups_day->setCurrentIndex(db->getGroupDayAsInt(groups_map[index]));
         ui->groups_hour->setTime(db->getGroupTime(groups_map[index]));
         qDebug() << db->getGroupTime(groups_map[index]);
+    }
+}
+
+void TabWidget::on_classes_faculty_currentIndexChanged(int index)
+{
+    if (index > 0)
+    {
+        fillSpecialisations(ui->classes_specialisations, index);
+    }
+}
+
+void TabWidget::on_classes_specialisations_currentIndexChanged(int index)
+{
+    if (index > 0)
+    {
+        fillSubjects(ui->classes_subject, index);
+        fillGroups(ui->classes_group, index);
+    }
+}
+
+void TabWidget::on_classes_subject_currentIndexChanged(int index)
+{
+    if (index > 0)
+    {
+        fillTopics(ui->classes_topic, index);
     }
 }

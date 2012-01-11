@@ -68,7 +68,7 @@ void Database::createDB()
             "primary key (group_id, student_id)"
             ");");
     db.exec("CREATE TABLE if not exists Classes ("
-            "class_id integer primary key,"
+            "class_id integer primary key autoincrement,"
             "subject_id integer references Subjects,"
             "class_date Date,"
             "topic_id integer references Topics,"
@@ -454,4 +454,15 @@ QTime Database::getGroupTime(int id)
     }
     query.next();
     return query.value(0).toTime();
+}
+
+bool Database::addClass(int subj_id, int topic_id, int group_id, QDate date)
+{
+    QSqlQuery query(db);
+    query.prepare("insert into classes (subject_id, topic_id, group_id, class_date) values (:sid, :tid, :gid, :date)");
+    query.bindValue(":sid", subj_id);
+    query.bindValue(":tid", topic_id);
+    query.bindValue(":gid", group_id);
+    query.bindValue(":date", date);
+    return query.exec();
 }

@@ -7,6 +7,7 @@
 #include <QtSQL/QSqlError>
 #include <QtCore/QDebug>
 #include "QTime"
+#include "QDate"
 
 class Database
 {
@@ -38,6 +39,7 @@ class Database
         bool addTopic(int subject_id, QString topic);
         bool changeGroup(int id, QString name, QString day, QTime time);
         bool addGroup(int spec_id, QString name, QString day, QTime time);
+        bool addClass(int subj_id, int topic_id, int group_id, QDate date);
         QString getSubjectYearAsString(int id);
         int getGroupDayAsInt(int id);
         QTime getGroupTime(int id);

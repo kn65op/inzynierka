@@ -17,7 +17,7 @@
    <string>Baza danych</string>
   </property>
   <property name="currentIndex">
-   <number>3</number>
+   <number>4</number>
   </property>
   <widget class="QWidget" name="specialisation">
    <attribute name="title">
@@ -409,8 +409,8 @@
    <widget class="QComboBox" name="classes_subject">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>60</y>
+      <x>170</x>
+      <y>90</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -422,8 +422,8 @@
    <widget class="QComboBox" name="classes_topic">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>90</y>
+      <x>170</x>
+      <y>120</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -432,8 +432,8 @@
    <widget class="QComboBox" name="classes_group">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>120</y>
+      <x>170</x>
+      <y>150</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -442,8 +442,8 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>90</y>
+      <x>80</x>
+      <y>120</y>
       <width>46</width>
       <height>13</height>
      </rect>
@@ -455,8 +455,8 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>60</y>
+      <x>80</x>
+      <y>90</y>
       <width>46</width>
       <height>13</height>
      </rect>
@@ -468,8 +468,8 @@
    <widget class="QLabel" name="label_17">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>120</y>
+      <x>80</x>
+      <y>150</y>
       <width>46</width>
       <height>13</height>
      </rect>
@@ -481,8 +481,8 @@
    <widget class="QLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>150</y>
+      <x>80</x>
+      <y>180</y>
       <width>46</width>
       <height>13</height>
      </rect>
@@ -491,11 +491,11 @@
      <string>Data</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit">
+   <widget class="QDateEdit" name="classes_date">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>150</y>
+      <x>170</x>
+      <y>180</y>
       <width>141</width>
       <height>22</height>
      </rect>
@@ -507,20 +507,20 @@
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>80</x>
       <y>30</y>
       <width>46</width>
       <height>13</height>
      </rect>
     </property>
     <property name="text">
-     <string>Kierunek</string>
+     <string>Wydział</string>
     </property>
    </widget>
    <widget class="QComboBox" name="classes_faculty">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>170</x>
       <y>30</y>
       <width>141</width>
       <height>22</height>
@@ -528,6 +528,32 @@
     </property>
     <property name="editable">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="classes_specialisations">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>60</y>
+      <width>141</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="editable">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>60</y>
+      <width>46</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Kierunek</string>
     </property>
    </widget>
   </widget>
