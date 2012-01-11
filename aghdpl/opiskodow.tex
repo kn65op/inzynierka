@@ -1,0 +1,48 @@
+\chapter{Opis plików źródłowych aplikacji}
+\label{cha:opiskodow}
+
+Część wykorzystywanego kodu pochodzi z pracy \cite{Gl11}. Opis niezmienionych części aplikacji został pominięty. Aplikacja składa się z następujących klas:
+\begin{itemize}
+\item \verb!checkDialog! - klasa odpowiadająca za wyświetlenie rezultatu segmentacji oraz przekazanie decyzji użytkownika,
+\begin{itemize}
+\item \verb!setImage! - funkcja wyświetlająca obraz,
+\end{itemize}
+\item \verb!Database! - klasa odpowiedzialna za komunikację z bazą danych,
+\begin{itemize}
+\item \verb!insertStudent! - funkcja dodająca studenta do bazy,
+\item \verb!insertEye! - funkcja dodająca kod tęczówki do bazy,
+\item \verb!addLastStudentToGroup! - funkcja przypisująca ostatnio dodanego studenta do grupy,
+\item \verb!searchStudent! - funkcja pozwalająca na pobranie studentów z~bazy,
+\item \verb!createDB! - funkcja tworząca nową bazę danych,
+\item \verb!getFaculties, getSpecialisations, getSubjects, getTopics, getGroups, getClasses, getFacultyById, getSpecialisationsByFacultyId, getSubjectsBySpecialisationId, getTopicsBySubjectId, getGroupsBySpecialisationId, getSubjectYearAsString, getGroupDayAsInt, getGroupTime!- funkcje pozwalające na pobranie odpowiednich danych z~bazy,
+\item \verb!changeSpecialisationName, changeFacultyName, changeSubject, changeTopic,changeGroup! - funkcje pozwalająca na zmianę danych w!bazie,
+\item \verb!addSpecialisation, addFaculty, addSubject, addTopic, addGroup, addClass! - funkcje pozwalające na dodanie danych do bazy,
+\end{itemize}
+\item \verb!Image! - klasa pomocnicza służąca do przeprowadzania operacji na obrazach, większość metod tej klasy została opisana w pracy \cite{Gl11}
+\begin{itemize}
+\item \verb!gabor_filter! – funkcja tworząca obraz filtru Gabora ze zmienionymi parametrami oraz sposobem tworzenia filtru,
+\end{itemize}
+\begin{itemize}
+\item \verb!Iris! - klasa odpowiedzialna za segmentację oraz generację kodu tęczówki, większość metod tej klasy została opisana w pracy \cite{Gl11},
+\end{itemize}
+\begin{itemize}
+\item \verb!find_flash_on_pupil! - funkcja wyszukująca odblask znajdujący się na źrenicy,
+\item \verb!find_flash_center! - funkcja znajdująca cały odblask na źrenicy,
+\item \verb!explode_circle! - funkcja realizująca algorytm eksplodujących okręgów,
+\item \verb!explode_rs! - funkcja realizująca algorytm eksplodujących promieni,
+\end{itemize}
+\item \verb!MainWindow! - klasa odpowiadająca za wyświetlanie okna głównego, większość metod tej klasy została opisana w pracy \cite{Gl11},
+\begin{itemize}
+\item \verb!checkSegmentation! - funkcja wyświetlająca okno klasy \verb!checkDialog!,
+\item \verb!addToDB()! - funkcja dodająca studenta wraz z!jego kodem tęczówki do bazy oraz grupy
+\item \verb!on_actionTestuj_folder_triggered! - funkcja dodająca do bazy użytkowników, których zdjęcia znajdują się w~wybranym folderze,
+\item \verb!on_actionTestuj_baz_triggered! - funkcja pozwalająca na porównanie obrazów z~wybranego folderu z~kodami tęczówek zapisanych w~bazie,
+\item \verb!on_actionEdycja_bazy_danych_triggered()! - funkcja wyświetlająca okno klasy \item \verb!TabWidget!,
+\end{itemize}
+\item \verb!TabWidget! - klasa odpowiadająca za wyświetlanie i~obsługę okna do edycji bazy danych,
+\begin{itemize}
+\item \verb!fillSpecialisations, fillFaculties, fillSubjects, fillTopics, fillGroups, fillClasses! - funkcje wypełniające odpowiednie pola danymi pobranymi z bazy,
+\item \verb!save! - funkcja zapisująca dane do bazy danych,
+\item \verb!setDatabase! - funkcja ustawiająca używaną bazę danych.
+\end{itemize}
+\end{itemize}
