@@ -28,7 +28,7 @@ void Database::createDB()
     db.exec("DROP TABLE if exists Complements;");
     //db.exec("CREATE TABLE users (id integer primary key autoincrement, name TEXT, surname TEXT, groupa TEXT, faculty TEXT, iris_code TEXT);");
     db.exec("CREATE TABLE if not exists Biometrics ("
-            "biometricsid integer primary key autoincrement,"
+            "biometrics_id integer primary key autoincrement,"
             "iris_pattern text not null,"
             "face_pattern text,"
             "fingerprint_pattern text"
