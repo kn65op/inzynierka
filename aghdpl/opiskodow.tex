@@ -14,22 +14,23 @@ Część wykorzystywanego kodu pochodzi z pracy \cite{Gl11}. Opis niezmienionych
 \item \verb!addLastStudentToGroup! - funkcja przypisująca ostatnio dodanego studenta do grupy,
 \item \verb!searchStudent! - funkcja pozwalająca na pobranie studentów z~bazy,
 \item \verb!createDB! - funkcja tworząca nową bazę danych,
-\item \verb!getFaculties, getSpecialisations, getSubjects, getTopics, getGroups, getClasses, getFacultyById, getSpecialisationsByFacultyId, getSubjectsBySpecialisationId, getTopicsBySubjectId, getGroupsBySpecialisationId, getSubjectYearAsString, getGroupDayAsInt, getGroupTime!- funkcje pozwalające na pobranie odpowiednich danych z~bazy,
-\item \verb!changeSpecialisationName, changeFacultyName, changeSubject, changeTopic,changeGroup! - funkcje pozwalająca na zmianę danych w!bazie,
-\item \verb!addSpecialisation, addFaculty, addSubject, addTopic, addGroup, addClass! - funkcje pozwalające na dodanie danych do bazy,
+\item \verb!getFaculties!, \verb!getSpecialisations!, \verb!getSubjects!, \verb!getTopics!, \verb!getGroups!, \verb!getClasses!, \verb!getFacultyById!, \verb!getSpecialisationsByFacultyId!, \verb!getSubjectsBySpecialisationId!, \verb!getTopicsBySubjectId!, \verb!getGroupsBySpecialisationId!, \verb!getSubjectYearAsString!, \verb!getGroupDayAsInt!, \verb!getGroupTime!- funkcje pozwalające na pobranie odpowiednich danych z~bazy,
+\item \verb!changeSpecialisationName!, \verb!changeFacultyName!, \verb!changeSubject!, \verb!changeTopic,changeGroup! - funkcje pozwalająca na zmianę danych w~bazie,
+\item \verb!addSpecialisation!, \verb!addFaculty!, \verb!addSubject!, \verb!addTopic!, \verb!addGroup!, \verb!addClass! - funkcje pozwalające na dodanie danych do bazy,
 \end{itemize}
 \item \verb!Image! - klasa pomocnicza służąca do przeprowadzania operacji na obrazach, większość metod tej klasy została opisana w pracy \cite{Gl11}
 \begin{itemize}
 \item \verb!gabor_filter! – funkcja tworząca obraz filtru Gabora ze zmienionymi parametrami oraz sposobem tworzenia filtru,
 \end{itemize}
-\begin{itemize}
 \item \verb!Iris! - klasa odpowiedzialna za segmentację oraz generację kodu tęczówki, większość metod tej klasy została opisana w pracy \cite{Gl11},
-\end{itemize}
 \begin{itemize}
 \item \verb!find_flash_on_pupil! - funkcja wyszukująca odblask znajdujący się na źrenicy,
 \item \verb!find_flash_center! - funkcja znajdująca cały odblask na źrenicy,
+\item \verb!find_center_pupil! - funkcja dokonująca segmentacji źrenicy,
 \item \verb!explode_circle! - funkcja realizująca algorytm eksplodujących okręgów,
 \item \verb!explode_rs! - funkcja realizująca algorytm eksplodujących promieni,
+\item \verb!masking! - funkcja tworząca kod tęczówki,
+\item \verb!compare! - funkcja porównująca kody tęczówek, dodano rotację kodu tęczówki,
 \end{itemize}
 \item \verb!MainWindow! - klasa odpowiadająca za wyświetlanie okna głównego, większość metod tej klasy została opisana w pracy \cite{Gl11},
 \begin{itemize}
@@ -41,7 +42,7 @@ Część wykorzystywanego kodu pochodzi z pracy \cite{Gl11}. Opis niezmienionych
 \end{itemize}
 \item \verb!TabWidget! - klasa odpowiadająca za wyświetlanie i~obsługę okna do edycji bazy danych,
 \begin{itemize}
-\item \verb!fillSpecialisations, fillFaculties, fillSubjects, fillTopics, fillGroups, fillClasses! - funkcje wypełniające odpowiednie pola danymi pobranymi z bazy,
+\item \verb!fillSpecialisations!, \verb!fillFaculties!, \verb!fillSubjects!, \verb!fillTopics!, \verb!fillGroups!, \verb!fillClasses! - funkcje wypełniające odpowiednie pola danymi pobranymi z bazy,
 \item \verb!save! - funkcja zapisująca dane do bazy danych,
 \item \verb!setDatabase! - funkcja ustawiająca używaną bazę danych.
 \end{itemize}
