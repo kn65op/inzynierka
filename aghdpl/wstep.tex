@@ -10,16 +10,16 @@ Biometria jest, zgodnie ~z definicjami zaczerpniętymi ~z \cite{Ko75} oraz \cite
 
 Identyfikacja biometryczna uwzględnia ~w swoich metodach dwa rodzaje cech człowieka ~\cite{Bio01}\cite{Bio02}\cite{Jain00}\cite{Jain08}:
 \begin{itemize} 
-\item fizyczne – na przykład tęczówka lub siatkówka oka, linie papilarne palców dłoni, układ naczyń krwionośnych, kształt dłoni, kształt ucha, obraz twarzy oraz rozkład temperatur na niej, charakterystyka uzębienia, DNA 
+\item fizyczne - na przykład tęczówka lub siatkówka oka, linie papilarne palców dłoni, układ naczyń krwionośnych, kształt dłoni, kształt ucha, obraz twarzy oraz rozkład temperatur na niej, charakterystyka uzębienia, DNA, 
 \item behawioralne - sposób poruszania się, dynamika podpisu, sposób pisania na klawiaturze komputera czy cechy charakterystyczne głosu.
 \end{itemize}
 
-W porównaniu ~z tradycyjnymi metodami identyfikacji bądź weryfikacji tożsamości, wśród których możemy wyróżnić \cite{Jain00}\cite{Jain08}:
+Wśród tradycyjnych metod identyfikacji bądź weryfikacji tożsamości możemy wyróżnić \cite{Jain00}\cite{Jain08}:
 \begin{itemize}
 \item oparte na posiadanych tokenach (ang. token-based), takich jak dowód tożsamości, paszport czy karta kredytowa,
-\item oparte na posiadanej wiedzy (and. knowledge-based), czyli haśle, numerze PIN czy innym kodzie dostępu.
+\item oparte na posiadanej wiedzy (and. knowledge-based), czyli haśle, numerze PIN czy innym kodzie dostępu,
 \end{itemize}
-Metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła ~w posiadanie danych dostępowych ~w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
+~W porównaniu ~z tradycyjnymi sposobami rozpoznawania i weryfikacji tożsamości, metody biometryczne okazują się być ~o wiele skuteczniejszym rozwiązaniem. Jest to spowodowane dużym prawdopodobieństwem zawodności tradycyjnych metod w sytuacjach, gdy posiadany token zostanie zgubiony, ulegnie kradzieży bądź sfałszowaniu lub kod dostępu unikalny dla danego użytkownika zostaje przechwycony albo zapomniany. Tradycyjne sposoby identyfikacji ~i weryfikacji nie gwarantują rozróżnienia pomiędzy właściwym posiadaczem danego tokenu lub wiedzy, ~a osobą, która weszła ~w posiadanie danych dostępowych ~w sposób bezprawny. Metody biometryczne wychodzą naprzeciw temu wymaganiu ze względu na tworzenie wzorca charakteryzującego człowieka w oparciu ~o informacje niesione przez unikalne dla niego cechy \cite{Jain00}. Ponadto, zwalniają one użytkownika ~z obowiązku tworzenia, zapamiętywania ~i przechowywania wiedzy lub przedmiotów koniecznych do identyfikacji/weryfikacji tożsamości \cite{Jain08}.  
 
 Biometria miała zastosowanie już ~w przeszłości, na przykład poprzez pobieranie odcisków palców ~w celu potwierdzenia transakcji handlowych ~w czasach starożytnych, czy ~w trakcie rejestracji więźniów ~w XIX wieku \cite{Bio02}\cite{HF1}. Współcześnie, jest to jedna ~z najprężniej rozwijających się dziedzin bio- oraz teleinformatyki, której rozwiązania służą najczęściej jako forma kontroli dostępu ~i autoryzacji tożsamości użytkowników określonych pomieszczeń, urządzeń, danych ~i programów. Biometryczna identyfikacja tożsamości jest używana jako alternatywna, szybka ~i efektywna forma odprawy paszportowej pasażerów na lotniskach ~i granicach państwowych (poprzez analizowanie obszaru twarzy lub tęczówki oka) oraz do wyszukiwania osób ~w bazie ~i monitoringu czasu pracy ~w firmach \cite{Bio01}\cite{Bio02}.
 
@@ -89,7 +89,7 @@ Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których 
 
 Następnym rozwiązaniem jest metoda Wildes'~a \cite{Wildes}, która jest odmienna od patentu Daugmana. Algorytm ten jest realizowany ~w dwóch krokach. Pierwszym jest zamiana oryginalnego obrazu na obraz binarny ~z wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą algorytmu Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformacja Hough'~a [9], dzięki której można znaleźć środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
 
-Kolejnym sposobem segmentacji tęczówki jest rozwiązanie Camus'~a ~i Wildes'~a \cite{Camus}. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. ~w tym przypadku funkcją, którą maksymalizujemy jest równanie \ref{eq:camus_wildes} 
+Kolejnym sposobem segmentacji tęczówki jest rozwiązanie Camus'~a ~i Wildes'~a \cite{Camus}. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. ~W tym przypadku funkcją, którą maksymalizujemy jest równanie \ref{eq:camus_wildes} 
 \begin{equation}
 \label{eq:camus_wildes}
 C=\sum_{\theta =1}^{n} ((n-1)\left|\left| g_{\theta,r} \right|\right| - \sum_{\varphi=\theta + 1 } ^{n} \left| \left| g_{\theta,r} - g_{\varphi,r} \right| \right| - \frac{I_{\theta,r}}{n}  )
@@ -109,10 +109,10 @@ Istnieje wiele metod generacji kodu tęczówki. W patencie Daugmana zastosowano 
 G(r,\theta) = e^{-2\pi i\omega (\theta - \theta 0)_{e}-(r - r0)2/a2_{e}-(\theta-\theta 0 )2/\beta 2}
 \end{equation}
 gdzie:\\
-$r$ - promień we współrzędnych biegunowych \\
-$\theta$ - kąt w radianach we współrzędnych biegunowych \\
-$ \omega $ - częstotliwość \\
-$ \alpha, \beta $ - stałe
+$r$ - promień we współrzędnych biegunowych, \\
+$\theta$ - kąt w radianach we współrzędnych biegunowych, \\
+$ \omega $ - częstotliwość, \\
+$ \alpha, \beta $ - stałe.
 
 
 Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymywany jest bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od liczby wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
@@ -125,8 +125,8 @@ Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną
 \end{center}
 \end{figure}
 
-Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują użycie pomiaru porządkowego (ordinal measures) do rozpoznawania na podstawie tęczówki. Wybiera się w nim dwa obszary, oblicza sumę jasności pikseli w tych obszarach ~i w zależności od tego, który obszar ma wyższą sumę, koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
+Inne podejście stosują Sun ~i Tan w swojej pracy \cite{TaSu09}. Proponują użycie tak zwanych ordinal measures do rozpoznawania na podstawie tęczówki. Wybiera się w nich dwa obszary, oblicza sumę jasności pikseli w tych obszarach ~i w zależności od tego, który obszar ma wyższą sumę, koduje się 1 lub 0. Ta metoda jest szybka oraz według twórców wykazuje dobre wyniki.
 
 \section{Metody porównania kodów tęczówek}
 \label{sec:metodyPorownaniaKodow}
-Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa liczbę bitów, których wartości są różne w dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota inplementacji, dlatego została użyta w niniejszej pracy. Inne metody są przedstawione w pracy \cite{Gl11}.
+Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa liczbę bitów, których wartości są różne w dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota implementacji, dlatego została użyta w niniejszej pracy. Inne metody są przedstawione w pracy \cite{Gl11}.

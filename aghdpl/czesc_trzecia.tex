@@ -1,9 +1,9 @@
 \chapter{Część aplikacyjna - program umożliwiający sprawdzanie obecności przy pomocy biometrycznego systemu kontroli dostępu}
 \label{cha:systemKontroli}
 
-W podrozdziale dotyczącym części aplikacyjnej opisany zostanie interfejs użytkownika systemu sprawdzania obecności na zajęciach, wraz z bazą danych przechowującą informacje niezbędne do identyfikacji lub weryfikacji tożsamości osób. Program ten stanowi rozwiniętą formę aplikacji opisanej w pracy \cite{Gl11}, oferującą zaawansowane funkcje operowania na bazie danych, zaproponowane w \cite{Gl11} jako kierunek dalszego rozwoju systemu.
+W rozdziale dotyczącym części aplikacyjnej opisany zostanie interfejs użytkownika systemu sprawdzania obecności na zajęciach, wraz z bazą danych przechowującą informacje niezbędne do identyfikacji lub weryfikacji tożsamości osób. Program ten stanowi rozwiniętą formę aplikacji opisanej w pracy \cite{Gl11}, oferującą zaawansowane funkcje operowania na bazie danych, zaproponowane w \cite{Gl11} jako kierunek dalszego rozwoju systemu.
 
-\section{Interfejs aplikacji}
+\section{Interfejs aplikacji}
 \label{sec:aplikacja}
 
 Podstawowa wersja opisywanego systemu sprawdzania obecności na zajęciach zapewniała minimum funkcji koniecznych do korzystania z programu. Wśród możliwości tych znajdowały się takie opcje, jak:
@@ -126,8 +126,9 @@ Uzupełniając zakładkę Dodaj grupę, możliwe jest wprowadzenie grup student�
 \end{itemize}
 
 Aby przypisać użytkowników do grup, należy powrócić do okna głównego aplikacji, w którym znajdują się pola służące do wprowadzania danych osobowych. Po uzupełnieniu pól, odpowiednim atrybutom tabel Studenci (Students) oraz Grupy studentów (Students\_Groups) nadawane są wartości:
-\begin{itemize}
+
 W tabeli Studenci:
+\begin{itemize}
 \item Imię (name) - pełne imię użytkownika
 \item Nazwisko (Surname) - pełne nazwisko studenta
 \item Kierunek (specialisation\_id) - informacje dotyczące kierunku studiów; po wybraniu opcji z listy kierunków umieszczonych w bazie Kierunki, przyporządkowany zostaje identyfikator kierunku, opisujący go w sposób unikalny
@@ -168,7 +169,7 @@ W celu utworzenia zajęć z przedmiotu, łączących tematy z konkretnymi termin
 \item Data (class\_date) - termin zajęć
 \item Kierunek (specialisation\_id) - identyfikator kierunku, w skład którego wchodzą użytkownicy z danej grupy
 \item Identyfikator zajęć (class\_id) - unikalny identyfikator zajęć
-\end{itemize{
+\end{itemize}
 Tabelami umożliwiającymi uzupełnienie list obecności oraz osób odrabiających zaległe tematy są Obecność (Attendance) i Odrabiający (Complements). Posiadają one pola:
 \begin{itemize}
 \item Tabela Obecność:
