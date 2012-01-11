@@ -31,8 +31,6 @@ Metody identyfikacji biometrycznej różnią się, poza formą analizy oraz wari
 \section{Charakterystyka identyfikacji biometrycznej na podstawie tęczówki oka}
 \label{sec:zawartoscPracy}
 
-%~w rodziale~\ref{cha:pierwszyDokument} przedstawiono podstawowe informacje dotyczące struktury dokumentów ~w \LaTeX ~u. Alvis~\cite{Alvis2011} jest językiem 
-
 Tęczówka ludzkiego oka jest jednym ~z najbardziej charakterystycznych elementów twarzy człowieka, indywidualnym ~i niepowtarzalnym ze względu na połączenie uwarunkowanego genetycznie koloru oraz złożonej struktury, wynikającej ~z różnorodnych procesów fizycznych ~i chemicznych, kształtujących ją ~w pierwszych latach ludzkiego życia [2][3]. Cechy te są wykorzystywane ~w procesie biometrycznej identyfikacji jednostki, który opiera się na zastosowaniu różnorodnych matematycznych metod rozpoznawania wzorców ~w algorytmach operujących na pobranym ~z użyciem specjalistycznej kamery obrazie oka.
 
 Pobranie stabilnego ~i wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery ~i sprzęt projektowane specjalnie do tego typu identyfikacji, są  coraz lepiej przystosowane do automatycznej akwizycji obrazu wysokiej rozdzielczości. ~W związku ~z tym możliwe jest, iż ~z upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
@@ -115,7 +113,7 @@ $ \omega $ - częstotliwość, \\
 $ \alpha, \beta $ - stałe.
 
 
-Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia sie rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymywany jest bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od liczby wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
+Wybierane są punkty na obszarze tęczówki, w sposób pozwalający na poprawną analizę w przypadku zmiany jej rozmiaru. Jest to istotna kwestia, ponieważ w zależności od jasności otoczenia zmienia się rozmiar źrenicy, co implikuję zmianę rozmiaru tęczówki. Punkty są następnie filtrowane ~z użyciem filtrów Gabora, dla różnych kierunków. W rezultacie otrzymywana jest (dla jednego punktu) liczba zespolona. Następuje kodowanie otrzymanej liczby w następujący sposób: 1, jeśli dana część jest większa od zera lub 0, jeśli jest mniejsza bądź równa zeru. W ten sposób otrzymywany jest bitowy kod (zwykle ~o długości 2048 bitów, jest to zależne od liczby wybranych punktów). Przykładowy wybór punktów jest przedstawiony na rysunku \ref{fig:przykladPunkty}
 
 \begin{figure}
 \begin{center}
