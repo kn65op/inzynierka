@@ -51,7 +51,7 @@ Moduł algorytmu odpowiedzialny za wykrycie źrenicy ma za zadanie odnalezienie 
 
 Najistotniejszy dla dalszych etapów algorytmu odblask znajduje się ~w otoczeniu źrenicy, ~a więc jednego ~z najciemniejszych obszarów obrazu; otoczenie pozostałych odblasków jest ~o wiele jaśniejsze (skóra lub białko oka). ~W obrazie uzyskanym po binaryzacji wyszukiwane są piksele odblasku. ~W momencie znalezienia każdego kolejnego piksela odblasku analizowane jest jego otoczenie. Sprawdzanych jest po 10 punktów na ukos ~w górę ~z lewej ~i prawej strony ~w odległości od 11 do 20 pikseli. Jeśli większość z nich ma jasność poniżej 60 to analizowany piksel jest uznawany za piksel odblasku znajdującego się na źrenicy. ~W takiej sytuacji wyszukiwanie zostaje zakończone i następuje dalsza cześć algorytmu.
 
-Następnie wyszukiwany jest cały odblask. Odbywa się to poprzez analizę otoczenia (kwadratu o boku 50 pikseli oraz środku ~w miejscu już znalezionego fragmentu) znalezionego punktu. Sprawdzany jest każdy piksel ~w wybranym otoczeniu i uznawany jest za element odblasku ~w sytuacji, gdy jego jasność jest większa niż 240. Przykład wyniku przeprowadzonych operacji jest przedstawiony na rysunku \ref{fig:dobryOdblask}.
+Następnie wyszukiwany jest cały odblask. Odbywa się to poprzez analizę otoczenia znalezionego punktu (kwadratu o boku 50 pikseli oraz środku ~w miejscu już znalezionego fragmentu). Sprawdzany jest każdy piksel ~w wybranym otoczeniu i uznawany jest za element odblasku ~w sytuacji, gdy jego jasność jest większa niż 240. Przykład wyniku przeprowadzonych operacji jest przedstawiony na rysunku \ref{fig:dobryOdblask}.
 
 \begin{figure}
 \begin{center}
@@ -61,7 +61,7 @@ Następnie wyszukiwany jest cały odblask. Odbywa się to poprzez analizę otocz
 \end{center}
 \end{figure}
 
-Po znalezieniu wszystkich pikseli należących do odblasku, jego kształt jest aproksymowany przy pomocy koła, którego środek jest przyjmowany jako środek źrenicy. Mając środek źrenicy można zastosować metodę ,,eksplodujących okręgów'', zaczerpniętych ~z patentu Daugmana.  Szukany jest największy wzrost jasności pikseli na rozszerzającym się okręgu (z uwagi na to, że źrenica jest ciemna, ~a tęczówka jest jaśniejsza). Znaleziony okrąg określa źrenicę. Niestety dla zarejestrowanych obrazów metoda nie okazała się skuteczna. Z tego powodu zastosowano nieco odmienną metodę. Wyszukiwanie odbywa się na promieniach, to znaczy wybierane są 72 promienie ~o różnych kierunkach ~i na każdym wyszukiwany jest największy wzrost jasności. Dla znalezionych punktów wyszukuje się najmniejszy okrąg, ~w którym zawierają się wszystkie punkty. Stosowany jest algorytm zaimplementowany ~w bibliotece OpenCV. Znaleziony okrąg określa źrenicę. Przykład obrazu ~z wykrytą źrenicą jest przedstawiony na rysunku \ref{fig:zrenicaNasza}.
+Po znalezieniu wszystkich pikseli należących do odblasku, jego kształt jest aproksymowany przy pomocy koła, którego środek jest przyjmowany jako środek źrenicy. Mając środek źrenicy można zastosować metodę ,,eksplodujących okręgów'', zaczerpniętą ~z patentu Daugmana.  Szukany jest największy wzrost jasności pikseli na rozszerzającym się okręgu (z uwagi na to, że źrenica jest ciemna, ~a tęczówka jest jaśniejsza). Znaleziony okrąg określa źrenicę. Niestety dla zarejestrowanych obrazów metoda nie okazała się skuteczna. Z tego powodu zastosowano nieco odmienne podejście. Wyszukiwanie odbywa się na promieniach, to znaczy wybierane są 72 promienie ~o różnych kierunkach ~i na każdym wyszukiwany jest największy wzrost jasności. Dla znalezionych punktów wyszukuje się najmniejszy okrąg, ~w którym zawierają się wszystkie punkty. Do wyznaczania okręgu stosowany jest algorytm zaimplementowany ~w bibliotece OpenCV. Znaleziony okrąg określa źrenicę. Przykład obrazu ~z wykrytą źrenicą jest przedstawiony na rysunku \ref{fig:zrenicaNasza}.
 
 \begin{figure}
 \begin{center}
@@ -71,9 +71,9 @@ Po znalezieniu wszystkich pikseli należących do odblasku, jego kształt jest a
 \end{center}
 \end{figure}
 
-Po zmianie kamery algorytm wykrywania źrenicy został zmieniony. Było to spowodowane poprawą jasności zdjęcia oraz zmianą położenia niektórych elementów stanowiska. Odblask na źrenicy, wcześniej będący się ~w środku źrenicy, po modyfikacji stanowiska znajduje się ponad środkiem. ~W związku ~z tym nie można go wykorzystać do ustalenia środka źrenicy.
+Po zmianie kamery firmy YOKO na urządzenia IQEye752 algorytm wykrywania źrenicy został zmieniony. Było to spowodowane poprawą jasności zdjęcia oraz zmianą położenia niektórych elementów stanowiska. Odblask na źrenicy, wcześniej będący ~w środku źrenicy, po modyfikacji stanowiska znajduje się ponad środkiem. ~W związku ~z tym nie można go wykorzystać do ustalenia środka źrenicy.
 
-Można natomiast wykorzystać wykrycie odblasku do oszacowania, ~w którym miejscu na obrazie znajduje się źrenica. Pozwala to ograniczyć wielkość obrazu podlegającemu późniejszym przekształceniom. Wybierany jest kwadrat ~o boku 440 pikseli. Taki obszar jest wystarczający, ponieważ promień źrenicy na rejestrowanych obrazach nie przekracza 150 pikseli. Taki zabieg pozwala na osiągnięcie dwóch korzyści. Pierwszą jest zmniejszenie obszaru, który podlega przekształceniom co przyśpiesza działanie progami. Drugą jest ograniczenie innych obiektów na zdjęciu, jak brwi czy rzęsy, które mogą być uznane podczas binaryzacji za fragmenty źrenicy. Pozwala to na ograniczenie błędów podczas segmentacji. Przykładowy wybór obszaru jest przedstawiony na rysunku \ref{fig:obszar}.
+Można natomiast wykorzystać wykrycie odblasku do oszacowania, ~w którym miejscu na obrazie znajduje się źrenica. Pozwala to ograniczyć wielkość obrazu podlegającemu późniejszym przekształceniom. Wybierany jest kwadrat ~o boku 440 pikseli. Taki obszar jest wystarczający, ponieważ promień źrenicy na rejestrowanych obrazach nie przekracza 150 pikseli. Taki zabieg pozwala na osiągnięcie dwóch korzyści. Pierwszą jest zmniejszenie obszaru, który podlega przekształceniom co przyśpiesza działanie programu. Drugą jest ograniczenie innych obiektów na zdjęciu, jak brwi czy rzęsy, które mogą być uznane podczas binaryzacji za fragmenty źrenicy. Pozwala to na zmniejszenie częstości występowania błędów podczas segmentacji. Przykładowy wybór obszaru jest przedstawiony na rysunku \ref{fig:obszar}.
 
 \begin{figure}
 \begin{center}
@@ -83,11 +83,11 @@ Można natomiast wykorzystać wykrycie odblasku do oszacowania, ~w którym miejs
 \end{center}
 \end{figure}
 
-Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wcześniej ze zmianami. Analizowane są punkty ~w większej odległości od znalezionego piksela, ponieważ dla obrazów rejestrowanych za pomocą drugiej wybranej kamery obrazy mają większą rozdzielczość oraz sam odblask ma inny kształt oraz wielkość. Nie jest konieczne wyszukiwanie całego odblasku, ponieważ dowolny piksel odblasku będzie wystarczającym środkiem wybieranego fragmentu obrazu ~i różnica rzędu kilku pikseli nie ma znaczenia dla dalszych przekształceń.
+Wykrycie odblasku na źrenicy jest realizowane za pomocą zmodyfikowanej wersji algorytmu opisanego wcześniej. Analizowane są punkty ~w większej odległości od znalezionego piksela, ponieważ obrazy rejestrowane za pomocą drugiej wybranej kamery mają większą rozdzielczość oraz sam odblask ma inny kształt oraz wielkość. Nie jest konieczne wyszukiwanie całego odblasku, ponieważ dowolny piksel odblasku będzie wystarczającym przybliżeniem środka wybieranego fragmentu obrazu ~i różnica rzędu kilku pikseli nie ma znaczenia dla dalszych przekształceń.
 
 ~W opisanym obszarze przeprowadzane są następujące operacje:
 \begin{itemize}
-\item Najpierw stosowana jest binaryzacja ~z dwoma progami, wybierane są piksele należące do źrenicy (o jasności mniejszej niż 60) oraz piksele należące do odblasku (o jasności 255). Dzięki temu, otrzymuje bardziej zwarty obszar źrenicy. Po tej operacji powstaje obraz \ref{fig:binaryzacja2}, na którym widać większą część źrenicy.
+\item Najpierw stosowana jest binaryzacja ~z dwoma progami, wybierane są piksele należące do źrenicy (o jasności mniejszej niż 60) oraz piksele należące do odblasku (o jasności 255). Dzięki temu, otrzymuje bardziej zwarty obszar źrenicy. Po tej operacji powstaje obraz \ref{fig:binaryzacja2}, na którym można zauważyć większą część źrenicy.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{binaryzacja2.jpg}
@@ -95,7 +95,7 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 \label{fig:binaryzacja2}
 \end{center}
 \end{figure}
-\item Zamknięcie, po którym obszary znajdujące się ~w środku źrenicy ~w otoczeniu odblasku, które mają mniejszą jasność niż on sam zostają włączone do obszaru źrenicy. Na obrazie \ref{fig:zamkniecie2} po tej operacji wyraźnie widać, że źrenica jest wyznaczona ~w całości.
+\item Zamknięcie, po którym obszary znajdujące się ~w środku źrenicy, ~w otoczeniu odblasku, które mają mniejszą jasność niż on sam zostają włączone do obszaru źrenicy. Na obrazie \ref{fig:zamkniecie2} po tej operacji można dostrzec, że źrenica jest wyznaczona ~w całości.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{zamkniecie.jpg}
@@ -124,7 +124,7 @@ Wykrycie odblasku na źrenicy jest realizowane za pomocą algorytmu opisanego wc
 
 \subsection{Wykrywanie tęczówki na pobranym obrazie}
 \label{subsec:wykrycieTeczowki}
-Algorytm odpowiedzialny za wykrycie tęczówki oparty został na użytym ~w pracy \cite{Gl11}. Przykładowy obraz ~z wykrytą tęczówką jest przedstawiony na rysunku \ref{fig:teczowkaNasza}.
+Algorytm odpowiedzialny za wykrycie tęczówki oparty został na rozwiązaniu ~z pracy \cite{Gl11}. Przykładowy obraz ~z wykrytą tęczówką jest przedstawiony na rysunku \ref{fig:teczowkaNasza}.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{teczowka.jpg}
