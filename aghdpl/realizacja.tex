@@ -177,16 +177,16 @@ $x_{0}$ - położenie szczytu koperty Gaussa na osi x,\\
 $y_{0}$ - położenie szczytu koperty Gaussa na osi y,\\
 $\theta$ - obrót koperty Gaussa.
 
-W~niniejszej pracy używane są filtry Gabora o~wielkości 11 na 11 pikseli o~następujących parametrach:\\
+W~niniejszej pracy używane są filtry Gabora o~rozmiarze 11 na 11 pikseli o~następujących parametrach:\\
 $F_{0} = \frac{8}{\pi}$,\\
 $P = 0$,\\
 $a = \frac{1}{2}$,\\
 $b = \frac{3}{10}$,\\
 $\theta = \pi / 4$,\\
 $x_{0} = 0$, $y_{0} = 0$ - punkt $(0,0)$ znajduje się w środku filtru,\\
-Używanych jest 8 kierunków $\omega_{0} =\frac {k \cdot \pi} {8} $ dla $k = 0, 1, ..., 8$.
+używanych jest 8 kierunków $\omega_{0} =\frac {k \cdot \pi} {8} $ dla $k = 0, 1, ..., 8$.
 
-Obraz jest przetwarzany z~użyciem wspomnianych filtrów. Po tym zabiegu otrzymujemy współczynniki zespolone, które sumujemy w~pewnych obszarach. Obszary wybierane są na powierzchni tęczówki w~punktach zależnych od jej rozmiaru. Jest to spowodowane tym, że w~zależności od jasności otoczenia źrenica zwiększa się lub zmniejsza, co powoduje zwężenie lub rozszerzenie tęczówki. Otrzymane sumy kodowane są w~ten sposób, że osobno rozpatrując część rzeczywistą i~urojoną, zapisywane jest 1~w~przypadku, gdy suma jest większa od zera oraz 0~jeśli jest mniejsza lub równa. W~ten sposób otrzymujemy 2 bity na jeden obszar. Ponieważ stosowane jest 8 różnych orientacji filtru Gabora, potrzebny jest wybór 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc wymagany jest wybór 64 obszarów na każdej stronie. Przykład wyznaczonych obszarów przedstawiony jest na rysunku \ref{fig:obszaryNasze}.
+Obraz jest przetwarzany z~użyciem wspomnianych filtrów. Po tym zabiegu otrzymywane są współczynniki zespolone. Są one sumowane w~pewnych obszarach wybieranych na powierzchni tęczówki w~punktach zależnych od jej rozmiaru. Jest to spowodowane tym, że w~zależności od jasności otoczenia źrenica zwiększa się lub zmniejsza, co powoduje zwężenie lub rozszerzenie tęczówki. Otrzymane sumy kodowane są w~ten sposób, że osobno rozpatrując część rzeczywistą i~urojoną, zapisywane jest 1~w~przypadku, gdy suma jest większa od zera oraz 0~jeśli jest mniejsza lub równa. W~ten sposób otrzymywane są 2 bity na jeden obszar. Ponieważ stosowane jest 8 różnych orientacji filtru Gabora, potrzebny jest wybór 2048/(2*8) = 128 obszarów. Obszary wybierane są po dwóch stronach tęczówki, więc wymagany jest wybór 64 obszarów na każdej stronie. Przykład wyznaczonych obszarów przedstawiony jest na rysunku \ref{fig:obszaryNasze}.
 
 \begin{figure}
 \begin{center}
@@ -218,6 +218,6 @@ Wybranym językiem programowania jest C++. Wszelkie zalety tego języka, które 
 
 \subsection{Biblioteka do przetwarzania obrazow}
 \label{sec:bibliotekaObrazow}
-Często używaną biblioteką używaną przy przetwarzaniu obrazów dla języka C++ jest biblioteka OpenCV. Posiada dużą liczbę zaimplementowanych algorytmów oraz wykazuje szybką ich realizację. Także w~tym projekcie została ona użyta. Główne czynniki wpływające na ten wybór są przedstawione w~pracy \cite{Gl11}. Także doświadczenie w~używaniu tej biblioteki miało wpływ. Dzięki temu można był szybciej oraz efektywniej zrealizować projekt.
+Do przetwarzaniu obrazów użyto biblioteki OpenCV. Jest to rozbudowana biblioteka napisana w C++, posiadająca dużą liczbę zaimplementowanych algorytmów. Główne czynniki wpływające na wybór są przedstawione w~pracy \cite{Gl11}. Doświadczenie w~używaniu tej biblioteki pozwoliło na szybszą oraz efektywniejszą realizację projektu.
 
 
