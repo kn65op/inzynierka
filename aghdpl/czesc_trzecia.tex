@@ -1,10 +1,10 @@
-\section{Część aplikacyjna - program umożliwiający sprawdzanie obecności przy pomocy biometrycznego systemu kontroli dostępu}
-\label{sec:systemKontroli}
+\chapter{Część aplikacyjna - program umożliwiający sprawdzanie obecności przy pomocy biometrycznego systemu kontroli dostępu}
+\label{cha:systemKontroli}
 
 W podrozdziale dotyczącym części aplikacyjnej opisany zostanie interfejs użytkownika systemu sprawdzania obecności na zajęciach, wraz z bazą danych przechowującą informacje niezbędne do identyfikacji lub weryfikacji tożsamości osób. Program ten stanowi rozwiniętą formę aplikacji opisanej w pracy \cite{Gl11}, oferującą zaawansowane funkcje operowania na bazie danych, zaproponowane w \cite{Gl11} jako kierunek dalszego rozwoju systemu.
 
-\subsection{Interfejs aplikacji}
-\label{subsec:aplikacja}
+\section{Interfejs aplikacji}
+\label{sec:aplikacja}
 
 Podstawowa wersja opisywanego systemu sprawdzania obecności na zajęciach zapewniała minimum funkcji koniecznych do korzystania z programu. Wśród możliwości tych znajdowały się takie opcje, jak:
 \begin{itemize}
@@ -69,8 +69,8 @@ Możliwe jest również wprowadzenie użytkowników bez wcześniejszego uzupełn
 Aby przypisać użytkownikowi biometrykę, należy postępować zgodnie ze schematem przedstawionym w dalszych częściach pracy.
 W celu sprawdzenia obecności użytkowników, wymagane jest pobranie zdjęć poszczególnych osób i wyznaczenie kodów potrzebnych do ich identyfikacji. W przypadku pozytywnej identyfikacji danej osoby pola danych osobowych ulegają uzupełnieniu. Można wówczas wybrać zajęcia, na których obecna jest osoba, oraz ewentualnie temat odrabianych zajęć, jeśli jest to student odrabiający. W przypadku nierozpoznania osoby, informacje nie są uzupełniane i nie można przypisać użytkownika do zajęć w bazie.
 
-\subsection{Baza danych}
-\label{subsec:baza}
+\section{Baza danych}
+\label{sec:bazadanych}
 
 Program opisany w pracy \cite{Gl11} działał w oparciu o nieskomplikowaną bazę danych, składającą się z pojedynczej tabeli o polach id, name, surname, group, faculty, iris\_code. Taki układ bazy sprzyjał niskiej złożoności wykonywanych operacji, prostocie zapytań wysyłanych do bazy oraz dużej szybkości działania programu. Było to związane z brakiem konieczności łączenia tabel dla uzyskania informacji dotyczących użytkownika. Jednocześnie jednak taka budowa ograniczała rozszerzenie opcji aplikacji, które umożliwiałyby wiązanie kierunków z przedmiotami, a przedmiotów z grupami studentów oraz konkretnymi zajęciami. W związku z zaistniałą niedogodnością, w aplikacji rozwiniętej na potrzeby niniejszej wersji systemu podjęto próbę utworzenia rozbudowanej bazy danych.
 
@@ -89,7 +89,7 @@ Baza ta składa się z tabel, których funkcją jest logiczne usegregowanie info
 
 W przypadku uruchamiania systemu biometrycznej kontroli dostępu po raz pierwszy, możliwe jest jedynie dodawanie użytkowników do bazy w sposób podstawowy, niezapewniający funkcji przyporządkowywania osób istniejącym kierunkom, przedmiotom i grupom. Jest to spowodowane początkowym brakiem danych w tabelach odpowiedzialnych za przechowywanie niesionych z tym informacji. Wypełnienie pól znajdujących się w głównym oknie aplikacji, przedstawionym na obrazku \ref{fig:oknoGlowne}, powoduje uzupełnienie wyłącznie wybranych atrybutów w tabeli Students, Biometrics, Groups i Specialisations (rysunek \ref{fig:wybraneTabele}). 
 
-Aby w pełni wykorzystać możliwości systemu, należy wprowadzać informacje przy pomocy specjalnych zakładek opisanych szczegółowo w części \ref{subsec:aplikacja}. Uzupełnianie danych w ten sposób pozwala na postępowanie zgodnie ze schematem \ref{fig:etapyDzialania}, co umożliwia późniejszy szybki wybór oraz modyfikację informacji umieszczonych w bazie i generowanie gotowych list obecności na zajęciach.
+Aby w pełni wykorzystać możliwości systemu, należy wprowadzać informacje przy pomocy specjalnych zakładek opisanych szczegółowo w części \ref{sec:aplikacja}. Uzupełnianie danych w ten sposób pozwala na postępowanie zgodnie ze schematem \ref{fig:etapyDzialania}, co umożliwia późniejszy szybki wybór oraz modyfikację informacji umieszczonych w bazie i generowanie gotowych list obecności na zajęciach.
 
 Opis danych wprowadzanych do bazy podczas wypełniania pól na kolejnych zakładkach został przedstawiony poniżej.
 
@@ -102,77 +102,88 @@ Pierwszą zakładką, w której możliwe jest wprowadzenie danych do bazy, jest 
 \item Identyfikator kierunku (specialisation\_id) - jest to unikalne pole, identyfikujące kierunek wśród innych w sposób jednoznaczny; nie wymaga ono bezpośredniego wprowadzania wartości przez użytkownika, gdyż jest automatycznie uzupełniane przy tworzeniu nowego rekordu, dlatego też w interfejsie aplikacji nie ma specjalnego miejsca dla wprowadzenia danych odnoszących się do niego
 \end{itemize}
 Kolejną zakładką umożliwiającą uzupełnienie bazy danych jest Dodaj przedmiot, przedstawioną na rysunku \ref{fig:dodajPrzedmiot}. Podczas wprowadzania przedmiotu lub edycji informacji dotyczących istniejącego, w efekcie potwierdzenia danych wpisanych w odpowiednich polach, uzupełnieniu ulegają następujące atrybuty tabeli Przedmioty (Subjects):
-
-Przedmiot (Subject) - pełna nazwa przedmiotu; jest to pole wymagane
-Kierunek (specialisation\_id) - pole zawierające identyfikator kierunku, na którym prowadzony jest przedmiot; jest ono uzupełniane poprzez wybranie nazwy kierunku i wydziału z listy, które są przekształcane na odpowiedni identyfikator charakteryzujący kierunek w tabeli Kierunki
-Rok studiów (year\_of\_studies) - rok studiów kierunku, podczas którego prowadzony jest dany przedmiot
+\begin{itemize}
+\item Przedmiot (Subject) - pełna nazwa przedmiotu; jest to pole wymagane
+\item Kierunek (specialisation\_id) - pole zawierające identyfikator kierunku, na którym prowadzony jest przedmiot; jest ono uzupełniane poprzez wybranie nazwy kierunku i wydziału z listy, które są przekształcane na odpowiedni identyfikator charakteryzujący kierunek w tabeli Kierunki
+\item Rok studiów (year\_of\_studies) - rok studiów kierunku, podczas którego prowadzony jest dany przedmiot
 Identyfikator przedmiotu (subject\_id) - jest to unikalny identyfikator dla przedmiotu w obrębie tabeli
+\end{itemize}
 
 Używając zakładki Dodaj temat, przedstawionej na rysunku \ref{fig:dodajTemat}, można wprowadzić do bazy dane dotyczące tematów realizowanych w obrębie istniejących w bazie przedmiotów. Po uprzednim wypełnieniu pól i zatwierdzeniu wpisywanych informacji, uzupełniane są następujące atrybuty tabeli Tematy (Topics):
-
-Temat (topic) - pełna nazwa wprowadzanego tematu
-Przedmiot (subject\_id) - pole identyfikatora przedmiotu, w obrębie którego dodawany jest temat; po wybraniu przez użytkownika nazwy przedmiotu, kierunku, wydziału i roku, na których jest prowadzony, następuje wyszukanie odpowiadającego im identyfikatora w tabeli Przedmioty
-Identyfikator tematu (topic\_id) - unikalny identyfikator tematu, automatycznie tworzony podczas wprowadzania danego tematu; nie wymaga on bezpośredniego wpisywania danych przez użytkownika, dlatego nie posiada odpowiadającego mu pola w aplikacji
+\begin{itemize}
+\item Temat (topic) - pełna nazwa wprowadzanego tematu
+\item Przedmiot (subject\_id) - pole identyfikatora przedmiotu, w obrębie którego dodawany jest temat; po wybraniu przez użytkownika nazwy przedmiotu, kierunku, wydziału i roku, na których jest prowadzony, następuje wyszukanie odpowiadającego im identyfikatora w tabeli Przedmioty
+\item Identyfikator tematu (topic\_id) - unikalny identyfikator tematu, automatycznie tworzony podczas wprowadzania danego tematu; nie wymaga on bezpośredniego wpisywania danych przez użytkownika, dlatego nie posiada odpowiadającego mu pola w aplikacji
+\end{itemize}
 
 Uzupełniając zakładkę Dodaj grupę, możliwe jest wprowadzenie grup studentów, na które zostaną podzieleni w obrębie danego przedmiotu. Zakładka przedstawiona została na rysunku \ref{fig:dodajGrupe}. Wraz z potwierdzeniem wpisywanych informacji, do bazy wprowadzeniu ulegają wartości następujących atrybutów tabeli Grupy (Groups):
-
-Identyfikator przedmiotu (subject\_id) - pole zawierające informacje na temat przedmiotu, w obrębie którego tworzona jest dana grupa; na podstawie wybranych informacji wyszukiwany jest identyfikator przypisany do przedmiotu w tabeli Przedmioty
-Dzień odbywania się zajęć (day\_of\_week) - dzień tygodnia, w którym odbywać się będą zajęcia grupy
-Godzina odbywania się zajęć (time\_of\_classes) - godzina odbywania się zajęć danej grupy
-Nazwa grupy (group\_name) - nazwa grupy, domyślnie tworzona jako ciąg znaków w postaci: nazwa.kierunku\_nazwa.przedmiotu\_dzień.zajęć\_godzina.zajęć; możliwa jest modyfikacja domyślnej wartości, ale musi ona być unikalna w całej tabeli Grupy
-Identyfikator grupy (group\_id) - identyfikator jednoznacznie określający grupę w tabeli; jest to wartość tworzona automatycznie, nie wymaga wprowadzania informacji od użytkownika.
+\begin{itemize}
+\item Identyfikator przedmiotu (subject\_id) - pole zawierające informacje na temat przedmiotu, w obrębie którego tworzona jest dana grupa; na podstawie wybranych informacji wyszukiwany jest identyfikator przypisany do przedmiotu w tabeli Przedmioty
+\item Dzień odbywania się zajęć (day\_of\_week) - dzień tygodnia, w którym odbywać się będą zajęcia grupy
+\item Godzina odbywania się zajęć (time\_of\_classes) - godzina odbywania się zajęć danej grupy
+\item Nazwa grupy (group\_name) - nazwa grupy, domyślnie tworzona jako ciąg znaków w postaci: nazwa.kierunku\_nazwa.przedmiotu\_dzień.zajęć\_godzina.zajęć; możliwa jest modyfikacja domyślnej wartości, ale musi ona być unikalna w całej tabeli Grupy
+\item Identyfikator grupy (group\_id) - identyfikator jednoznacznie określający grupę w tabeli; jest to wartość tworzona automatycznie, nie wymaga wprowadzania informacji od użytkownika.
+\end{itemize}
 
 Aby przypisać użytkowników do grup, należy powrócić do okna głównego aplikacji, w którym znajdują się pola służące do wprowadzania danych osobowych. Po uzupełnieniu pól, odpowiednim atrybutom tabel Studenci (Students) oraz Grupy studentów (Students\_Groups) nadawane są wartości:
-
+\begin{itemize}
 W tabeli Studenci:
-
-Imię (name) - pełne imię użytkownika
-Nazwisko (Surname) - pełne nazwisko studenta
-Kierunek (specialisation\_id) - informacje dotyczące kierunku studiów; po wybraniu opcji z listy kierunków umieszczonych w bazie Kierunki, przyporządkowany zostaje identyfikator kierunku, opisujący go w sposób unikalny
-Przedmiot (subject\_id) - dane przedmiotu, do którego zostanie przypisany student; wybrane informacje ulegają przekształceniu na identyfikator przedmiotu w tabeli Przedmioty
-Grupa (group\_id) - nazwa grupy z przedmiotu, do której będzie przypisany student; na podstawie nazwy tej uzupełniany jest identyfikator danej grupy
-Identyfikator studenta (student\_id) - unikalny identyfikator dla osoby w obrębie całej tabeli
-Identyfikator biometryki (biometrics\_id) - identyfikator biometryki, tworzonej dla każdego studenta
+\item Imię (name) - pełne imię użytkownika
+\item Nazwisko (Surname) - pełne nazwisko studenta
+\item Kierunek (specialisation\_id) - informacje dotyczące kierunku studiów; po wybraniu opcji z listy kierunków umieszczonych w bazie Kierunki, przyporządkowany zostaje identyfikator kierunku, opisujący go w sposób unikalny
+\item Przedmiot (subject\_id) - dane przedmiotu, do którego zostanie przypisany student; wybrane informacje ulegają przekształceniu na identyfikator przedmiotu w tabeli Przedmioty
+\item Grupa (group\_id) - nazwa grupy z przedmiotu, do której będzie przypisany student; na podstawie nazwy tej uzupełniany jest identyfikator danej grupy
+\item Identyfikator studenta (student\_id) - unikalny identyfikator dla osoby w obrębie całej tabeli
+\item Identyfikator biometryki (biometrics\_id) - identyfikator biometryki, tworzonej dla każdego studenta
+\end{itemize}
 
 W tabeli Grupy studentów:
-Identyfikator grupy (group\_id) - identyfikator grupy przedmiotu
-Identyfikator studenta (student\_id) - identyfikator studenta, który jest tworzony i automatycznie przypisywany do grupy o wymienionym identyfikatorze group\_id
+\begin{itemize}
+\item Identyfikator grupy (group\_id) - identyfikator grupy przedmiotu
+\item Identyfikator studenta (student\_id) - identyfikator studenta, który jest tworzony i automatycznie przypisywany do grupy o wymienionym identyfikatorze group\_id
+\end{itemize}
+
 Podstawową funkcją tabeli Grupy studentów jest połączenie informacji przechowywanych w tabelach Studenci oraz Grupy. Podczas dodawania kolejnych osób do grupy o danej nazwie, następuje uzupełnianie tabeli Grupy studentów rekordami o tym samym identyfikatorze grupy, ale różnych identyfikatorach studentów, co powoduje przypisanie wielu osób do tej samej grupy. 
 
 Wśród najważniejszych funkcji stworzonego systemu można wyróżnić tworzenie kodu tęczówki oka dla każdego użytkownika oraz przechowywanie go w specjalnie do tego przygotowanych strukturach danych. Tabelą gromadzącą kody tęczówek jest tabela Biometryki (Biometrics). Składa się ona z następujących atrybutów:
-
-Kod tęczówki (iris\_pattern) - pole przechowujące informacje o utworzonym kodzie tęczówki 
-Odcisk palca (fingerprint\_pattern) - dodatkowe pole przechowujące kod odcisku palca, które mogłoby być wykorzystane w przypadku rozbudowy systemu o funkcjonalność rozpoznawania na tej podstawie
-Kod twarzy - pole przechowujące informacje dotyczące kształtu twarzy, używane w przypadku poszerzenia systemu o identyfikację w oparciu o kształt twarzy
-Identyfikator biometryki (biometrics\_id) - identyfikator charakteryzujący biometrykę
+\begin{itemize}
+\item Kod tęczówki (iris\_pattern) - pole przechowujące informacje o utworzonym kodzie tęczówki 
+\item Odcisk palca (fingerprint\_pattern) - dodatkowe pole przechowujące kod odcisku palca, które mogłoby być wykorzystane w przypadku rozbudowy systemu o funkcjonalność rozpoznawania na tej podstawie
+\item Kod twarzy - pole przechowujące informacje dotyczące kształtu twarzy, używane w przypadku poszerzenia systemu o identyfikację w oparciu o kształt twarzy
+\item Identyfikator biometryki (biometrics\_id) - identyfikator charakteryzujący biometrykę
+\end{itemize}
 
 Tabelą pomocniczą dla tabeli Biometryki jest Zdjęcia (Photos). Posiada ona atrybuty:
-
-Iris1 .. Iris5 - pole przechowujące pobrane zdjęcia tęczówki oka, służące do tworzenia kodu tęczówki
-Finger1 .. Finger5 - pola służące do przechowywania zdjęć odcisków palca, w przypadku, gdy system zostanie poszerzony o funkcjonalność identyfikacji na podstawie odcisków palców
-Face1 .. Face5 - pola przechowujące fotografie twarzy, w przypadku, gdy system posiada funkcjonalność rozpoznawania na podstawie kształtu twarzy
+\begin{itemize}
+\item Iris1 .. Iris5 - pole przechowujące pobrane zdjęcia tęczówki oka, służące do tworzenia kodu tęczówki
+\item Finger1 .. Finger5 - pola służące do przechowywania zdjęć odcisków palca, w przypadku, gdy system zostanie poszerzony o funkcjonalność identyfikacji na podstawie odcisków palców
+\item Face1 .. Face5 - pola przechowujące fotografie twarzy, w przypadku, gdy system posiada funkcjonalność rozpoznawania na podstawie kształtu twarzy
+\end{itemize}
 
 W celu utworzenia zajęć z przedmiotu, łączących tematy z konkretnymi terminami w postaci daty, należy wypełnić pola w zakładce Dodaj zajęcia, przedstawionej na rysunku \ref{fig:dodajZajecia}. Powoduje to uzupełnienie tabeli Zajęcia (Classes), która posiada atrybuty:
-
-Przedmiot - identyfikator przedmiotu, z którego odbywać się będą zajęcia; jest on pobierany z tabeli Przedmioty na podstawie wybranego pola
-Temat (topic\_id) - identyfikator tematu, który będzie realizowany na danych zajęciach
-Grupa (group\_id) - identyfikator grupy, do której przypisane będą zajęcia
-Data (class\_date) - termin zajęć
-Kierunek (specialisation\_id) - identyfikator kierunku, w skład którego wchodzą użytkownicy z danej grupy
-Identyfikator zajęć (class\_id) - unikalny identyfikator zajęć
-
+\begin{itemize}
+\item Przedmiot - identyfikator przedmiotu, z którego odbywać się będą zajęcia; jest on pobierany z tabeli Przedmioty na podstawie wybranego pola
+\item Temat (topic\_id) - identyfikator tematu, który będzie realizowany na danych zajęciach
+\item Grupa (group\_id) - identyfikator grupy, do której przypisane będą zajęcia
+\item Data (class\_date) - termin zajęć
+\item Kierunek (specialisation\_id) - identyfikator kierunku, w skład którego wchodzą użytkownicy z danej grupy
+\item Identyfikator zajęć (class\_id) - unikalny identyfikator zajęć
+\end{itemize{
 Tabelami umożliwiającymi uzupełnienie list obecności oraz osób odrabiających zaległe tematy są Obecność (Attendance) i Odrabiający (Complements). Posiadają one pola:
-
-Tabela Obecność:
-Identyfikator zajęć (class\_id) - identyfikator zajęć, na których obecny lub nieobecny jest użytkownik
-Identyfikator studenta (student\_id) - identyfikator użytkownika
-Obecny (present) - logiczna wartość, wskazująca na obecność studenta
-
-Tabela Odrabiający:
-
-Identyfikator zajęć (class\_id) - identyfikator zajęć, które osoba odrabia
-Identyfikator studenta (student\_id) - identyfikator użytkownika
-Data uzupełniania zajęć (complement\_date) - data odrabiania danych zajęć
+\begin{itemize}
+\item Tabela Obecność:
+\begin{itemize}
+\item Identyfikator zajęć (class\_id) - identyfikator zajęć, na których obecny lub nieobecny jest użytkownik
+\item Identyfikator studenta (student\_id) - identyfikator użytkownika
+\item Obecny (present) - logiczna wartość, wskazująca na obecność studenta
+\end{itemize}
+\item Tabela Odrabiający:
+\begin{itemize}
+\item Identyfikator zajęć (class\_id) - identyfikator zajęć, które osoba odrabia
+\item Identyfikator studenta (student\_id) - identyfikator użytkownika
+\item Data uzupełniania zajęć (complement\_date) - data odrabiania danych zajęć
+\end{itemize}
+\end{itemize}
 
 Dodawanie informacji do tych tabel możliwe jest w przypadku, gdy osoba identyfikowana istnieje w systemie. Wówczas aktywowany zostaje przycisk Dodaj obecność, który otwiera specjalnie stworzone menu, pozwalające na wprowadzenie danych do powyższych tabel.
 
