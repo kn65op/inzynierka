@@ -1,0 +1,35 @@
+Konstrukcja stanowiska:
+Konstruując stanowisko należało wziąć pod uwagę następujące wymagania stawiane obrazom.
+Brak odblasków na tęczowce, cel ten został osiągnięty za pomocą kartonowego pudła, które zasłaniało źródła światła.
+Ponieważ w pudle jest ciemniej należało rozjaśnić sceną. Efekt został osiągnięty za pomocą oświetlacza IR.
+Wysoką jakość obrazu oraz odpowiednią wielkość tęczówki na obrazie osiągnięto używając odpowiedniego sprzętu, kamery i obiektywu.
+
+Stworzone stanowisko:
+Zdjęcia przedstawiają zbudowane stanowisko. Na zdjęciu po prawej widać świecący oświetlacz IR.
+
+Schemat działania programu:
+Kolejnymi etapami działania programu są: akwizycja obrazu, wykrycie źrenicy, wykrycie granic tęczówki, tworzenie kodu i dodanie nowego kodu do bazy albo pobranie istniejącego i porównanie obu.
+
+Wykrycie źrenicy:
+1. Proces wykrywania źrenicy przebiega wieloetapowo. Pierwszym etapem jest odnalezieni odblasku pochodzącego od oświetlacza IR. Znaleziony odblask staje się środkiem kwadratowego obszaru o boku 440 pikseli, który jest poddawany dalszym przekształceniom.
+
+2. Następnie wybrany fragment jest poddawany operacji binaryzacji z dwoma progami: wybierane są piksele mniejsze niż 60 w celu wykrycia pikseli źrenicy oraz większe od 254 w celu wypełnienia dziury po odblasku w obszarze źrenicy. Poza źrenicą wykrywane są piksele rzęs oraz cieni.
+
+3. Dalsze przekształcenia mają na celu poprawienie obszaru źrenicy. Stosuje się zamknięcie, które wypełnia (w całości obszar) źrenicy (dziury w obszarze) źrenicy oraz dwukrotne otwarcie zmniejszające, bądź likwidujące obszary nie będące źrenicą.
+
+4. Ostatnią operacją jest czyszczenie brzegu. Po tej operacji na obrazie zostaje sama źrenica.
+
+Wykrycie tęczówki:
+Wykrywanie granic zewnętrznych tęczówki odbywa się za pomocą metody eksplodujących okręgów. Szukane jest największe zwiększenie jasności na okręgu o środku w środku źrenicy.
+
+Tworzenie kodu tęczówki:
+Wybierane są obszary, które są poddawane filtracji filtrami Gabora. Używanych jest 8 filtrów o różnych kierunkach. Współczynniki wyliczone po filtracji są sumowane. Obliczone sumy są kodowane: jeśli cześć rzeczywista lub urojona jest większa od 0 to jest kodowane 1 a jeśli jest mniejsza lub równa to kodowane jest 0. W ten sposób uzyskujemy 2 bity dla jednego obszaru i jednego filtru.
+
+Porównanie kodów:
+W celu porównania kodu liczy się odległość Hamminga. Jest to stosunek ilości różnych bitów w dwóch kodach tęczówek i długości tych kodów zgodnie z przedstawionym wzorem. Jeśli obliczona wartość jest mniejsza od 0.18 to uznaje się, że są to te same tęczówki.
+
+Wyniki testów:
+W tabeli jest przedstawiony fragment testów systemu. Przedstawione są wyliczone wartości odległości Hamminga dla czterech osób (A, B, C i D) oraz kilku zdjęć każdej osoby. Zielone komórki przedstawiają wartości poniżej 0.18 co oznacza, że tęczówki dla podanych zdjęć są identyczne.
+
+Wnioski:
+Udało się skonstruować działający system rozpoznawania osób na podstawie tęczówki. Najważniejszym etapem jest skonstruowanie odpowiedniego stanowiska do pobierania obrazów, aby obrazy były dobrej jakości. W części biometrycznej najtrudniejsze okazała się segmentacja źrenicy.
