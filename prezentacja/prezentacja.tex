@@ -52,8 +52,6 @@ Celem naszego projektu było stworzenie/rozbudowa systemu do identyfikacji osób
 
 \begin{frame}
 \frametitle{Podział systemu}
-
-Tworzony przez nas system składa się z trzech głównych części:
 \begin{columns}[t]
 \column{0.3\textwidth}
 \begin{block}{Część sprzętowa}
@@ -75,27 +73,14 @@ Część odpowiedzialna za przechowywanie danych osób wprowadzanych do systemu.
 
 \begin{frame}
 \frametitle{Konstrukcja stanowiska}
-Stanowisko do pobierania obrazów musi spełniać odpowiednie wymagania. Im lepsze będą pobierane obrazy, tym łatwiejsza będzie późniejsza segmentacja. Główne założenia:
+Stanowisko do pobierania obrazów musi spełniać odpowiednie wymagania. Główne założenia oraz ich realizacja:
 \begin{itemize}
-\item Likwidacja odblasków pochodzących z oświetlenia (naturalnego oraz sztucznego),
-\item Odpowiednia jasność obrazu,
-\item Wysoka jakość obrazu,
-\item Odpowiednia wielkość tęczówki na obrazie.
+\item Likwidacja odblasków pochodzących z oświetlenia (naturalnego oraz sztucznego) - zastosowanie kartonowego pudła,
+\item Odpowiednia jasność obrazu - zastosowanie oświetlacza IR,
+\item Wysoka jakość obrazu - zastosowanie odpowiedniej kamery,
+\item Odpowiednia wielkość tęczówki na obrazie - zastosowanie odpowiedniego obiektywu.
 \end{itemize}
 \end{frame}
-%---------------------------------------------------------------------------
-
-\begin{frame}
-\frametitle{Konstrukcja stanowiska}
-Udało się skonstruować stanowisko spełniające wymagania:
-\begin{itemize}
-\item Odblaski usunięto poprzez przesłonięcie źródeł światła (za pomocą kartonowego pudła),
-\item Odpowiednią jasność zapewnia oświetlacz IR,
-\item Wysoką jakość obrazu zapewnia odpowiednia kamera, która potrafi rejestrować obrazy w dużej rozdzielczości,
-\item Odpowiednią wielkość tęczówki otrzymujemy stosując przybliżenie za pomocą obiektywu.
-\end{itemize}
-\end{frame}
-
 %---------------------------------------------------------------------------
 
 \begin{frame}
@@ -123,7 +108,7 @@ Udało się skonstruować stanowisko spełniające wymagania:
 \frametitle{Algorytm do tworzenia kodu tęczówki}
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.4]{schemat.jpg}
+\includegraphics[scale=0.45]{schemat.jpg}
 \end{center}
 \end{figure}
 \end{frame}
@@ -132,10 +117,10 @@ Udało się skonstruować stanowisko spełniające wymagania:
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Celem tej części algorytmu jest opisanie źrenicy przy pomocy sparametryzowanego okręgu, czyli znalezienie środka okręgu na obrazie oraz jego promienia. Punktem startowym jest pobrany obraz z kamery.
+Celem tej części algorytmu jest opisanie źrenicy przy pomocy okręgu. Pierwszym etapem wyszukiwania źrenicy jest znalezienie odblasku widocznego na źrenicy pochodzącego od oświetlacza IR. Do dalszych przekształceń wybierany jest odpowiedni fragment obrazu zaznaczony na rysunku.
 \begin{figure}
 \begin{center}
-\includegraphics[scale=0.13]{szarosc.jpg}
+\includegraphics[scale=0.07]{obszar.jpg}
 \end{center}
 \end{figure}
 \end{frame}
@@ -144,14 +129,7 @@ Celem tej części algorytmu jest opisanie źrenicy przy pomocy sparametryzowane
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Następnie wyszukiwany jest odblask widoczny na źrenicy, pochodzący od oświetlacza IR. Poszukiwany jest jasny punkt w otoczeniu ciemnych. Po znalezieniu odblasku do dalszych przekształceń wybierany jest fragment obrazu w jego otoczeniu (kwadrat o boku 440 pikseli z odblaskiem w środku).
-\end{frame}
-
-%---------------------------------------------------------------------------
-
-\begin{frame}
-\frametitle{Wykrycie źrenicy}
-Następnie w wybranym fragmencie obrazu stosujemy operację binaryzacji w celu wyznaczenia źrenicy z dwoma progami: mniejsze od 60 w celu znalezienia pikseli źrenicy oraz większe od 254 w celu znalezienie pikseli odblasku.
+W wybranym fragmencie obrazu stosujemy operację binaryzacji w celu wyznaczenia źrenicy z dwoma progami: mniejsze od 60 oraz większe od 254 .
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.25]{bin.jpg}
@@ -190,7 +168,7 @@ Kolejno stosowane są operacje zamknięcia i dwukrotnego otwarcia (za drugim raz
 
 \begin{frame}
 \frametitle{Wykrycie źrenicy}
-Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaje biały obszar w miejscu, gdzie na obrazie występują rzęsy oraz obszar ten obszar zawsze jest styczny z brzegiem fragmentu obrazu, stosowany jest algorytm czyszczenia brzegów.
+Ostatnim etapem jest zastosowanie algorytmu czyszczenie brzegu na wybranym obszarze. Pozostały obiekt jest źrenicą.
 \begin{columns}
 	\column{0.5\textwidth}
 		\begin{figure}
@@ -208,18 +186,6 @@ Ponieważ na niektórych obrazach po wcześniej wymienionych operacjach pozostaj
 		\end{figure}
 \end{columns}
 \end{frame}
-
-%---------------------------------------------------------------------------
-
-%\begin{frame}
-%\frametitle{Wykrycie tęczówki}
-%Sposób wykrywania tęczówki jest zgodny z patentem Daugmana oraz z pracą z poprzedniego roku. Po wykonaniu algorytmu widzimy obszar na zdjęciu, w którym znajduje się tęczówka.
-%\begin{figure}
-%\begin{center}
-%\includegraphics[scale=0.25]{teczowka_nasza.jpg}
-%\end{center}
-%\end{figure}
-%\end{frame}
 
 %---------------------------------------------------------------------------
 
@@ -254,13 +220,8 @@ Kody porównuje się licząc ile jest różnych pikseli dla dwóch kodów w stos
 $$ H = \frac{\sum XOR(A,B)}{2048} $$
 gdzie:
 $A, B$ - porównywane kody tęczówek, każdy o długości 2048 bitów.\\
-\end{frame}
 
-%---------------------------------------------------------------------------
-
-\begin{frame}
-\frametitle{Wynik porównania}
-Uznaje się, że dwa zdjęcia są obrazami tej samej tęczówki w przypadku, gdy wyliczona odległość Hamminga ma wartość poniżej 0.18. Jeśli jest równa lub większa to uznaje się, że obrazy przedstawiają różne tęczówki.
+Uznaje się, że dwa zdjęcia są obrazami tej samej tęczówki w przypadku, gdy wyliczona odległość Hamminga ma wartość poniżej 0.18.
 \end{frame}
 
 %---------------------------------------------------------------------------
@@ -342,7 +303,7 @@ W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z po
 
 
 \begin{frame}
-\frametitle{Wyniki i wnioski}
+\frametitle{Wnioski}
 \begin{itemize}
 \item Udało się skonstruować system do identyfikacji na podstawie tęczówki.
 \item Najważniejsze jest uzyskanie dobrego obrazu, z jak najmniejszą liczbą zakłóceń.
