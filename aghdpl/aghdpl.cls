@@ -8,6 +8,8 @@
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
 \message{*** [aghdpl.cls] ---  (MSz, GJN)  v0.22 <05.04.2011>  ***}       
 
 \newif\ifpdflatex\pdflatexfalse
@@ -15,7 +17,7 @@
 \ProvidesClass{aghdpl} 
 \DeclareOption{pdflatex}{\pdflatextrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}} 
-\ProcessOptions\LoadClass[a4paper,oneside]{report} 
+\ProcessOptions\LoadClass[a4paper,twoside]{report} 
 
 \RequirePackage{times}
 \RequirePackage[T1]{fontenc}
@@ -157,12 +159,14 @@ University of Science and Technology in Krakow}}}
 }
 
 \def\thesisheaders{
-\fancyfoot[L]{\small \@shortauthor\quad\textit{\@shorttitlePL}}
+\fancyfoot[LO]{\small \@shortauthor\quad\textit{\@shorttitlePL}}
+\fancyfoot[RE]{\small \@shortauthor\quad\textit{\@shorttitlePL}}
 }
 
 \DeclareOption{en}{
 \def\thesisheaders{
-\fancyfoot[L]{\small \@shortauthor\quad\textit{\@shorttitleEN}}
+\fancyfoot[LO]{\small \@shortauthor\quad\textit{\@shorttitleEN}}
+\fancyfoot[RE]{\small \@shortauthor\quad\textit{\@shorttitleEN}}
 }
 }
 
@@ -175,8 +179,11 @@ University of Science and Technology in Krakow}}}
 \renewcommand{\footrulewidth}{0.5pt}
 \fancyhf{}
 \fancyhead{}
-\fancyhead[L]{\slshape{\small \rightmark}}
-\fancyhead[R]{\bfseries \thepage}
+\fancyhead[RE]{\slshape{\small \rightmark}}
+\fancyhead[LE]{\bfseries \thepage}
+\fancyhead[LO]{\slshape{\small \rightmark}}
+\fancyhead[RO]{\bfseries \thepage}
+
 
 \thesisheaders
 

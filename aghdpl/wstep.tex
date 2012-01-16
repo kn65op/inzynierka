@@ -37,7 +37,7 @@ Metody identyfikacji biometrycznej różnią się, poza formą analizy oraz wari
 \section{Charakterystyka identyfikacji biometrycznej na podstawie tęczówki oka}
 \label{sec:zawartoscPracy}
 
-Tęczówka ludzkiego oka jest jednym z~najbardziej charakterystycznych elementów twarzy człowieka, indywidualnym i~niepowtarzalnym ze względu na połączenie uwarunkowanego genetycznie koloru oraz złożonej struktury, wynikającej z~różnorodnych procesów fizycznych i~chemicznych, kształtujących ją w~pierwszych latach ludzkiego życia [2][3]. Cechy te są wykorzystywane w~procesie biometrycznej identyfikacji jednostki, który opiera się na zastosowaniu różnorodnych matematycznych metod rozpoznawania wzorców w~algorytmach operujących na pobranym z~użyciem specjalistycznej kamery obrazie oka.
+Tęczówka ludzkiego oka jest jednym z~najbardziej charakterystycznych elementów twarzy człowieka, indywidualnym i~niepowtarzalnym ze względu na połączenie uwarunkowanego genetycznie koloru oraz złożonej struktury, wynikającej z~różnorodnych procesów fizycznych i~chemicznych, kształtujących ją w~pierwszych latach ludzkiego życia \cite{Iris01}\cite{Iris02}. Cechy te są wykorzystywane w~procesie biometrycznej identyfikacji jednostki, który opiera się na zastosowaniu różnorodnych matematycznych metod rozpoznawania wzorców w~algorytmach operujących na pobranym z~użyciem specjalistycznej kamery obrazie oka.
 
 Pobranie stabilnego i~wolnego od zakłóceń obrazu ludzkiego oka wymaga pewnego stopnia współpracy ze strony osoby badanej, jednakże współczesne kamery i~sprzęt projektowane specjalnie do tego typu identyfikacji, są  coraz lepiej przystosowane do automatycznej akwizycji obrazu wysokiej rozdzielczości. ~W związku z~tym możliwe jest, iż z~upływem czasu będą one mogły operować bez bezpośredniej kooperacji ze strony badanego.
 
@@ -47,7 +47,7 @@ Współcześnie stosowane kamery, wykorzystywane w~celu akwizycji obrazu oka, op
 \item promieniowanie to pomaga w~likwidowaniu powstałych na powierzchni oka odblasków światła z~otoczenia,
 \item jest ono nieinwazyjne, w związku z~czym nieszkodliwe dla oka.
 \end{itemize}
-Natomiast technika \emph{Visible Wavelength} zachowuje informację na temat barwników przeważających w budowie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety i~wady; ich porównanie oraz próby połączenia w~celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki i~większej ilości niesionych wraz z~tym informacji zostały opisane w~pracy \cite{Hos10}. 
+Natomiast technika \emph{Visible Wavelength} zachowuje informację na temat barwników przeważających w~budowie tęczówki, co umożliwia pozyskanie danych dotyczących charakterystycznych wzorców występujących na obrazie. Obie technologie mają swoje zalety i~wady; ich porównanie oraz próby połączenia w~celu uzyskania dokładniejszego sposobu pozyskiwania zdjęć tęczówki i~większej ilości niesionych wraz z~tym informacji zostały opisane w~pracy \cite{Hos10}. 
 
 Proces identyfikacji na podstawie tęczówki, po uzyskaniu poprawnego obrazu przy pomocy kamery, dzieli się na kilka głównych etapów: \begin{itemize}
 \item segmentacja, mająca na celu wyodrębnienie wewnętrznej i~zewnętrznej granicy tęczówki na obrazie oka, wraz z~szeregiem operacji, mających za zadanie wyeliminowanie zakłóceń na zdjęciu, w~postaci otaczających tęczówkę rzęs, powiek czy powstałych w~wyniku wpływu oświetlenia odblasków,
@@ -82,7 +82,7 @@ $ r $ - promień okręgu, \\
 $ ~I(x,y) $ - jasność piksela na obrazie,\\
 $ G_{\sigma}(r) $ - rozkład Gaussa.
 
-Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a~tęczówką oraz między tęczówką a~rogówką. Częste jest w~niej zastosowanie łuku dla szukania granicy między tęczówką a~rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki. [9]. Po skutecznie zrealizowanym algorytmie otrzymuje obraz podobny do przedstawionego na rysunku \ref{fig:przykladDaugman}.
+Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których będziemy mieli największą wartość pochodnej względem najbliższego otoczenia. Ta metoda jest skuteczna dla obrazów, gdzie wyraźna jest granica między źrenicą a~tęczówką oraz między tęczówką a~rogówką. Częste jest w~niej zastosowanie łuku dla szukania granicy między tęczówką a~rogówką, ponieważ zdarza się, że część tęczówki jest zakryta przez powieki \cite{Kr11}. Po skutecznie zrealizowanym algorytmie otrzymuje obraz podobny do przedstawionego na rysunku \ref{fig:przykladDaugman}.
 \begin{figure}
 \begin{center}
 \includegraphics[scale=0.5]{calosc.png}
@@ -91,7 +91,7 @@ Dzięki temu można odnaleźć środek okręgu oraz jego promień, dla których 
 \end{center}
 \end{figure}
 
-Następnym rozwiązaniem jest metoda Wildes'~a \cite{Wildes}, która jest odmienna od patentu Daugmana. Algorytm ten jest realizowany w~dwóch krokach. Pierwszym jest zamiana oryginalnego obrazu na obraz binarny z~wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą algorytmu Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformacja Hough'~a [9], dzięki której można znaleźć środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
+Następnym rozwiązaniem jest metoda Wildes'~a \cite{Wildes}, która jest odmienna od patentu Daugmana. Algorytm ten jest realizowany w~dwóch krokach. Pierwszym jest zamiana oryginalnego obrazu na obraz binarny z~wyznaczonymi krawędziami, które są obecne na obrazie źródłowym. Najczęściej obraz pośredni jest tworzony za pomocą algorytmu Canny'ego. Na zmodyfikowanym obrazie stosowana jest transformacja Hough'~a \cite{KrH11}, dzięki której można znaleźć środek okręgu opisującego tęczówkę oraz jego promień. Wadą tej metody jest trudność ustalenia progu binaryzacji.
 
 Kolejnym sposobem segmentacji tęczówki jest rozwiązanie Camus'a i~Wildes'a \cite{Camus}. Jest to metoda podobna do algorytmu Daugmana, która również polega na wyszukiwaniu tęczówki za pomocą maksymalizacji funkcji. W~tym przypadku funkcją, którą maksymalizujemy jest równanie \ref{eq:camus_wildes} 
 \begin{equation}
@@ -133,4 +133,4 @@ Inne podejście stosują Sun i~Tan w swojej pracy \cite{TaSu09}. Proponują uży
 
 \section{Metody porównania kodów tęczówek}
 \label{sec:metodyPorownaniaKodow}
-Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa liczbę bitów, których wartości są różne w~dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota implementacji, dlatego została użyta w niniejszej pracy. Inne metody są przedstawione w pracy \cite{Gl11}.
+Główną metodą stosowaną do porównywania kodów tęczówek jest, zaproponowane przez Daugmana, wyznaczanie odległości Hamminga. Odległość Hamminga określa liczbę bitów, których wartości są różne w~dwóch porównywanych kodach. Zaletą tej metody jest szybkość obliczeń oraz prostota implementacji, dlatego została użyta w niniejszej pracy. Inne metody są przedstawione w pracy \cite{Gl11}. Wśród innych metod można wyróżnić bazujące na sieciach neuronowych. Przykładem może być wykorzystanie sieci neuronowych o radialnych funkcjach bazowych lub sieci samoorganizujących się na zasadzie współzawodnictwa przedstawione w pracy \cite{TP11}.
