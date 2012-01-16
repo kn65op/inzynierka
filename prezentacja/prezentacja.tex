@@ -4,7 +4,8 @@
 \usepackage[polish]{babel}
 \usepackage{graphicx}
 \usepackage{times}
-
+\usepackage{color}
+\usepackage{colortbl}
 \usetheme{AGH}
 
 \title[Biometryczny System Kontroli Dostępu]{Biometryczny System Kontroli Dostępu}
@@ -301,6 +302,33 @@ W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z po
 
 %---------------------------------------------------------------------------
 
+\begin{frame}
+\frametitle{Wyniki testów}
+\begin{table}
+\begin{center}
+\label{tab:druga1}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|l|}
+\hline
+
+ & A1 & A2 & A3 & B1 & B2 & B3 & C1 & C2\\ \hline
+A1  & \multicolumn{1}{>{\columncolor{green}}c|}{ 0} & \multicolumn{1}{>{\columncolor{green}}c|}{0,114} & \multicolumn{1}{>{\columncolor{green}}c|}{0,121} & \multicolumn{1}{>{\columncolor{red}}c|}{0,194} & \multicolumn{1}{>{\columncolor{red}}c|}{0,196} & \multicolumn{1}{>{\columncolor{red}}c|}{0,195} & \multicolumn{1}{>{\columncolor{red}}c|}{0,212} & \multicolumn{1}{>{\columncolor{red}}c|}{0,213}\\ \hline
+A2  & \multicolumn{1}{>{\columncolor{green}}c|}{ 0,114} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{green}}c|}{0,078} & \multicolumn{1}{>{\columncolor{red}}c|}{0,192} & \multicolumn{1}{>{\columncolor{red}}c|}{0,186} & \multicolumn{1}{>{\columncolor{red}}c|}{0,184} & \multicolumn{1}{>{\columncolor{red}}c|}{0,207} & \multicolumn{1}{>{\columncolor{red}}c|}{0,21}\\ \hline
+A3  & \multicolumn{1}{>{\columncolor{green}}c|}{ 0,121} & \multicolumn{1}{>{\columncolor{green}}c|}{0,078} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{red}}c|}{0,198} & \multicolumn{1}{>{\columncolor{red}}c|}{0,194} & \multicolumn{1}{>{\columncolor{red}}c|}{0,189} & \multicolumn{1}{>{\columncolor{red}}c|}{0,207} & \multicolumn{1}{>{\columncolor{red}}c|}{0,213}\\ \hline
+B1  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,194} & \multicolumn{1}{>{\columncolor{red}}c|}{0,192} & \multicolumn{1}{>{\columncolor{red}}c|}{0,198} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{green}}c|}{0,124} & \multicolumn{1}{>{\columncolor{green}}c|}{0,108} & \multicolumn{1}{>{\columncolor{red}}c|}{0,2} & \multicolumn{1}{>{\columncolor{red}}c|}{0,206}\\ \hline
+B2  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,196} & \multicolumn{1}{>{\columncolor{red}}c|}{0,186} & \multicolumn{1}{>{\columncolor{red}}c|}{0,194} & \multicolumn{1}{>{\columncolor{green}}c|}{0,124} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{green}}c|}{0,065} & \multicolumn{1}{>{\columncolor{red}}c|}{0,191} & \multicolumn{1}{>{\columncolor{red}}c|}{0,203}\\ \hline
+B3  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,195} & \multicolumn{1}{>{\columncolor{red}}c|}{0,184} & \multicolumn{1}{>{\columncolor{red}}c|}{0,189} & \multicolumn{1}{>{\columncolor{green}}c|}{0,108} & \multicolumn{1}{>{\columncolor{green}}c|}{0,065} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{red}}c|}{0,199} & \multicolumn{1}{>{\columncolor{red}}c|}{0,202}\\ \hline
+C1  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,212} & \multicolumn{1}{>{\columncolor{red}}c|}{0,207} & \multicolumn{1}{>{\columncolor{red}}c|}{0,207} & \multicolumn{1}{>{\columncolor{red}}c|}{0,2} & \multicolumn{1}{>{\columncolor{red}}c|}{0,191} & \multicolumn{1}{>{\columncolor{red}}c|}{0,199} & \multicolumn{1}{>{\columncolor{green}}c|}{0} & \multicolumn{1}{>{\columncolor{green}}c|}{0,121}\\ \hline
+C2  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,213} & \multicolumn{1}{>{\columncolor{red}}c|}{0,21} & \multicolumn{1}{>{\columncolor{red}}c|}{0,213} & \multicolumn{1}{>{\columncolor{red}}c|}{0,206} & \multicolumn{1}{>{\columncolor{red}}c|}{0,203} & \multicolumn{1}{>{\columncolor{red}}c|}{0,202} & \multicolumn{1}{>{\columncolor{green}}c|}{0,121} & \multicolumn{1}{>{\columncolor{green}}c|}{0}\\ \hline
+C3  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,208} & \multicolumn{1}{>{\columncolor{red}}c|}{0,207} & \multicolumn{1}{>{\columncolor{red}}c|}{0,208} & \multicolumn{1}{>{\columncolor{red}}c|}{0,198} & \multicolumn{1}{>{\columncolor{red}}c|}{0,202} & \multicolumn{1}{>{\columncolor{red}}c|}{0,204} & \multicolumn{1}{>{\columncolor{green}}c|}{0,145} & \multicolumn{1}{>{\columncolor{green}}c|}{0,093}\\ \hline
+D1  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,186} & \multicolumn{1}{>{\columncolor{red}}c|}{0,197} & \multicolumn{1}{>{\columncolor{red}}c|}{0,201} & \multicolumn{1}{>{\columncolor{red}}c|}{0,219} & \multicolumn{1}{>{\columncolor{red}}c|}{0,216} & \multicolumn{1}{>{\columncolor{red}}c|}{0,213} & \multicolumn{1}{>{\columncolor{red}}c|}{0,21} & \multicolumn{1}{>{\columncolor{red}}c|}{0,211}\\ \hline
+D2  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,186} & \multicolumn{1}{>{\columncolor{red}}c|}{0,194} & \multicolumn{1}{>{\columncolor{red}}c|}{0,197} & \multicolumn{1}{>{\columncolor{red}}c|}{0,212} & \multicolumn{1}{>{\columncolor{red}}c|}{0,208} & \multicolumn{1}{>{\columncolor{red}}c|}{0,208} & \multicolumn{1}{>{\columncolor{red}}c|}{0,211} & \multicolumn{1}{>{\columncolor{red}}c|}{0,214}\\ \hline
+D3  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,185} & \multicolumn{1}{>{\columncolor{red}}c|}{0,199} & \multicolumn{1}{>{\columncolor{red}}c|}{0,197} & \multicolumn{1}{>{\columncolor{red}}c|}{0,223} & \multicolumn{1}{>{\columncolor{red}}c|}{0,216} & \multicolumn{1}{>{\columncolor{red}}c|}{0,211} & \multicolumn{1}{>{\columncolor{red}}c|}{0,216} & \multicolumn{1}{>{\columncolor{red}}c|}{0,222}\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+\end{frame}
+
+%---------------------------------------------------------------------------
 
 \begin{frame}
 \frametitle{Wnioski}
@@ -319,6 +347,7 @@ W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z po
 \begin{block}{}
 Dziękujemy za uwagę.\\
 Pytania?
+
 \end{block}
 
 \end{frame}
