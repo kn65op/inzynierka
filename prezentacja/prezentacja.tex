@@ -220,10 +220,11 @@ Uznaje się, że dwa zdjęcia są obrazami tej samej tęczówki w przypadku, gdy
 %---------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Baza danych programu}
+
 W celu poszerzenia funkcjonalności aplikacji, postanowiono rozbudować istniejącą bazę danych systemu. Schemat przebudowanej bazy wygląda następująco:
 
 \begin{figure}
-\includegraphics[scale=0.3]{diagram.png}
+\includegraphics[scale=0.3]{diag2.png}
 \end{figure}
 \end{frame}
 
@@ -232,7 +233,10 @@ W celu poszerzenia funkcjonalności aplikacji, postanowiono rozbudować istniej�
 
 Wśród wielu tabel bazy, na szczególną uwagę zasługują relacje Biometryki (Biometrics), Zdjęcia (Photos), Obecność (Attendance) oraz Odrabiający (Complements).
 \begin{figure}
-\includegraphics{biometrics.png}
+\includegraphics{biometrics.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics{photos.jpg}
 \end{figure}
 \end{frame}
 
@@ -240,12 +244,16 @@ Wśród wielu tabel bazy, na szczególną uwagę zasługują relacje Biometryki 
 \frametitle{Wybrane tabele}
 
 \begin{figure}
-\includegraphics{photos.png}
+\includegraphics{attendance.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics{complements.jpg}
 \end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Podstawowy interfejs aplikacji}
+
 W podstawowej wersji programu obecny był jedynie uproszczony interfejs aplikacji.
 \begin{figure}
 \includegraphics[scale=0.2]{oknoGlowne.jpg}
@@ -254,59 +262,53 @@ W podstawowej wersji programu obecny był jedynie uproszczony interfejs aplikacj
 
 \begin{frame}
 \frametitle{Rozszerzony interfejs aplikacji}
+
 Rozbudowa bazy danych wiązała się z poszerzeniem interfejsu programu. Dodano zakładki umożliwiające zaawansowane korzystanie z funkcji oferowanych przez nową bazę. Zakładki dostępne są po naciśnięciu przycisku Zaawansowane opcje dodawania w głównym oknie aplikacji.
-
-\end{frame}
-
-
-\begin{itemize}
-\item Zaawansowane opcje dodawania - zakładki: Dodaj kierunek, Dodaj przedmiot, Dodaj temat, Dodaj grupę, Dodaj zajęcia
-\item Generowanie listy obecności
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Okno główne aplikacji}
-Po przebudowie aplikacji, okno główne przyjęło postać:
+\begin{figure}
+\includegraphics{okno_glowne.jpg}
+\end{figure}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Zakładka Dodaj kierunek}
-Pierwszą zakładką, w której możliwe jest uzupełnienie danych, jest Dodaj kierunek. Pozwala ona na dodanie specjalności o podanej nazwie i wydziale.
+\frametitle{Zakładki dodawania do bazy}
 
+Zakładki Dodaj kierunek oraz Dodaj przedmiot:
+\begin{figure}
+\includegraphics{dodaj_kierunek.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics{dodaj_przedmiot.jpg}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Zakładka Dodaj przedmiot}
-W zakładce drugiej możliwe jest dodanie przedmiotu o określonej nazwie, odbywającym się na konkretnym kierunku i roku studiów:
+\frametitle{Zakładki dodawania do bazy}
 
+Zakładki Dodaj temat i Dodaj grupę:
+\begin{figure}
+\includegraphics{dodaj_temat.jpg}
+\end{figure}
+\begin{figure}
+\includegraphics{dodaj_grupe.jpg}
+\end{figure}
 \end{frame}
 
 \begin{frame}
-\frametitle{Zakładka Dodaj temat}
-W kolejnej zakładce można w ramach przedmiotu dodać realizowane tematy:
+\frametitle{Zakładki dodawania do bazy}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{Zakładka Dodaj grupę}
-Zakładka Dodaj grupę pozwala na utworzenie grup studentów mających zajęcia w określone dni tygodnia i danych godzinach:
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Zakładka Dodaj zajęcia}
-W zakładce Dodaj zajęcia możliwe jest dodanie zajęć z przedmiotu, wraz z podaniem terminu ich odbycia się oraz grupy i realizowanego tematu:
-
+Zakładka Dodaj zajęcia:
+\begin{figure}
+\includegraphics{dodaj_zajecia.jpg}
+\end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Iplementacja}
 \begin{itemize}
-\item Język C++.
-\item Biblioteka do przetwarzania obrazów: OpenCV.
-\item Biblioteka do tworzenia interfejsu graficznego: Qt.
+\item Język C++;
+\item Biblioteka do przetwarzania obrazów: OpenCV;
+\item Biblioteka do tworzenia interfejsu graficznego: Qt;
 \item System zarządzania bazami danych: SQLite.
 \end{itemize}
 \end{frame}
@@ -344,11 +346,21 @@ D3  & \multicolumn{1}{>{\columncolor{red}}c|}{ 0,185} & \multicolumn{1}{>{\colum
 \begin{frame}
 \frametitle{Wnioski}
 \begin{itemize}
-\item Udało się skonstruować system do identyfikacji osób na podstawie tęczówki.
-\item Najważniejsze jest uzyskanie dobrego obrazu, z jak najmniejszą liczbą zakłóceń.
-\item Stworzone stanowisko nie jest przenośne.
-\item Tęczówka na zdjęciu musi być duża, potrzeba jest dużej liczby szczegółów tęczówki.
+\item Udało się skonstruować system do identyfikacji osób na podstawie tęczówki;
+\item Najważniejsze jest uzyskanie dobrego obrazu, z jak najmniejszą liczbą zakłóceń;
+\item Stworzone stanowisko nie jest przenośne;
+\item Tęczówka na zdjęciu musi być duża, potrzeba jest dużej liczby szczegółów tęczówki;
 \item Najtrudniejszym etapem podczas tworzenia kodu tęczówki jest segmentacja źrenicy.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Wnioski}
+\begin{itemize}
+\item Skontruowano rozbudowaną bazę danych, o większej liczbie tabel;
+\item Baza zapewnia logiczny podział wprowadzanych informacji;
+\item Wyszukiwanie informacji nie jest skomplikowane dzięki unikalnym identyfikatorom;
+\item Rozszerzony interfejs aplikacji umożliwia dodawanie kierunków, przedmiotów, tematów, grup i zajęć
 \end{itemize}
 \end{frame}
 
